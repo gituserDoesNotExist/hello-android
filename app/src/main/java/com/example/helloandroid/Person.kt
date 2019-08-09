@@ -11,6 +11,6 @@ class Person(var _firstName: String, var _lastName: String) {
     fun changeName(view: View) {
         println("i am called")
         firstName.set("new name")
-        println("persons new first name is ${firstName.get() }")
+        println("persons new first name is ${firstName.get()}")
     }
 }
