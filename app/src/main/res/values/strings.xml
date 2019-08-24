@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">HelloAndroid</string>
     <string name="hello_world_text">0</string>
+    <string name="title_start_verzicht_activity_button">Verzicht</string>
+    <string name="title_button_verzicht_add_day">Tag hinzufuegen</string>
 </resources>

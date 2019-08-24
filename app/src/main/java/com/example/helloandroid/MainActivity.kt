@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         textView.text = currentValueOfCounter.toString()
     }
 
-    fun startRandom(currentView: View) {
-        val intent: Intent = Intent(this,RandomActivity::class.java)
+    fun startVerzicht(currentView: View) {
+        val intent: Intent = Intent(this,ChocolateActivity::class.java)
         startActivity(intent)
     }
 

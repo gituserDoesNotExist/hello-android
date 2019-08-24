@@ -18,7 +18,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:id="@+id/textView"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/textView"/>
     <Button
             android:text="PopUp"
             android:layout_width="wrap_content"
@@ -27,14 +28,16 @@
             android:onClick="toastMe"
             android:background="@color/buttonBackground"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="24dp" android:layout_marginEnd="24dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"/>
     <Button
-            android:text="Random"
+            android:text="@string/title_start_verzicht_activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/random_button"
-            android:onClick="startRandom"
+            android:id="@+id/start_verzicht_activity_button"
+            android:onClick="startVerzicht"
             android:background="@color/buttonBackground"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +50,7 @@
             android:onClick="countIt"
             android:background="@color/buttonBackground"
             app:layout_constraintTop_toBottomOf="@+id/textView" app:layout_constraintStart_toEndOf="@+id/toast_button"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/random_button"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/start_verzicht_activity_button"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
