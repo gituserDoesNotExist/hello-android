@@ -1,13 +1,17 @@
 package com.example.helloandroid
 
-import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableField
+
 
 class ChocolateViewModel {
 
-    val daysWithoutChocolate: ObservableInt = ObservableInt(0)
+    val daysWithoutChocolate: ObservableField<Int> = ObservableField(0)
 
-    fun increaseDaysWithoutChocolateByOneDay(): Unit {
-        daysWithoutChocolate.get().inc()
+
+    fun increaseDaysWithoutChocolateByOneDay() {
+        var valueDaysWithoutChocolate = daysWithoutChocolate.get()
+        valueDaysWithoutChocolate = valueDaysWithoutChocolate?.inc()
+        daysWithoutChocolate.set(valueDaysWithoutChocolate)
     }
 
 }
