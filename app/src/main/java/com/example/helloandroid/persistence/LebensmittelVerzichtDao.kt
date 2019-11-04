@@ -9,6 +9,13 @@ interface LebensmittelVerzichtDao {
     @Insert
     fun insertLebensmittelVerzicht(lebensmittelVerzicht: LebensmittelVerzicht)
 
+
+    @Query("SELECT * FROM LEBENSMITTEL_VERZICHT verzicht where verzicht.name LIKE :type")
+    fun findByLebensmittelType(type: LebensmittelType): LebensmittelVerzicht
+
+
     @Query("SELECT * FROM LEBENSMITTEL_VERZICHT")
     fun findAll(): List<LebensmittelVerzicht>
+
+
 }

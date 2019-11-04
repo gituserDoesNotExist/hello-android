@@ -14,4 +14,8 @@ class ChocolateViewModel {
         daysWithoutChocolate.set(valueDaysWithoutChocolate)
     }
 
+    fun wasDaysWithoutChocolateAlreadyIncresedToday() {
+
+    }
+
 }

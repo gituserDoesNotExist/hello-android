@@ -13,4 +13,10 @@ class ChocolateActivity : AppCompatActivity() {
         val chocolateViewModel = ChocolateViewModel()
         binding.chocolateViewModel = chocolateViewModel
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        println("resuming activity")
+    }
 }

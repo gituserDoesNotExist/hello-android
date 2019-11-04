@@ -17,5 +17,16 @@ class HelloTypeConverters {
         return LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME)
     }
 
+    @TypeConverter
+    fun fromLebensmittelType(value: LebensmittelType): String {
+        return value.lebensmittelName
+    }
+
+    @TypeConverter
+    fun toLebensmittelType(value: String): LebensmittelType{
+        return LebensmittelType.fromLebensmittelName(value)
+    }
+
+
 
 }
