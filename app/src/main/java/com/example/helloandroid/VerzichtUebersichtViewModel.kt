@@ -3,12 +3,25 @@ package com.example.helloandroid
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.helloandroid.persistence.Verzicht
-import com.example.helloandroid.persistence.VerzichtDao
+import com.example.helloandroid.persistence.VerzichtRepository
 
-class VerzichtUebersichtViewModel(verzichtDao: VerzichtDao) : ViewModel() {
+class VerzichtUebersichtViewModel(verzichtRepository: VerzichtRepository) : ViewModel() {
 
-    private lateinit var verzichte: LiveData<List<Verzicht>>
+    private val verzichtRepository = verzichtRepository
+    lateinit var verzichteLiveData: LiveData<List<Verzicht>>
+        private set
 
+    fun initializeByLoadingAllVerzichte() {
+        verzichteLiveData = verzichtRepository.findAllVerzichte()
+    }
+
+    fun saveVerzicht(verzicht: Verzicht) {
+        verzichtRepository.saveVerzicht(verzicht)
+    }
+
+    fun deleteVerzicht(verzicht: Verzicht) {
+        verzichtRepository.deleteVerzicht(verzicht)
+    }
 
 
 }

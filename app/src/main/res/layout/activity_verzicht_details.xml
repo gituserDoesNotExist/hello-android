@@ -34,7 +34,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:onClick="increaseDaysWithoutChocolateByOneDay"
-            android:text="@string/title_button_add_day"
+            android:text="@string/label_btn_add_day_to_verzicht"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

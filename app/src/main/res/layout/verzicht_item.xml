@@ -22,12 +22,15 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-    <Button
+    <ImageButton
+            android:id="@+id/btn_delete_verzicht"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_verzicht" />
+
+    <ImageButton
             android:id="@+id/btn_open_verzicht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="Click me"
-            android:textSize="20dp" />
-
+            android:src="@drawable/open_verzicht" />
 </LinearLayout>

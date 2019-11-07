@@ -16,7 +16,6 @@ class VerzichtDetailsActivity : AppCompatActivity() {
         private const val ERROR_NO_VERZICHT = "Es wurde kein Name eingegeben, Activity kann nicht gestartet werden"
     }
 
-    private lateinit var verzichtService: VerzichtService
     private lateinit var verzichtDetailsViewModel: VerzichtDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,15 +25,16 @@ class VerzichtDetailsActivity : AppCompatActivity() {
         val verzichtName = extractVerzichtName()
         verzichtName ?: throw TypeNotFoundException(ERROR_NO_VERZICHT)
 
-        verzichtService = VerzichtService(AppDatabase.getDb(this).verzichtDao())
-        verzichtDetailsViewModel = ViewModelProviders.of(this).get(VerzichtDetailsViewModel::class.java)
+        val verzichtDao = AppDatabase.getDb(this).verzichtDao()
+        verzichtDetailsViewModel =
+            ViewModelProviders.of(this, VerzichtViewModelFactory(application)).get(VerzichtDetailsViewModel::class.java)
 
-        val verzichtLiveData = verzichtService.findByVerzichtNameLiveData(verzichtName)
+        verzichtDetailsViewModel.findByVerzichtName(verzichtName)
+        val verzichtLiveData = verzichtDetailsViewModel.getCurrentVerzicht()
         val verzichtObserver = Observer<Verzicht> { verzicht ->
-            verzichtDetailsViewModel.currentVerzichtId = verzicht.id
             updateDescription(verzicht)
         }
-        verzichtLiveData.observe(this,verzichtObserver)
+        verzichtLiveData.observe(this, verzichtObserver)
     }
 
     private fun extractVerzichtName(): String? {
@@ -42,16 +42,14 @@ class VerzichtDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateDescription(verzicht: Verzicht) {
-        val descriptionVerzichtDetails: String = resources.getString(R.string.verzicht_details_message,verzicht.verzichtName)
+        val descriptionVerzichtDetails: String =
+            resources.getString(R.string.verzicht_details_message, verzicht.verzichtName)
         findViewById<TextView>(R.id.description_verzicht_details).text = descriptionVerzichtDetails
         findViewById<TextView>(R.id.verzicht_duration).text = verzicht.days.toString()
     }
 
     fun increaseDaysWithoutChocolateByOneDay(view: View) {
-        verzichtService.increaseDaysWithoutChocolateByOneDay(verzichtDetailsViewModel.currentVerzichtId)
-        verzichtService.findVerzichtById(verzichtDetailsViewModel.currentVerzichtId)
-
-
+        verzichtDetailsViewModel.increaseVerzichtDurationByOneDay()
     }
 
     private fun updateVerzichtDuration(duration: String) {

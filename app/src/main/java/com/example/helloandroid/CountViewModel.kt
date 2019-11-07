@@ -3,7 +3,7 @@ package com.example.helloandroid
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CounterViewModel : ViewModel() {
+class CountViewModel : ViewModel() {
 
     lateinit var counterLiveData: MutableLiveData<Int>
 
