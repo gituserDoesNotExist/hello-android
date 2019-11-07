@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = arrayOf(LebensmittelVerzicht::class),version = 1)
+@Database(entities = [ Verzicht::class ],version = 1)
 @TypeConverters(HelloTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun lebensmittelVerzichtDao(): LebensmittelVerzichtDao
+
+    abstract fun verzichtDao(): VerzichtDao
 
     companion object {
         private const val DATABASE_NAME = "APP_DATABASE"

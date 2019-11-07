@@ -2,5 +2,12 @@
     <string name="app_name">HelloAndroid</string>
     <string name="hello_world_text">0</string>
     <string name="title_start_verzicht_activity_button">Verzicht</string>
-    <string name="title_button_verzicht_add_day">Tag hinzufuegen</string>
+    <string name="title_button_add_day">Add day...</string>
+    <string name="title_verzicht_activity">Uebersicht Ihrer Verzichte</string>
+    <string name="text_new_verzicht_button">Neuen Verzicht anlegen"</string>
+    <string name="title_activity_add_verzicht">AddVerzichtActivity</string>
+    <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
+    <string name="description_add_verzicht_name">Name</string>
+    <string name="text_btn_save_verzicht">Speichern</string>
+    <string name="verzicht_details_message">Tage die Sie auf %1$s verzichtet haben</string>
 </resources>
