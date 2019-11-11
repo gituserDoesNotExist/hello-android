@@ -25,5 +25,7 @@ interface VerzichtDao {
     @Query("SELECT * FROM VERZICHT")
     fun getAll(): LiveData<List<Verzicht>>
 
+    @Query("SELECT * FROM VERZICHT")
+    fun getAllTest(): List<Verzicht>
 
 }

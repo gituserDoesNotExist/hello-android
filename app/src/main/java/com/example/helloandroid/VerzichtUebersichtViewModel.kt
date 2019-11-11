@@ -15,6 +15,10 @@ class VerzichtUebersichtViewModel(verzichtRepository: VerzichtRepository) : View
         verzichteLiveData = verzichtRepository.findAllVerzichte()
     }
 
+    fun findAllVerzichte() : List<Verzicht> {
+        return verzichtRepository.findAllVerzichteTest()
+    }
+
     fun saveVerzicht(verzicht: Verzicht) {
         verzichtRepository.saveVerzicht(verzicht)
     }

@@ -20,19 +20,6 @@ class VerzichtUebersichtActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verzicht_uebersicht)
-
-        val verzichtListView = findViewById<ListView>(R.id.list_view)
-        viewModel = of(this, VerzichtViewModelFactory(application)).get(VerzichtUebersichtViewModel::class.java)
-        viewModel.initializeByLoadingAllVerzichte()
-
-
-        val verzichteObserver = Observer<List<Verzicht>> {
-            if (it.isEmpty()) {
-                verzichtListView.visibility = ListView.INVISIBLE
-            }
-            verzichtListView.adapter = VerzichtArrayAdapter(this, it, Consumer { t -> viewModel.deleteVerzicht(t) })
-        }
-        viewModel.verzichteLiveData.observe(this, verzichteObserver)
     }
 
     fun createNewVerzicht(view: View) {

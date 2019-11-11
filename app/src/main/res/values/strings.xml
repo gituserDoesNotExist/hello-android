@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">HelloAndroid</string>
 
-<!--    button titles-->
+    <!--    button titles-->
     <string name="label_btn_start_verzicht_activity">Verzicht</string>
     <string name="label_btn_start_count_activity">Count it!</string>
+    <string name="label_btn_start_fragment_activity">Frgmt</string>
+
     <string name="label_btn_add_day_to_verzicht">Add day...</string>
     <string name="label_btn_new_verzicht">Neuen Verzicht anlegen"</string>
     <string name="label_btn_save_verzicht">Speichern</string>
+
 
     <!--    titles-->
     <string name="title_verzicht_activity">Uebersicht Ihrer Verzichte</string>
@@ -15,4 +18,8 @@
 
     <string name="description_add_verzicht_name">Name</string>
     <string name="verzicht_details_message">Tage die Sie auf %1$s verzichtet haben</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

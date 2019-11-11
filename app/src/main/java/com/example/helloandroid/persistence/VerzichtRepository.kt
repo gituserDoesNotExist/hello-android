@@ -27,4 +27,8 @@ class VerzichtRepository(verzichtDao: VerzichtDao) : ViewModel() {
     fun deleteVerzicht(verzicht: Verzicht) {
         Thread { verzichtDao.deleteVerzicht(verzicht) }.start()
     }
+
+    fun findAllVerzichteTest(): List<Verzicht> {
+        return verzichtDao.getAllTest()
+    }
 }

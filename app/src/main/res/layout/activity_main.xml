@@ -8,7 +8,12 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
     <TextView
             android:id="@+id/title_main_activity"
             android:layout_width="wrap_content"
@@ -22,32 +27,55 @@
 
     <Button
             android:id="@+id/btn_start_verzicht_activity"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
             android:background="@color/buttonBackground"
             android:onClick="startVerzicht"
-            android:text="@string/label_btn_start_verzicht_activity"
-            android:textSize="30dip"
             android:padding="10dip"
-            app:layout_constraintEnd_toStartOf="@id/btn_start_count_activity"
+            android:text="@string/label_btn_start_verzicht_activity"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_main_activity" />
 
 
     <Button
             android:id="@+id/btn_start_count_activity"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
             android:background="@color/buttonBackground"
-            android:textSize="30dip"
-            android:padding="10dip"
             android:onClick="startCount"
+            android:padding="10dip"
             android:text="@string/label_btn_start_count_activity"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_start_verzicht_activity"
+            app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/title_main_activity" />
+
+    <Button
+            android:id="@+id/btn_start_fragment_activity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/buttonBackground"
+            android:onClick="startFragmentPlayground"
+            android:padding="10dip"
+            android:text="@string/label_btn_start_fragment_activity"
+            android:textSize="30dip"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_count_activity" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,22 +16,34 @@
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
             android:text="@string/title_verzicht_activity"
+            android:textColor="@android:color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-            android:id="@+id/list_view"
+    <!--    <ListView-->
+    <!--            android:id="@+id/list_view"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dip"-->
+    <!--            android:layout_marginTop="40dp"-->
+    <!--            android:background="@color/colorPrimaryDark"-->
+    <!--            android:scrollbars="vertical"-->
+    <!--            app:layout_constraintBottom_toTopOf="@+id/btn_home"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/new_verzicht_button" />-->
+
+    <fragment
+            android:id="@+id/menu_fragment"
+            class="com.example.helloandroid.verzicht.VerzichtListFragment"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginTop="40dp"
-            android:background="@color/colorPrimaryDark"
-            android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/btn_home"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/new_verzicht_button" />
+
 
     <EditText
             android:id="@+id/input_new_verzicht_name"

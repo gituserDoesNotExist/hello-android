@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.helloandroid.IntentKeys
 import com.example.helloandroid.R
 import com.example.helloandroid.VerzichtDetailsActivity
 import com.example.helloandroid.persistence.Verzicht
 import java.util.function.Consumer
 
-class VerzichtArrayAdapter constructor(context: Context, verzichte: List<Verzicht>, deleteConsumer: Consumer<Verzicht>) :
+class VerzichtArrayAdapter constructor(
+    context: Context,
+    verzichte: List<Verzicht>,
+    deleteConsumer: Consumer<Verzicht>
+) :
     ArrayAdapter<Verzicht>(context, 0, verzichte) {
 
     private val deleteConsumer = deleteConsumer
@@ -45,8 +50,6 @@ class VerzichtArrayAdapter constructor(context: Context, verzichte: List<Verzich
         intent.putExtra(IntentKeys.VERZICHT_NAME.name, currentVerzicht?.verzichtName)
         return intent
     }
-
-
 
 
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     fun startCount(currentView: View) {
         startActivity(Intent(this,CountActivity::class.java))
+    }
+
+    fun startFragmentPlayground(currentView: View) {
+        startActivity(Intent(this,FunWithFragmentsActivity::class.java))
     }
 
 
