@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
+import com.example.helloandroid.verzicht.VerzichtUebersichtActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startVerzicht(currentView: View) {
-        startActivity(Intent(this,VerzichtUebersichtActivity::class.java))
+        startActivity(Intent(this, VerzichtUebersichtActivity::class.java))
     }
 
     fun startCount(currentView: View) {

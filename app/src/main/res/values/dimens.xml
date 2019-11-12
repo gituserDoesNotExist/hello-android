@@ -1,3 +1,11 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+<!--    dashboard-->
+    <dimen name="btn_margin_left_right">24dip</dimen>
+    <dimen name="btn_margin_top_bottom">10dip</dimen>
+
+
+    <dimen name="edit_verzicht_txt_size">30dip</dimen>
+    <dimen name="edit_verzicht_verzicht_info_size">60dip</dimen>
 </resources>

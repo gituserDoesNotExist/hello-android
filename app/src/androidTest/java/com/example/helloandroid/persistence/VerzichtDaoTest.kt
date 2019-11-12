@@ -26,7 +26,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testInsertVerzicht_IdSet_KeepsId() {
-        val verzicht = Verzicht(VERZICHT_NAME,0, TIMESTAMP_TODAY)
+        val verzicht = Verzicht(VERZICHT_NAME, 0)
         verzicht.id = VERZICHT_ID
         val id = verzichtDao.insertVerzicht(verzicht)
 
@@ -38,7 +38,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testInsertVerzicht_NoIdGiven_GeneratesId() {
-        val id = verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME, 0, TIMESTAMP_TODAY))
+        val id = verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME, 0))
 
         assertThat(id).isNotNull()
         assertThat(verzichtDao.findById(id).timestampDayAdded).isEqualTo(TIMESTAMP_TODAY)
@@ -46,7 +46,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testInsertVerzicht_VerzichtWithIdAlreadyExists_ThrowsException() {
-        val verzicht = Verzicht(VERZICHT_NAME,0, TIMESTAMP_TODAY)
+        val verzicht = Verzicht(VERZICHT_NAME, 0)
         verzicht.id = VERZICHT_ID
         verzichtDao.insertVerzicht(verzicht)
 
@@ -60,7 +60,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testUpdateVerzicht_SameId_UpdatesEntity() {
-        val verzicht = Verzicht(VERZICHT_NAME,0, TIMESTAMP_TODAY)
+        val verzicht = Verzicht(VERZICHT_NAME, 0)
         verzicht.id = VERZICHT_ID
         verzichtDao.insertVerzicht(verzicht)
 
@@ -77,7 +77,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testFindById() {
-        verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME,0, TIMESTAMP_TODAY))
+        verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME, 0))
 
         val verzichte = verzichtDao.findAll()
 
@@ -93,7 +93,7 @@ class VerzichtDaoTest {
 
     @Test
     fun testFindByLebensmittelType() {
-        verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME,0, TIMESTAMP_TODAY))
+        verzichtDao.insertVerzicht(Verzicht(VERZICHT_NAME, 0))
 
         val result = verzichtDao.findByName(VERZICHT_NAME)
 

@@ -5,21 +5,22 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import java.time.LocalDateTime
+import java.util.*
 
 class HelloTypeConvertersTest {
 
     private val converter: HelloTypeConverters = HelloTypeConverters()
 
     @Test
-    fun fromLocalDateTime() {
-        val result = converter.fromLocalDateTime(SOME_LOCAL_DATE_TIME)
+    fun testFromLocalDateTime() {
+        val result = converter.fromLocalDateTime(Optional.of(SOME_LOCAL_DATE_TIME))
 
         assertThat(result, equalTo(SOME_TIME_STRING))
     }
 
     @Test
-    fun toLocalDateTime() {
-        val result = converter.toLocalDateTime(SOME_TIME_STRING)
+    fun testToLocalDateTime() {
+        val result = converter.toLocalDateTime(SOME_TIME_STRING).get()
 
         assertThat(result, equalTo(SOME_LOCAL_DATE_TIME))
     }

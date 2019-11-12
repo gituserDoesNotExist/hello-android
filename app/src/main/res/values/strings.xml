@@ -4,7 +4,7 @@
     <!--    button titles-->
     <string name="label_btn_start_verzicht_activity">Verzicht</string>
     <string name="label_btn_start_count_activity">Count it!</string>
-    <string name="label_btn_start_fragment_activity">Frgmt</string>
+    <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
 
     <string name="label_btn_add_day_to_verzicht">Add day...</string>
     <string name="label_btn_new_verzicht">Neuen Verzicht anlegen"</string>
@@ -12,12 +12,12 @@
 
 
     <!--    titles-->
-    <string name="title_verzicht_activity">Uebersicht Ihrer Verzichte</string>
+    <string name="title_verzicht_activity">You must </string>
     <string name="title_count_activity">CountActivity</string>
     <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
 
     <string name="description_add_verzicht_name">Name</string>
-    <string name="verzicht_details_message">Tage die Sie auf %1$s verzichtet haben</string>
+    <string name="verzicht_details_message">Tage auf %1$s verzichtet!</string>
     <string name="title_activity_fragment">FragmentActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -1,19 +1,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1.0">
 
-    <fragment
-            android:layout_height="match_parent"
+    <LinearLayout
             android:layout_width="match_parent"
-            class="com.example.helloandroid.fragmentsht.MenuFragment"
-            android:id="@+id/menu_fragment"
-            android:layout_weight="0.5"/>
-    <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.example.helloandroid.fragmentsht.TextFragment"
-            android:id="@+id/text_fragment"
-            android:layout_weight="0.5"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
+
+        <fragment
+                android:id="@+id/menu_fragment"
+                class="com.example.helloandroid.fragmentsht.MenuFragment"
+                android:layout_width="231dp"
+                android:layout_height="200dp" />
+
+        <fragment
+                android:id="@+id/text_fragment"
+                class="com.example.helloandroid.fragmentsht.TextFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Below is shit for passing data" />
+
+        <FrameLayout
+                android:id="@+id/input_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        <FrameLayout
+                android:id="@+id/output_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+    </LinearLayout>
+
 </LinearLayout>

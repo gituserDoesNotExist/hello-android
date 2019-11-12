@@ -1,4 +1,4 @@
-package com.example.helloandroid
+package com.example.helloandroid.verzicht
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

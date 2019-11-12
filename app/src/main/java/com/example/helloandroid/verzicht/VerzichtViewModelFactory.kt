@@ -1,10 +1,9 @@
-package com.example.helloandroid
+package com.example.helloandroid.verzicht
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.helloandroid.persistence.AppDatabase
-import com.example.helloandroid.persistence.VerzichtDao
 import com.example.helloandroid.persistence.VerzichtRepository
 
 /** Factory um ViewModels anzulegen, welche das VerzichtDao benoetigen */

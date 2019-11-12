@@ -12,6 +12,10 @@ class VerzichtRepository(verzichtDao: VerzichtDao) : ViewModel() {
         return verzichtDao.getByName(name)
     }
 
+    fun findById(id: Long): LiveData<Verzicht> {
+        return verzichtDao.getById(id)
+    }
+
     fun findAllVerzichte(): LiveData<List<Verzicht>> {
         return verzichtDao.getAll()
     }
