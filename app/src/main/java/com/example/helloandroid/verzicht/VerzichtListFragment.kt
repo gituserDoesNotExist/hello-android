@@ -12,8 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.*
 
-import com.example.helloandroid.persistence.Verzicht
-import com.example.helloandroid.presentation.VerzichtArrayAdapter
+import com.example.helloandroid.verzicht.persistence.Verzicht
 import java.util.function.Consumer
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager

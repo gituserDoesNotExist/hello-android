@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.helloandroid.persistence.AppDatabase
-import com.example.helloandroid.persistence.VerzichtRepository
+import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 
 /** Factory um ViewModels anzulegen, welche das VerzichtDao benoetigen */
 class VerzichtViewModelFactory(context: Context) : ViewModelProvider.Factory {

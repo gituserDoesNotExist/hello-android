@@ -1,4 +1,4 @@
-package com.example.helloandroid.presentation
+package com.example.helloandroid.verzicht
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.helloandroid.R
-import com.example.helloandroid.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.Verzicht
 import java.util.function.Consumer
 
 class VerzichtArrayAdapter constructor(

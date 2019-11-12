@@ -1,7 +1,7 @@
 package com.example.helloandroid.verzicht
 
-import com.example.helloandroid.persistence.Verzicht
-import com.example.helloandroid.persistence.VerzichtRepository
+import com.example.helloandroid.verzicht.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith

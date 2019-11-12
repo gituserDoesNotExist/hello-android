@@ -1,7 +1,9 @@
-package com.example.helloandroid.persistence
+package com.example.helloandroid.verzicht.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.helloandroid.verzicht.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.VerzichtDao
 
 
 class VerzichtRepository(verzichtDao: VerzichtDao) : ViewModel() {

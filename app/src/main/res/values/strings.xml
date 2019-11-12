@@ -5,10 +5,12 @@
     <string name="label_btn_start_verzicht_activity">Verzicht</string>
     <string name="label_btn_start_count_activity">Count it!</string>
     <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
+    <string name="label_btn_start_finances_activity">Finances</string>
 
     <string name="label_btn_add_day_to_verzicht">Add day...</string>
     <string name="label_btn_new_verzicht">Neuen Verzicht anlegen"</string>
     <string name="label_btn_save_verzicht">Speichern</string>
+    <string name="label_btn_neuer_posten">Neuer Posten</string>
 
 
     <!--    titles-->
@@ -19,7 +21,8 @@
     <string name="description_add_verzicht_name">Name</string>
     <string name="verzicht_details_message">Tage auf %1$s verzichtet!</string>
     <string name="title_activity_fragment">FragmentActivity</string>
+    <string name="txt_finances_activity_total_amount">Money spent so far:</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

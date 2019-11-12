@@ -1,8 +1,8 @@
-package com.example.helloandroid.persistence
+package com.example.helloandroid.verzicht.persistence
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import com.example.helloandroid.verzicht.persistence.Verzicht
 
 @Dao
 interface VerzichtDao {

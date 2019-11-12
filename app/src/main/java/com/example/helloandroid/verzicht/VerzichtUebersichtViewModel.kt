@@ -2,8 +2,8 @@ package com.example.helloandroid.verzicht
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloandroid.persistence.Verzicht
-import com.example.helloandroid.persistence.VerzichtRepository
+import com.example.helloandroid.verzicht.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 
 class VerzichtUebersichtViewModel(verzichtRepository: VerzichtRepository) : ViewModel() {
 

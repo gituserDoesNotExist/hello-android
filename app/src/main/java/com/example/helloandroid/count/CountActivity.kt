@@ -1,15 +1,14 @@
-package com.example.helloandroid
+package com.example.helloandroid.count
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
-import kotlinx.android.synthetic.main.activity_count.*
+import com.example.helloandroid.MainActivity
+import com.example.helloandroid.R
 
 class CountActivity : AppCompatActivity() {
 
@@ -31,7 +30,7 @@ class CountActivity : AppCompatActivity() {
     }
 
     fun openMainActivity(view: View) {
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
 }

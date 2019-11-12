@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.helloandroid.verzicht.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.VerzichtDao
 
 @Database(entities = [Verzicht::class], version = 1)
 @TypeConverters(HelloTypeConverters::class)

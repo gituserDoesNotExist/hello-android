@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
+import com.example.helloandroid.verzicht.persistence.Verzicht
+import com.example.helloandroid.verzicht.persistence.VerzichtDao
 import org.assertj.core.api.Assertions.*
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThat

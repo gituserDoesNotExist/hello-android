@@ -1,8 +1,9 @@
-package com.example.helloandroid.persistence
+package com.example.helloandroid.verzicht.persistence
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
+import com.example.helloandroid.persistence.BaseEntity
 import java.time.LocalDateTime
 import java.util.*
 

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.example.helloandroid">
-
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,8 +14,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".finances.FinancesActivity"></activity>
         <activity android:name=".fragmentsht.FunWithFragmentsActivity" />
-        <activity android:name=".CountActivity" />
+        <activity android:name=".count.CountActivity" />
         <activity android:name=".verzicht.VerzichtUebersichtActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

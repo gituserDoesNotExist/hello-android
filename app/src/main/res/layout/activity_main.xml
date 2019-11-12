@@ -73,6 +73,20 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left" />
 
+    <Button
+            android:id="@+id/btn_start_finances_activity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:background="@color/buttonBackgroundOrange"
+            android:onClick="startFincancesActivity"
+            android:padding="10dip"
+            android:text="@string/label_btn_start_finances_activity"
+            android:textAllCaps="false"
+            android:textSize="30dip"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
