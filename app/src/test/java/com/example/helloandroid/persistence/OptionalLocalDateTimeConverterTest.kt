@@ -7,9 +7,9 @@ import org.junit.Assert.*
 import java.time.LocalDateTime
 import java.util.*
 
-class HelloTypeConvertersTest {
+class LocalDateTimeConverterTest {
 
-    private val converter: HelloTypeConverters = HelloTypeConverters()
+    private val converter: LocalDateTimeConverter = LocalDateTimeConverter()
 
     @Test
     fun testFromLocalDateTime() {
