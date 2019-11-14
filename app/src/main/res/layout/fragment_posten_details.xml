@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:text="@string/title_posten_details_fragment"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_of_table"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
             android:layout_height="0dip"
             android:background="@color/colorYellowLight"
             android:scrollbars="vertical"
-            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom_of_table"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_top" />
@@ -37,11 +37,22 @@
             app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_bottom"
+            android:id="@+id/guideline_bottom_of_table"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.7" />
+
+    <Button
+            android:id="@+id/btn_new_ausgabe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Neue Ausgabe erfassen"
+            android:drawableLeft="@drawable/neue_ausgabe_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline_bottom_of_table" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

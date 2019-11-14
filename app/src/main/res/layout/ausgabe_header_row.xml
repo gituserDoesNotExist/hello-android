@@ -4,6 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="4dip"
         android:weightSum="1">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +15,7 @@
 
 
         <TextView
-                android:id="@+id/ausgabe_item_datum"
+                android:id="@+id/ausgabe_header_row_datum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
@@ -22,7 +23,7 @@
                 android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/ausgabe_item_wert"
+                android:id="@+id/ausgabe_header_rowdatum_wert"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
@@ -30,7 +31,7 @@
                 android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/ausgabe_item_beschreibung"
+                android:id="@+id/ausgabe_header_rowdatum_beschreibung"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"

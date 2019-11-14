@@ -3,29 +3,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:orientation="vertical"
+        android:padding="4dip">
 
-
-    <TextView
-            android:id="@+id/ausgabe_item_datum"
-            android:layout_width="0dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4" />
+            android:orientation="horizontal"
+            android:weightSum="1">
 
 
-    <TextView
-            android:id="@+id/ausgabe_item_wert"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="1" />
+        <TextView
+                android:id="@+id/ausgabe_item_datum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4" />
 
-    <TextView
-            android:id="@+id/ausgabe_item_beschreibung"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.4"
-            android:text="egal" />
+
+        <TextView
+                android:id="@+id/ausgabe_item_wert"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="1" />
+
+        <TextView
+                android:id="@+id/ausgabe_item_beschreibung"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="egal" />
+
+    </LinearLayout>
 
 </LinearLayout>

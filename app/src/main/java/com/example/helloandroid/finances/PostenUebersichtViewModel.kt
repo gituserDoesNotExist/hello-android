@@ -7,7 +7,7 @@ import com.example.helloandroid.finances.persistence.FinancesRepository
 import com.example.helloandroid.finances.persistence.Posten
 import java.math.BigDecimal
 
-class AusgabenUebersichtViewModel(financesRepository: FinancesRepository) : ViewModel() {
+class PostenUebersichtViewModel(financesRepository: FinancesRepository) : ViewModel() {
 
     private val financesRepository = financesRepository
     lateinit var allPosten: LiveData<List<Posten>>

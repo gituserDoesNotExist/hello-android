@@ -8,12 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TableLayout
+import android.widget.*
 import android.widget.TableLayout.*
-import android.widget.TableRow
 import android.widget.TableRow.LayoutParams.*
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,11 +22,14 @@ class PostenDetailsFragment : Fragment() {
 
     private lateinit var postenDetailsViewModel: PostenDetailsViewModel
     private lateinit var sharedPostenViewModel: SharedPostenViewModel
-    private lateinit var dataTable: TableLayout
+    private lateinit var btnNewAusgabe: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_posten_details, container, false)
+
+        btnNewAusgabe = rootView.findViewById(R.id.btn_new_ausgabe)
+        btnNewAusgabe.setOnClickListener { openNewAusgabeDialog() }
 
         activity?.let {
             sharedPostenViewModel = ViewModelProviders.of(it).get(SharedPostenViewModel::class.java)
@@ -46,6 +46,19 @@ class PostenDetailsFragment : Fragment() {
         }
 
         return rootView
+    }
+
+    private fun openNewAusgabeDialog() {
+        activity?.let {
+            val transaction = it.supportFragmentManager.beginTransaction()
+            val prev = it.supportFragmentManager.findFragmentByTag("ausgabe_dialog")
+            if (prev != null) {
+                transaction.remove(prev)
+            }
+            transaction.addToBackStack(null)
+            val addPostenDialog = AddAusgabeDialog()
+            addPostenDialog.show(transaction, "ausgabe_dialog")
+        }
     }
 
     private fun anzeigeTextForPostenname(it: FragmentActivity): String {

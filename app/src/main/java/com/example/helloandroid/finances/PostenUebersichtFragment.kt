@@ -15,16 +15,16 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.R
 import java.util.function.Consumer
 
-class AusgabenUebersichtFragment : Fragment() {
+class PostenUebersichtFragment : Fragment() {
 
-    private lateinit var ausgabenUebersichtViewModel: AusgabenUebersichtViewModel
+    private lateinit var postenUebersichtViewModel: PostenUebersichtViewModel
     private lateinit var sharedPostenViewModel: SharedPostenViewModel
     private lateinit var gesamtausgaben: TextView
     private lateinit var btnNewPosten: Button
     lateinit var openFragmentCallback: PostenDetailsFragmentOpener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val roowView = inflater.inflate(R.layout.fragment_ausgaben_uebersicht, container, false)
+        val roowView = inflater.inflate(R.layout.fragment_posten_uebersicht, container, false)
 
         gesamtausgaben = roowView.findViewById(R.id.txt_finances_total_amount)
         btnNewPosten = roowView.findViewById(R.id.btn_open_new_posten_dialog)
@@ -32,11 +32,11 @@ class AusgabenUebersichtFragment : Fragment() {
 
         activity?.let { fragmentActivity ->
             sharedPostenViewModel = ViewModelProviders.of(fragmentActivity).get(SharedPostenViewModel::class.java)
-            ausgabenUebersichtViewModel =
+            postenUebersichtViewModel =
                 ViewModelProviders.of(fragmentActivity, FinancesViewModelFactory(fragmentActivity.application))
-                    .get(AusgabenUebersichtViewModel::class.java)
-            ausgabenUebersichtViewModel.initializeByFindingAllPosten()
-            gesamtausgaben.text = ausgabenUebersichtViewModel.calculateGesamtausgaben().toString()
+                    .get(PostenUebersichtViewModel::class.java)
+            postenUebersichtViewModel.initializeByFindingAllPosten()
+            gesamtausgaben.text = postenUebersichtViewModel.calculateGesamtausgaben().toString()
 
             observePostenChanges(fragmentActivity, roowView)
 
@@ -55,12 +55,11 @@ class AusgabenUebersichtFragment : Fragment() {
             val addPostenDialog = AddPostenDialog()
             addPostenDialog.show(transaction, "dialog")
         }
-
     }
 
     private fun observePostenChanges(fragmentActivity: FragmentActivity, roowView: View) {
         val listView = roowView.findViewById<ListView>(R.id.testit)
-        ausgabenUebersichtViewModel.allPosten.observe(fragmentActivity, Observer { posten ->
+        postenUebersichtViewModel.allPosten.observe(fragmentActivity, Observer { posten ->
             listView.adapter =
                 PostenArrayAdapter(fragmentActivity, posten, Consumer {
                     sharedPostenViewModel.currentPosten = it

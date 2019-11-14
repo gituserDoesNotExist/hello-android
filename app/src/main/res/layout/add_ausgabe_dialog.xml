@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dip"
+        android:stretchColumns="1">
+    <TableRow>
+        <TextView
+                android:text="Datum"
+                android:textSize="20sp"
+                android:padding="3dip" />
+        <EditText
+                android:id="@+id/add_ausgabe_datum"
+                android:gravity="left"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:text="Wert"
+                android:textSize="20sp"
+                android:padding="3dip" />
+        <EditText
+                android:id="@+id/add_ausgabe_wert"
+                android:hint="23.54"
+                android:gravity="left"
+                android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView
+                android:text="Beschreibung"
+                android:textSize="20sp"
+                android:padding="3dip" />
+        <EditText
+                android:id="@+id/add_ausgabe_description"
+                android:gravity="left"
+                android:padding="3dip" />
+    </TableRow>
+</TableLayout>

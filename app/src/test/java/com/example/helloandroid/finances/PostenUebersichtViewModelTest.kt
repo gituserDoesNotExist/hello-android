@@ -13,10 +13,10 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @RunWith(MockitoJUnitRunner::class)
-class AusgabenUebersichtViewModelTest {
+class PostenUebersichtViewModelTest {
 
     @InjectMocks
-    private lateinit var testCandidate: AusgabenUebersichtViewModel
+    private lateinit var testCandidate: PostenUebersichtViewModel
 
     @Mock
     private lateinit var postenRepository: FinancesRepository

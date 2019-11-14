@@ -22,7 +22,7 @@ class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_HEADER) {
-            HeaderViewHolder(inflate(R.layout.ausgabe_item, parent))
+            HeaderViewHolder(inflate(R.layout.ausgabe_header_row, parent))
         } else {
             ItemViewHolder(inflate(R.layout.ausgabe_item, parent))
         }
@@ -66,8 +66,8 @@ class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) :
     }
 
     class HeaderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val datumTextView: TextView = itemView.findViewById(R.id.ausgabe_item_datum)
-        val wertTextView: TextView = itemView.findViewById(R.id.ausgabe_item_wert)
-        val beschreibungTextView: TextView = itemView.findViewById(R.id.ausgabe_item_beschreibung)
+        val datumTextView: TextView = itemView.findViewById(R.id.ausgabe_header_row_datum)
+        val wertTextView: TextView = itemView.findViewById(R.id.ausgabe_header_rowdatum_wert)
+        val beschreibungTextView: TextView = itemView.findViewById(R.id.ausgabe_header_rowdatum_beschreibung)
     }
 }

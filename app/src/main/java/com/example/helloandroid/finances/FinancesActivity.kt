@@ -4,16 +4,15 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.example.helloandroid.R
 
-class FinancesActivity : FragmentActivity(), AusgabenUebersichtFragment.PostenDetailsFragmentOpener {
+class FinancesActivity : FragmentActivity(), PostenUebersichtFragment.PostenDetailsFragmentOpener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances)
 
-        val ausgabenUebersichtFragment = AusgabenUebersichtFragment()
+        val ausgabenUebersichtFragment = PostenUebersichtFragment()
         ausgabenUebersichtFragment.openFragmentCallback = this
         supportFragmentManager.beginTransaction()//
             .add(R.id.fragment_container_ausgaben, ausgabenUebersichtFragment)//
-            .addToBackStack(null)//
             .commit()
     }
 

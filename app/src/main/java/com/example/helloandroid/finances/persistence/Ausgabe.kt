@@ -8,7 +8,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity(
-    tableName = "AUSGABE", foreignKeys = [ForeignKey(
+    tableName = "AUSGABE",indices = [Index(value = ["POSTEN_ID"])], foreignKeys = [ForeignKey(
         entity = Posten::class, parentColumns = arrayOf("ID"), childColumns = arrayOf("POSTEN_ID")
     )]
 )
