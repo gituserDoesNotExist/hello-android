@@ -8,7 +8,6 @@
     <string name="label_btn_start_finances_activity">Finances</string>
 
     <string name="label_btn_add_day_to_verzicht">Add day...</string>
-    <string name="label_btn_new_verzicht">Neuen Verzicht anlegen"</string>
     <string name="label_btn_save_verzicht">Speichern</string>
     <string name="label_btn_neuer_posten">Neuer Posten</string>
 
@@ -19,10 +18,10 @@
     <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
 
     <string name="description_add_verzicht_name">Name</string>
-    <string name="verzicht_details_message">Tage auf %1$s verzichtet!</string>
+    <string name="ausgaben_posten">%1$s €</string>
     <string name="title_activity_fragment">FragmentActivity</string>
-    <string name="txt_finances_activity_total_amount">Money spent so far:</string>
+    <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
 
 </resources>

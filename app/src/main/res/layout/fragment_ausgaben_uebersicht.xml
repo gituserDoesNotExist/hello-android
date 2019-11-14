@@ -8,35 +8,65 @@
         android:orientation="vertical"
         tools:context=".finances.AusgabenUebersichtFragment">
 
-    <TextView
-            android:id="@+id/txt_finances_money_spend_so_far"
-            android:layout_width="wrap_content"
+
+    <Button
+            android:id="@+id/btn_open_new_posten_dialog"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:text="@string/txt_finances_activity_total_amount"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toTopOf="@id/txt_finances_total_amount"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@color/buttonBackgroundOrange"
+            android:text="@string/label_btn_neuer_posten"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/testit" />
 
-    <TextView
-            android:id="@+id/txt_finances_total_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10"
-            android:textSize="80sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txt_finances_euro"
-            app:layout_constraintTop_toBottomOf="@id/txt_finances_money_spend_so_far" />
-
-    <TextView
-            android:id="@+id/txt_finances_euro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Euro"
-            android:textSize="80sp"
-            app:layout_constraintStart_toEndOf="@id/txt_finances_total_amount"
+    <ListView
+            android:id="@+id/testit"
+            android:layout_width="399dip"
+            android:layout_height="200dip"
+            android:background="@color/colorYellowLight"
+            android:layout_marginTop="20dip"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_finances_money_spend_so_far" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_open_new_posten_dialog" />
+
+    <LinearLayout
+            android:id="@+id/layout_gesamtausgaben"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/testit">
+
+        <TextView
+                android:id="@+id/txt_finances_money_spend_so_far"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="@string/txt_finances_activity_total_amount"
+                android:textSize="20sp" />
+
+        <TextView
+                android:id="@+id/txt_finances_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:layout_marginRight="5dip"
+                android:textSize="20sp" />
+
+        <TextView
+                android:id="@+id/txt_finances_euro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Euro"
+                android:textSize="20sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
+import java.time.LocalDateTime
+import java.util.*
 
 @RunWith(MockitoJUnitRunner::class)
 class VerzichtDetailsViewModelTest {
@@ -15,7 +17,9 @@ class VerzichtDetailsViewModelTest {
 
     @Test
     fun testWereDaysIncreasedToday_DaysWereIncreasedToday_ReturnsTrue() {
-        val verzichtUpdatedToday = Verzicht("egal", 0)
+        val verzichtUpdatedToday = Verzicht("egal")
+        verzichtUpdatedToday.timestampDayAdded = Optional.of(LocalDateTime.now())
+
 
         val result = testCandidate.wereDaysIncreasedToday(verzichtUpdatedToday)
 
@@ -24,9 +28,10 @@ class VerzichtDetailsViewModelTest {
 
     @Test
     fun testWereDaysIncreasedToday_DaysWereIncreasedYesterday_ReturnsFalse() {
-        val verzichtUpdatedToday = Verzicht("egal", 0)
+        val verzichtUpdatedYesterday = Verzicht("egal")
+        verzichtUpdatedYesterday.timestampDayAdded = Optional.of(LocalDateTime.now().minusDays(1))
 
-        val result = testCandidate.wereDaysIncreasedToday(verzichtUpdatedToday)
+        val result = testCandidate.wereDaysIncreasedToday(verzichtUpdatedYesterday)
 
         assertThat(result).isFalse()
     }

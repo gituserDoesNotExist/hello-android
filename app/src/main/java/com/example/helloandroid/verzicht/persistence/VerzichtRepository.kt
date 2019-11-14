@@ -6,7 +6,7 @@ import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
 
 
-class VerzichtRepository(verzichtDao: VerzichtDao) : ViewModel() {
+class VerzichtRepository(verzichtDao: VerzichtDao)  {
 
     private var verzichtDao = verzichtDao
 

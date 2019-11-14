@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class LocalDateTimeConverter {
+class OptionalLocalDateTimeConverter {
 
     @TypeConverter
     fun fromLocalDateTime(value: Optional<LocalDateTime>): String {

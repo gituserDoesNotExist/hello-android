@@ -7,20 +7,20 @@ import org.junit.Assert.*
 import java.time.LocalDateTime
 import java.util.*
 
-class LocalDateTimeConverterTest {
+class OptionalLocalDateTimeConverterTest {
 
-    private val converter: LocalDateTimeConverter = LocalDateTimeConverter()
+    private val converterOptional: OptionalLocalDateTimeConverter = OptionalLocalDateTimeConverter()
 
     @Test
     fun testFromLocalDateTime() {
-        val result = converter.fromLocalDateTime(Optional.of(SOME_LOCAL_DATE_TIME))
+        val result = converterOptional.fromLocalDateTime(Optional.of(SOME_LOCAL_DATE_TIME))
 
         assertThat(result, equalTo(SOME_TIME_STRING))
     }
 
     @Test
     fun testToLocalDateTime() {
-        val result = converter.toLocalDateTime(SOME_TIME_STRING).get()
+        val result = converterOptional.toLocalDateTime(SOME_TIME_STRING).get()
 
         assertThat(result, equalTo(SOME_LOCAL_DATE_TIME))
     }

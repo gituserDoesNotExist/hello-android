@@ -5,34 +5,65 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.helloandroid.finances.persistence.Ausgabe
+import com.example.helloandroid.finances.persistence.AusgabeDao
+import com.example.helloandroid.finances.persistence.Posten
+import com.example.helloandroid.finances.persistence.PostenDao
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
+import java.math.BigDecimal
+import java.time.LocalDateTime.*
+import java.util.concurrent.Executors
+import java.util.stream.Collectors
+import java.util.stream.IntStream
 
-@Database(entities = [Verzicht::class], version = 1)
-@TypeConverters(HelloTypeConverters::class)
+@Database(entities = [Verzicht::class, Posten::class, Ausgabe::class], version = 1)
+@TypeConverters(OptionalLocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun verzichtDao(): VerzichtDao
+
+    abstract fun postenDao(): PostenDao
+
+    abstract fun ausgabeDao(): AusgabeDao
 
     companion object {
         private const val DATABASE_NAME = "APP_DATABASE"
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getDb(context: Context): AppDatabase {
-            val tmpInstance = INSTANCE
-            if (tmpInstance != null) {
-                return tmpInstance
+        fun getDb(context: Context): AppDatabase =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
             }
-            synchronized(this) {
-                val instance =
-                    Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).allowMainThreadQueries()
-                        .build()
-                INSTANCE = instance
-                return instance
+
+        private fun buildDatabase(context: Context): AppDatabase {
+            val instance =
+                Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).allowMainThreadQueries()
+                    .addCallback(object : Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                            ioThread { prepopulateDatabase(context) }
+                        }
+                    })
+                    .build()
+            INSTANCE = instance
+            return instance
+        }
+
+        private fun prepopulateDatabase(context: Context) {
+            val postenId = getDb(context)?.postenDao()?.insertPosten(Posten("Lebensmittel"))
+            IntRange(1,60).forEach {
+                val ausgabe = Ausgabe(BigDecimal(it), "egal", now())
+                ausgabe.postenId = postenId!!
+                getDb(context)?.ausgabeDao()?.insertAusgabe(ausgabe)
             }
         }
+
+        private fun ioThread(runnable: () -> Unit) {
+            Executors.newSingleThreadExecutor().execute(runnable)
+        }
     }
-
-
 }

@@ -16,6 +16,7 @@ import com.example.helloandroid.verzicht.persistence.Verzicht
 import java.util.function.Consumer
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.FragmentActivity
 
 
 class VerzichtListFragment : ListFragment() {
@@ -24,12 +25,13 @@ class VerzichtListFragment : ListFragment() {
     private lateinit var sharedVerzichtViewModel: SharedVerzichtViewModel
     private lateinit var userInputNewVerzicht: EditText
     private lateinit var newVerzichtBtn: ImageButton
+    lateinit var openEditVerzichtFragmentCallback: EditVerzichtFragmentOpener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_verzicht_list, container, false)
 
         userInputNewVerzicht = rootView.findViewById(R.id.input_new_verzicht_name)
-        newVerzichtBtn = rootView.findViewById(R.id.new_verzicht_button)
+        newVerzichtBtn = rootView.findViewById(R.id.btn_new_verzicht)
         newVerzichtBtn.setOnClickListener {
             saveVerzicht()
             resetInputField()
@@ -41,7 +43,7 @@ class VerzichtListFragment : ListFragment() {
                     .get(VerzichtUebersichtViewModel::class.java)
             sharedVerzichtViewModel = ViewModelProviders.of(it).get(SharedVerzichtViewModel::class.java)
             viewModel.initializeByLoadingAllVerzichte()
-            viewModel.verzichteLiveData.observe(this, aVerzichtListObserver())
+            viewModel.verzichteLiveData.observe(this, aVerzichtListObserver(it))
 
         }
 
@@ -50,7 +52,7 @@ class VerzichtListFragment : ListFragment() {
 
     private fun saveVerzicht() {
         val verzichtName = userInputNewVerzicht.text.toString()
-        viewModel.saveVerzicht(Verzicht(verzichtName, 0))
+        viewModel.saveVerzicht(Verzicht(verzichtName))
     }
 
     private fun resetInputField() {
@@ -63,24 +65,23 @@ class VerzichtListFragment : ListFragment() {
         }
     }
 
-    private fun aVerzichtListObserver(): Observer<List<Verzicht>> {
+    private fun aVerzichtListObserver(activity: FragmentActivity): Observer<List<Verzicht>> {
         return Observer { verzichte ->
             listAdapter =
-                VerzichtArrayAdapter(activity!!, //
+                VerzichtArrayAdapter(activity, //
                     verzichte,//
                     Consumer { verzicht -> openEditVerzichtFragment(verzicht) },//
                     Consumer { t -> viewModel.deleteVerzicht(t) })
         }
     }
 
+    interface EditVerzichtFragmentOpener {
+        fun openEditVerzichtFragment()
+    }
+
     private fun openEditVerzichtFragment(currentVerzicht: Verzicht) {
         sharedVerzichtViewModel.currentVerzicht = currentVerzicht
-        activity?.let {
-            it.supportFragmentManager.beginTransaction()//
-                .replace(R.id.fragment_container_verzicht, EditVerzichtFragment())//
-                .addToBackStack("egal")
-                .commit()
-        }
+        openEditVerzichtFragmentCallback.openEditVerzichtFragment()
     }
 
 }

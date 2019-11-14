@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+        <TextView
+                android:id="@+id/ausgabe_item_datum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Datum"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/ausgabe_item_wert"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Wert"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/ausgabe_item_beschreibung"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Beschreibung"
+                android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+            android:layout_marginTop="5dip"
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:background="@color/black" />
+
+
+</LinearLayout>
