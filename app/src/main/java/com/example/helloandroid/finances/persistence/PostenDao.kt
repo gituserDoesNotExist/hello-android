@@ -9,14 +9,9 @@ import androidx.room.Query
 interface PostenDao {
 
     @Insert
-    fun insertPosten(posten: Posten) : Long
+    fun insertPosten(posten: PostenEntity) : Long
 
-    @Query("select * from posten p where p.ID = :id")
-    fun getById(id: Long) : Posten
+    @Query("select * from POSTEN_ENTITY p where p.ID = :id")
+    fun getById(id: Long) : PostenEntity
 
-    @Query("select * from posten")
-    fun getAll() : List<Posten>
-
-    @Query("select * from posten")
-    fun getAllLiveData() : LiveData<List<Posten>>
 }

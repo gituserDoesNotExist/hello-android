@@ -4,7 +4,7 @@ class PostenService constructor(postenDao: PostenDao) {
 
     private val postenDao = postenDao
 
-    fun savePosten(posten:Posten) {
+    fun savePosten(posten:PostenEntity) {
         Thread(Runnable { postenDao.insertPosten(posten) }).start()
     }
 

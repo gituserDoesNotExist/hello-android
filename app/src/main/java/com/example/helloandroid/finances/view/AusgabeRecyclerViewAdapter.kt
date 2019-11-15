@@ -1,4 +1,4 @@
-package com.example.helloandroid.finances
+package com.example.helloandroid.finances.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
-import com.example.helloandroid.finances.persistence.Ausgabe
+import com.example.helloandroid.finances.persistence.AusgabeEntity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) :
+class AusgabeRecyclerViewAdapter(ausgabe: List<AusgabeEntity>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -22,9 +22,19 @@ class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_HEADER) {
-            HeaderViewHolder(inflate(R.layout.ausgabe_header_row, parent))
+            HeaderViewHolder(
+                inflate(
+                    R.layout.ausgabe_header_row,
+                    parent
+                )
+            )
         } else {
-            ItemViewHolder(inflate(R.layout.ausgabe_item, parent))
+            ItemViewHolder(
+                inflate(
+                    R.layout.ausgabe_item,
+                    parent
+                )
+            )
         }
     }
 

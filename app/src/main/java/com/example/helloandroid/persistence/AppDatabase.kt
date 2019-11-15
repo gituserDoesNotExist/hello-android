@@ -6,19 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.helloandroid.finances.persistence.Ausgabe
-import com.example.helloandroid.finances.persistence.AusgabeDao
-import com.example.helloandroid.finances.persistence.Posten
-import com.example.helloandroid.finances.persistence.PostenDao
+import com.example.helloandroid.finances.persistence.*
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
 import java.math.BigDecimal
 import java.time.LocalDateTime.*
 import java.util.concurrent.Executors
-import java.util.stream.Collectors
-import java.util.stream.IntStream
 
-@Database(entities = [Verzicht::class, Posten::class, Ausgabe::class], version = 1)
+@Database(entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class], version = 1)
 @TypeConverters(OptionalLocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -27,6 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun postenDao(): PostenDao
 
     abstract fun ausgabeDao(): AusgabeDao
+
+    abstract fun postenWithAusgabeDao(): PostenWithAusgabenDao
 
     companion object {
         private const val DATABASE_NAME = "APP_DATABASE"
@@ -54,9 +51,9 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun prepopulateDatabase(context: Context) {
-            val postenId = getDb(context)?.postenDao()?.insertPosten(Posten("Lebensmittel"))
+            val postenId = getDb(context)?.postenDao()?.insertPosten(PostenEntity("Lebensmittel"))
             IntRange(1,60).forEach {
-                val ausgabe = Ausgabe(BigDecimal(it), "egal", now())
+                val ausgabe = AusgabeEntity(BigDecimal(it), "egal", now())
                 ausgabe.postenId = postenId!!
                 getDb(context)?.ausgabeDao()?.insertAusgabe(ausgabe)
             }

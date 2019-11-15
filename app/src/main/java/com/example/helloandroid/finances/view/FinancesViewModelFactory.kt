@@ -1,11 +1,10 @@
-package com.example.helloandroid.finances
+package com.example.helloandroid.finances.view
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.helloandroid.finances.persistence.FinancesRepository
 import com.example.helloandroid.persistence.AppDatabase
-import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 
 /** Factory um ViewModels anzulegen, welche das VerzichtDao benoetigen */
 class FinancesViewModelFactory(context: Context) : ViewModelProvider.Factory {

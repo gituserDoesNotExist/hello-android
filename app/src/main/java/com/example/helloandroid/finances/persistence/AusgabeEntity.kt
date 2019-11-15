@@ -8,11 +8,11 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity(
-    tableName = "AUSGABE",indices = [Index(value = ["POSTEN_ID"])], foreignKeys = [ForeignKey(
-        entity = Posten::class, parentColumns = arrayOf("ID"), childColumns = arrayOf("POSTEN_ID")
+    tableName = "AUSGABE_ENTITY",indices = [Index(value = ["POSTEN_ID"])], foreignKeys = [ForeignKey(
+        entity = PostenEntity::class, parentColumns = arrayOf("ID"), childColumns = arrayOf("POSTEN_ID")
     )]
 )
-class Ausgabe(wert: BigDecimal, beschreibung: String, datum: LocalDateTime) : BaseEntity() {
+class AusgabeEntity(wert: BigDecimal, beschreibung: String, datum: LocalDateTime) : BaseEntity() {
 
     @ColumnInfo(name = "WERT")
     @TypeConverters(BigDecimalConverter::class)

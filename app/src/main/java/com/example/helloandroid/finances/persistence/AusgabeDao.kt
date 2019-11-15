@@ -8,15 +8,15 @@ import androidx.room.Query
 interface AusgabeDao {
 
     @Insert
-    fun insertAusgabe(ausgaben: Ausgabe)
+    fun insertAusgabe(ausgaben: AusgabeEntity)
 
     @Insert
-    fun insertAusgaben(ausgaben: List<Ausgabe>)
+    fun insertAusgaben(ausgaben: List<AusgabeEntity>)
 
-    @Query("select * from ausgabe a where a.POSTEN_ID = :postenId")
-    fun getAusgabenByPostenId(postenId: Long) : List<Ausgabe>
+    @Query("select * from AUSGABE_ENTITY a where a.POSTEN_ID = :postenId")
+    fun getAusgabenByPostenId(postenId: Long) : List<AusgabeEntity>
 
-    @Query("select * from AUSGABE")
-    fun getAll() : List<Ausgabe>
+    @Query("select * from AUSGABE_ENTITY")
+    fun getAll() : List<AusgabeEntity>
 
 }

@@ -1,7 +1,8 @@
 package com.example.helloandroid.finances
 
-import com.example.helloandroid.finances.persistence.Ausgabe
+import com.example.helloandroid.finances.persistence.AusgabeEntity
 import com.example.helloandroid.finances.persistence.FinancesRepository
+import com.example.helloandroid.finances.view.PostenUebersichtViewModel
 import org.assertj.core.api.Assertions.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,7 +14,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @RunWith(MockitoJUnitRunner::class)
-class PostenUebersichtViewModelTest {
+class PostenEntityUebersichtViewModelTest {
 
     @InjectMocks
     private lateinit var testCandidate: PostenUebersichtViewModel
@@ -25,7 +26,7 @@ class PostenUebersichtViewModelTest {
     fun testCalculateGesamtausgaben() {
         Mockito.`when`(postenRepository.findAllAusgaben())
             .thenReturn(
-                listOf(Ausgabe(BigDecimal.ONE, "-", LocalDateTime.now()), Ausgabe(
+                listOf(AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now()), AusgabeEntity(
                     BigDecimal.ONE,
                     "-",
                     LocalDateTime.now()

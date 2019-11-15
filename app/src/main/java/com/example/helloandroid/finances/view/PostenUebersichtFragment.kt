@@ -1,4 +1,4 @@
-package com.example.helloandroid.finances
+package com.example.helloandroid.finances.view
 
 
 import android.os.Bundle
@@ -33,7 +33,9 @@ class PostenUebersichtFragment : Fragment() {
         activity?.let { fragmentActivity ->
             sharedPostenViewModel = ViewModelProviders.of(fragmentActivity).get(SharedPostenViewModel::class.java)
             postenUebersichtViewModel =
-                ViewModelProviders.of(fragmentActivity, FinancesViewModelFactory(fragmentActivity.application))
+                ViewModelProviders.of(fragmentActivity,
+                    FinancesViewModelFactory(fragmentActivity.application)
+                )
                     .get(PostenUebersichtViewModel::class.java)
             postenUebersichtViewModel.initializeByFindingAllPosten()
             gesamtausgaben.text = postenUebersichtViewModel.calculateGesamtausgaben().toString()

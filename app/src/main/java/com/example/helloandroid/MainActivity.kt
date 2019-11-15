@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.helloandroid.count.CountActivity
 import com.example.helloandroid.count.CountViewModel
-import com.example.helloandroid.finances.FinancesActivity
+import com.example.helloandroid.finances.view.FinancesActivity
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
 import com.example.helloandroid.verzicht.VerzichtUebersichtActivity
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startFincancesActivity(view: View) {
-        startActivity(Intent(this,FinancesActivity::class.java))
+        startActivity(Intent(this, FinancesActivity::class.java))
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.helloandroid.finances
+package com.example.helloandroid.finances.view
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.helloandroid.R
-import com.example.helloandroid.finances.persistence.Posten
+import com.example.helloandroid.finances.persistence.PostenEntity
 import java.math.BigDecimal
 import java.util.function.Consumer
 
-class PostenArrayAdapter constructor(context: Context, posten: List<Posten>, editConsumer: Consumer<Posten>) :
-    ArrayAdapter<Posten>(context, 0, posten) {
+class PostenArrayAdapter constructor(context: Context, posten: List<PostenEntity>, editConsumer: Consumer<PostenEntity>) :
+    ArrayAdapter<PostenEntity>(context, 0, posten) {
 
     private val editConsumer = editConsumer
 

@@ -1,16 +1,12 @@
-package com.example.helloandroid.finances
+package com.example.helloandroid.finances.view
 
 
-import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.TableLayout.*
-import android.widget.TableRow.LayoutParams.*
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,8 +29,11 @@ class PostenDetailsFragment : Fragment() {
 
         activity?.let {
             sharedPostenViewModel = ViewModelProviders.of(it).get(SharedPostenViewModel::class.java)
-            postenDetailsViewModel = ViewModelProviders.of(it, FinancesViewModelFactory(it.application))
+            postenDetailsViewModel = ViewModelProviders.of(it,
+                FinancesViewModelFactory(it.application)
+            )
                 .get(PostenDetailsViewModel::class.java)
+            postenDetailsViewModel.currentPosten = sharedPostenViewModel.currentPosten
             rootView.findViewById<TextView>(R.id.title_posten_details_fragment).text = anzeigeTextForPostenname(it)
 
             val ausgaben = postenDetailsViewModel.findAusgabenForPosten(sharedPostenViewModel.currentPosten)
