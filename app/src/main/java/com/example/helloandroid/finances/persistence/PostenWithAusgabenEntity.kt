@@ -8,9 +8,9 @@ import com.example.helloandroid.finances.Posten
 class PostenWithAusgabenEntity {
 
     @Embedded
-    lateinit var posten: Posten
+    lateinit var posten: PostenEntity
 
     @Relation(parentColumn = "ID", entityColumn = "POSTEN_ID")
-     lateinit var ausgaben: List<Ausgabe>
+     lateinit var ausgaben: List<AusgabeEntity>
 
 }

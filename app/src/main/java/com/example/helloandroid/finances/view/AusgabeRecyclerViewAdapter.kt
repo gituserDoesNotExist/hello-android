@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
+import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.persistence.AusgabeEntity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class AusgabeRecyclerViewAdapter(ausgabe: List<AusgabeEntity>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_HEADER: Int = 0

@@ -52,7 +52,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun prepopulateDatabase(context: Context) {
             val postenId = getDb(context)?.postenDao()?.insertPosten(PostenEntity("Lebensmittel"))
-            IntRange(1,60).forEach {
+            IntRange(1,5).forEach {
                 val ausgabe = AusgabeEntity(BigDecimal(it), "egal", now())
                 ausgabe.postenId = postenId!!
                 getDb(context)?.ausgabeDao()?.insertAusgabe(ausgabe)

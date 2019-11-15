@@ -1,22 +1,26 @@
 package com.example.helloandroid.finances.view
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.R
+import com.example.helloandroid.databinding.AddAusgabeDialogBinding
+import com.example.helloandroid.finances.Ausgabe
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class AddAusgabeDialog : DialogFragment() {
 
     private lateinit var postenDetailsViewModel: PostenDetailsViewModel
-
     private lateinit var editTextWert: EditText
     private lateinit var editTextBeschreibung: EditText
 
@@ -31,35 +35,32 @@ class AddAusgabeDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.let {
-            postenDetailsViewModel = ViewModelProviders.of(it,
-                FinancesViewModelFactory(it.application)
-            )
+            postenDetailsViewModel = ViewModelProviders.of(it, FinancesViewModelFactory(it.application))
                 .get(PostenDetailsViewModel::class.java)
         }
-
-
         val rootView = inflater.inflate(R.layout.add_ausgabe_dialog, container, false)
 
-        editTextDate = rootView.findViewById(R.id.input_add_ausgabe_datum)
-        editTextDate.setText(buildCurrentDateForAnzeige(), TextView.BufferType.EDITABLE)
-        btnSelectDate = rootView.findViewById(R.id.btn_add_ausgabe_dialog_select_date)
-        btnSelectDate.setOnClickListener { openDatePickerDialog() }
 
-        editTextTime = rootView.findViewById(R.id.input_add_ausgabe_time)
-        editTextTime.setText(buildCurrentTimeForAnzeige(), TextView.BufferType.EDITABLE)
-        btnSelectTime = rootView.findViewById(R.id.btn_add_ausgabe_dialog_select_time)
-        btnSelectTime.setOnClickListener { openTimePickerDialog() }
-
-        editTextWert = rootView.findViewById(R.id.input_add_ausgabe_wert)
-        editTextBeschreibung = rootView.findViewById(R.id.input_add_ausgabe_description)
-
-        btnSaveAusgabe = rootView.findViewById(R.id.btn_ausgabe_hinzufuegen)
-        btnSaveAusgabe.setOnClickListener {
-            saveAusgabe()
-            closeDialog()
-        }
-        btnCancel = rootView.findViewById(R.id.btn_ausgabe_hinzufuegen_abbrechen)
-        btnCancel.setOnClickListener { closeDialog() }
+//        editTextDate = rootView.findViewById(R.id.input_add_ausgabe_datum)
+//        editTextDate.setText(buildCurrentDateForAnzeige(), TextView.BufferType.EDITABLE)
+//        btnSelectDate = rootView.findViewById(R.id.btn_add_ausgabe_dialog_select_date)
+//        btnSelectDate.setOnClickListener { openDatePickerDialog() }
+//
+//        editTextTime = rootView.findViewById(R.id.input_add_ausgabe_time)
+//        editTextTime.setText(buildCurrentTimeForAnzeige(), TextView.BufferType.EDITABLE)
+//        btnSelectTime = rootView.findViewById(R.id.btn_add_ausgabe_dialog_select_time)
+//        btnSelectTime.setOnClickListener { openTimePickerDialog() }
+//
+//        editTextWert = rootView.findViewById(R.id.input_add_ausgabe_wert)
+//        editTextBeschreibung = rootView.findViewById(R.id.input_add_ausgabe_description)
+//
+//        btnSaveAusgabe = rootView.findViewById(R.id.btn_ausgabe_hinzufuegen)
+//        btnSaveAusgabe.setOnClickListener {
+//            saveAusgabe()
+//            closeDialog()
+//        }
+//        btnCancel = rootView.findViewById(R.id.btn_ausgabe_hinzufuegen_abbrechen)
+//        btnCancel.setOnClickListener { closeDialog() }
 
 
         return rootView
@@ -70,14 +71,7 @@ class AddAusgabeDialog : DialogFragment() {
         val uhrzeit = editTextTime.text.toString()
         val wert = editTextWert.text.toString()
         val beschreibung = editTextBeschreibung.text.toString()
-        postenDetailsViewModel.saveAusgabeForPosten(
-            AusgabeDTO(
-                datum,
-                uhrzeit,
-                wert,
-                beschreibung
-            )
-        )
+        postenDetailsViewModel.saveAusgabeForPosten(AusgabeDTO(datum, uhrzeit, wert, beschreibung))
     }
 
     private fun closeDialog() {

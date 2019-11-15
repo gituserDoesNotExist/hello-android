@@ -8,15 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.helloandroid.R
+import com.example.helloandroid.finances.Ausgabe
 
 class PostenDetailsFragment : Fragment() {
 
-    private lateinit var postenDetailsViewModel: PostenDetailsViewModel
+    private lateinit var postenDetailsVM: PostenDetailsViewModel
     private lateinit var sharedPostenViewModel: SharedPostenViewModel
     private lateinit var btnNewAusgabe: Button
 
@@ -28,23 +30,28 @@ class PostenDetailsFragment : Fragment() {
         btnNewAusgabe.setOnClickListener { openNewAusgabeDialog() }
 
         activity?.let {
-            sharedPostenViewModel = ViewModelProviders.of(it).get(SharedPostenViewModel::class.java)
-            postenDetailsViewModel = ViewModelProviders.of(it,
-                FinancesViewModelFactory(it.application)
-            )
-                .get(PostenDetailsViewModel::class.java)
-            postenDetailsViewModel.currentPosten = sharedPostenViewModel.currentPosten
+            initializeViewModels(it)
             rootView.findViewById<TextView>(R.id.title_posten_details_fragment).text = anzeigeTextForPostenname(it)
 
-            val ausgaben = postenDetailsViewModel.findAusgabenForPosten(sharedPostenViewModel.currentPosten)
-            val ausgabenRecyclerView = rootView.findViewById<RecyclerView>(R.id.ausgaben_recycler_view)
-            val adapter = AusgabeRecyclerViewAdapter(ausgaben)
-            ausgabenRecyclerView.adapter = adapter
-            ausgabenRecyclerView.layoutManager = LinearLayoutManager(activity)
-
+            postenDetailsVM.findAusgabenForPosten(postenDetailsVM.currentPosten).observe(
+                this,
+                Observer<List<Ausgabe>> { ausgaben -> createRecyclerViewForAusgaben(rootView, ausgaben) })
         }
 
         return rootView
+    }
+
+    private fun initializeViewModels(it: FragmentActivity) {
+        sharedPostenViewModel = of(it).get(SharedPostenViewModel::class.java)
+        postenDetailsVM = of(it, FinancesViewModelFactory(it.application)).get(PostenDetailsViewModel::class.java)
+        postenDetailsVM.currentPosten = sharedPostenViewModel.currentPosten
+    }
+
+    private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>) {
+        val ausgabenRecyclerView = rootView.findViewById<RecyclerView>(R.id.ausgaben_recycler_view)
+        val adapter = AusgabeRecyclerViewAdapter(ausgaben)
+        ausgabenRecyclerView.adapter = adapter
+        ausgabenRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     private fun openNewAusgabeDialog() {

@@ -7,6 +7,7 @@ import java.math.BigDecimal
 
 class Posten(name: String) {
 
+    var id: Long = 0
     val name: String = name
     var ausgaben: MutableList<Ausgabe> = ArrayList()
 

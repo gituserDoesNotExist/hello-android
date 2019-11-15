@@ -11,8 +11,9 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders.*
 import com.example.helloandroid.R
+import com.example.helloandroid.finances.Posten
 import java.util.function.Consumer
 
 class PostenUebersichtFragment : Fragment() {
@@ -30,20 +31,21 @@ class PostenUebersichtFragment : Fragment() {
         btnNewPosten = roowView.findViewById(R.id.btn_open_new_posten_dialog)
         btnNewPosten.setOnClickListener { openNewPostenDialog() }
 
-        activity?.let { fragmentActivity ->
-            sharedPostenViewModel = ViewModelProviders.of(fragmentActivity).get(SharedPostenViewModel::class.java)
-            postenUebersichtViewModel =
-                ViewModelProviders.of(fragmentActivity,
-                    FinancesViewModelFactory(fragmentActivity.application)
-                )
-                    .get(PostenUebersichtViewModel::class.java)
+        activity?.let {
+            initializeViewModels(it)
             postenUebersichtViewModel.initializeByFindingAllPosten()
             gesamtausgaben.text = postenUebersichtViewModel.calculateGesamtausgaben().toString()
 
-            observePostenChanges(fragmentActivity, roowView)
+            observePostenChanges(it, roowView)
 
         }
         return roowView
+    }
+
+    private fun initializeViewModels(activity: FragmentActivity) {
+        sharedPostenViewModel = of(activity).get(SharedPostenViewModel::class.java)
+        postenUebersichtViewModel =
+            of(activity, FinancesViewModelFactory(activity.application)).get(PostenUebersichtViewModel::class.java)
     }
 
     private fun openNewPostenDialog() {
@@ -62,11 +64,14 @@ class PostenUebersichtFragment : Fragment() {
     private fun observePostenChanges(fragmentActivity: FragmentActivity, roowView: View) {
         val listView = roowView.findViewById<ListView>(R.id.testit)
         postenUebersichtViewModel.allPosten.observe(fragmentActivity, Observer { posten ->
-            listView.adapter =
-                PostenArrayAdapter(fragmentActivity, posten, Consumer {
-                    sharedPostenViewModel.currentPosten = it
-                    openFragmentCallback.openPostenDetailsFragment()
-                })
+            listView.adapter =createPostenArrayAdapter(fragmentActivity, posten)
+        })
+    }
+
+    private fun createPostenArrayAdapter(fragmentActivity: FragmentActivity,posten: List<Posten>): PostenArrayAdapter {
+        return PostenArrayAdapter(fragmentActivity, posten, Consumer {
+            sharedPostenViewModel.currentPosten = it
+            openFragmentCallback.openPostenDetailsFragment()
         })
     }
 
