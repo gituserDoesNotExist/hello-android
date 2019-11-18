@@ -24,13 +24,9 @@ class PostenEntityUebersichtViewModelTest {
 
     @Test
     fun testCalculateGesamtausgaben() {
-        Mockito.`when`(postenRepository.findAllAusgaben())
-            .thenReturn(
-                listOf(AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now()), AusgabeEntity(
-                    BigDecimal.ONE,
-                    "-",
-                    LocalDateTime.now()
-                )))
+        Mockito.`when`(postenRepository.findAllAusgaben()).thenReturn(
+            listOf(Ausgabe(BigDecimal.ONE, LocalDateTime.now(), "", 1),
+                Ausgabe(BigDecimal.ONE, LocalDateTime.now(), "", 1)))
 
         val result = testCandidate.calculateGesamtausgaben()
 

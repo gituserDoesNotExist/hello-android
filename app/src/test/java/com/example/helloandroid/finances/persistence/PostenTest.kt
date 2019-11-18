@@ -1,5 +1,6 @@
 package com.example.helloandroid.finances.persistence
 
+import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.Posten
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -13,8 +14,8 @@ class PostenTest {
         val posten = Posten("PostenWithAusgaben")
         posten.ausgaben.addAll(
             listOf(
-                AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now()),
-                AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
+                Ausgabe(BigDecimal.TEN, LocalDateTime.now(),"",1),
+                Ausgabe(BigDecimal.ONE, LocalDateTime.now(),"",1)
             )
         )
 

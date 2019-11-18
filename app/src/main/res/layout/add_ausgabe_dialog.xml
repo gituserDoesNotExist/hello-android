@@ -5,8 +5,14 @@
     <data>
 
         <variable
-                name="ausgabe"
-                type="com.example.helloandroid.finances.view.AusgabeDTO" />
+                name="localDateConverter"
+                type="com.example.helloandroid.view.LocalDateConverter" />
+        <variable
+                name="localTimeConverter"
+                type="com.example.helloandroid.view.LocalTimeConverter" />
+        <variable
+                name="addAusgabeDialog"
+                type="com.example.helloandroid.finances.view.AddAusgabeDialog" />
     </data>
 
     <TableLayout
@@ -23,11 +29,15 @@
 
             <EditText
                     android:id="@+id/input_add_ausgabe_datum"
-                    android:gravity="bottom" />
+                    android:gravity="bottom"
+                    android:text="@={localDateConverter.dateToString(addAusgabeDialog.ausgabeDTO.datum)}"
+                    />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_date"
-                    android:src="@drawable/date_picker_icon" />
+                    android:src="@drawable/date_picker_icon"
+                    android:onClick="@{() -> addAusgabeDialog.openDatePickerDialog()}"
+                    />
         </TableRow>
 
         <TableRow>
@@ -38,11 +48,15 @@
 
             <EditText
                     android:id="@+id/input_add_ausgabe_time"
-                    android:gravity="bottom" />
+                    android:gravity="bottom"
+                    android:text="@={localTimeConverter.localTimeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}"
+                    />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_time"
-                    android:src="@drawable/time_icon" />
+                    android:src="@drawable/time_icon"
+                    android:onClick="@{() -> addAusgabeDialog.openTimePickerDialog()}"
+                    />
         </TableRow>
 
         <TableRow>
@@ -54,6 +68,7 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_wert"
                     android:gravity="bottom"
+                    android:text="@={addAusgabeDialog.ausgabeDTO.wert}"
                     android:hint="xy.yz" />
         </TableRow>
 
@@ -65,7 +80,9 @@
 
             <EditText
                     android:id="@+id/input_add_ausgabe_description"
-                    android:gravity="bottom" />
+                    android:gravity="bottom"
+                    android:text="@={addAusgabeDialog.ausgabeDTO.beschreibung}"
+                    />
         </TableRow>
 
         <View
@@ -83,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="left"
+                    android:onClick="@{() -> addAusgabeDialog.saveAusgabeAndCloseDialog()}"
                     android:src="@drawable/btn_confirm"
                     android:textSize="20sp" />
 
@@ -92,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="right"
+                    android:onClick="@{() -> addAusgabeDialog.closeDialog()}"
                     android:src="@drawable/btn_cancel"
                     android:textSize="20sp" />
         </LinearLayout>
