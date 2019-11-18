@@ -10,4 +10,8 @@ class PostenEntityToPostenMapper  {
         return posten
     }
 
+    fun asPostenEntity(posten: Posten): PostenEntity {
+        return PostenEntity(posten.name)
+    }
+
 }

@@ -8,4 +8,5 @@
 
     <dimen name="edit_verzicht_txt_size">30dip</dimen>
     <dimen name="edit_verzicht_verzicht_info_size">60dip</dimen>
+    <dimen name="dlg_padding">5dip</dimen>
 </resources>

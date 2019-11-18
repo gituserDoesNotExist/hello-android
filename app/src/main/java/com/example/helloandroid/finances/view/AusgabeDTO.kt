@@ -2,7 +2,8 @@ package com.example.helloandroid.finances.view
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import com.example.helloandroid.BR
+import androidx.databinding.library.baseAdapters.BR
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -13,7 +14,7 @@ class AusgabeDTO : BaseObservable() {
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.addAusgabeDialog)
+                notifyPropertyChanged(BR.datum)
             }
         }
 
@@ -22,16 +23,16 @@ class AusgabeDTO : BaseObservable() {
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.addAusgabeDialog)
+                notifyPropertyChanged(BR.uhrzeit)
             }
         }
 
-    var wert: String = ""
+    var wert: BigDecimal = BigDecimal.ZERO
         @Bindable get
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.addAusgabeDialog)
+                notifyPropertyChanged(BR.wert)
             }
         }
     var beschreibung: String = ""
@@ -39,7 +40,7 @@ class AusgabeDTO : BaseObservable() {
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.addAusgabeDialog)
+                notifyPropertyChanged(BR.beschreibung)
             }
         }
 }

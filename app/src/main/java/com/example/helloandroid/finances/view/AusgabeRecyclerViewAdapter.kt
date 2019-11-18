@@ -3,6 +3,7 @@ package com.example.helloandroid.finances.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
@@ -11,30 +12,21 @@ import com.example.helloandroid.finances.persistence.AusgabeEntity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class AusgabeRecyclerViewAdapter(ausgabe: List<Ausgabe>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AusgabeRecyclerViewAdapter(val ausgaben: List<Ausgabe>, val onClickSortButton: View.OnClickListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_HEADER: Int = 0
         const val VIEW_TYPE_ITEM: Int = 1
     }
 
-    private val ausgaben = ausgabe
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_HEADER) {
-            HeaderViewHolder(
-                inflate(
-                    R.layout.ausgabe_header_row,
-                    parent
-                )
-            )
+            val view = inflate(R.layout.ausgabe_header_row, parent)
+            view.findViewById<ImageButton>(R.id.btn_open_dropdown_sort_ausgaben).setOnClickListener(onClickSortButton)
+            HeaderViewHolder(view)
         } else {
-            ItemViewHolder(
-                inflate(
-                    R.layout.ausgabe_item,
-                    parent
-                )
-            )
+            ItemViewHolder(inflate(R.layout.ausgabe_item, parent))
         }
     }
 

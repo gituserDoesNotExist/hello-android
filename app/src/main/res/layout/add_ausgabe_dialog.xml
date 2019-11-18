@@ -4,12 +4,12 @@
 
     <data>
 
-        <variable
-                name="localDateConverter"
-                type="com.example.helloandroid.view.LocalDateConverter" />
-        <variable
-                name="localTimeConverter"
-                type="com.example.helloandroid.view.LocalTimeConverter" />
+        <import type="com.example.helloandroid.view.LocalTimeConverter" />
+
+        <import type="com.example.helloandroid.view.LocalDateConverter" />
+
+        <import type="com.example.helloandroid.view.BigDecimalConverter" />
+
         <variable
                 name="addAusgabeDialog"
                 type="com.example.helloandroid.finances.view.AddAusgabeDialog" />
@@ -18,7 +18,7 @@
     <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="5dip"
+            android:padding="@dimen/dlg_padding"
             android:stretchColumns="1">
 
         <TableRow>
@@ -30,14 +30,12 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_datum"
                     android:gravity="bottom"
-                    android:text="@={localDateConverter.dateToString(addAusgabeDialog.ausgabeDTO.datum)}"
-                    />
+                    android:text="@={LocalDateConverter.dateToString(addAusgabeDialog.ausgabeDTO.datum)}" />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_date"
-                    android:src="@drawable/date_picker_icon"
                     android:onClick="@{() -> addAusgabeDialog.openDatePickerDialog()}"
-                    />
+                    android:src="@drawable/date_picker_icon" />
         </TableRow>
 
         <TableRow>
@@ -49,14 +47,12 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_time"
                     android:gravity="bottom"
-                    android:text="@={localTimeConverter.localTimeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}"
-                    />
+                    android:text="@={LocalTimeConverter.localTimeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}" />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_time"
-                    android:src="@drawable/time_icon"
                     android:onClick="@{() -> addAusgabeDialog.openTimePickerDialog()}"
-                    />
+                    android:src="@drawable/time_icon" />
         </TableRow>
 
         <TableRow>
@@ -68,8 +64,9 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_wert"
                     android:gravity="bottom"
-                    android:text="@={addAusgabeDialog.ausgabeDTO.wert}"
-                    android:hint="xy.yz" />
+                    android:hint="xy.yz"
+                    android:inputType="numberDecimal"
+                    android:text="@={BigDecimalConverter.bigDecimalToString(addAusgabeDialog.ausgabeDTO.wert)}" />
         </TableRow>
 
         <TableRow>
@@ -81,8 +78,7 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_description"
                     android:gravity="bottom"
-                    android:text="@={addAusgabeDialog.ausgabeDTO.beschreibung}"
-                    />
+                    android:text="@={addAusgabeDialog.ausgabeDTO.beschreibung}" />
         </TableRow>
 
         <View
