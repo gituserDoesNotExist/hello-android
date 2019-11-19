@@ -7,11 +7,38 @@
         android:padding="4dip"
         android:weightSum="1">
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Sort by:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <Spinner
+                android:id="@+id/spinner_ausgabe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@null"
+                android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:background="@color/background" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:weightSum="1">
 
 
@@ -38,13 +65,6 @@
                 android:layout_weight="0.4"
                 android:text="Beschreibung"
                 android:textStyle="bold" />
-
-        <ImageButton
-                android:id="@+id/btn_open_dropdown_sort_ausgaben"
-                android:layout_width="wrap_content"
-                android:layout_gravity="top"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sort_icon_24x24" />
 
     </LinearLayout>
 

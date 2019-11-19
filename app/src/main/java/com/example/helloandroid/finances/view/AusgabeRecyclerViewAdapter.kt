@@ -3,36 +3,100 @@ package com.example.helloandroid.finances.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.helloandroid.R
+import com.example.helloandroid.R.*
+import com.example.helloandroid.SortDirection
 import com.example.helloandroid.finances.Ausgabe
-import com.example.helloandroid.finances.persistence.AusgabeEntity
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
-class AusgabeRecyclerViewAdapter(val ausgaben: List<Ausgabe>, val onClickSortButton: View.OnClickListener) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AusgabeRecyclerViewAdapter(val ausgaben: List<Ausgabe>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_HEADER: Int = 0
         const val VIEW_TYPE_ITEM: Int = 1
+        private val DROPDOWN_ENTRIES =
+            listOf("Datum aufsteigend", "Datum absteigend", "Wert aufsteigend", "Wert absteigend", "Beschreibung")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_HEADER) {
-            val view = inflate(R.layout.ausgabe_header_row, parent)
-            view.findViewById<ImageButton>(R.id.btn_open_dropdown_sort_ausgaben).setOnClickListener(onClickSortButton)
-            HeaderViewHolder(view)
+            val headerView = inflate(layout.ausgabe_header_row, parent)
+            headerView.findViewById<Spinner>(id.spinner_ausgabe).also {
+                it.onItemSelectedListener = onItemSelectListener()
+                it.adapter = AusgabeSpinnerAdapter(parent.context, DROPDOWN_ENTRIES)
+            }
+            HeaderViewHolder(headerView)
         } else {
-            ItemViewHolder(inflate(R.layout.ausgabe_item, parent))
+            ItemViewHolder(inflate(layout.ausgabe_item, parent))
         }
     }
 
     private fun inflate(layoutId: Int, parent: ViewGroup): View {
         return LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
     }
+
+    private fun onItemSelectListener(): AdapterView.OnItemSelectedListener {
+        return object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                sortAusgaben(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun sortAusgaben(positionOfSortCriteria: Int) {
+        when (positionOfSortCriteria) {
+            0 -> sortByDatumAufsteigend()
+            1 -> sortByDatumAbsteigend()
+            2 -> sortByWertAufsteigend()
+            3 -> sortByWertAbsteigend()
+            4 -> sortAusgabenByBeschreibung()
+        }
+        notifyDataSetChanged()
+    }
+
+    private fun sortByDatumAufsteigend() {
+        Collections.sort(ausgaben) { o1, o2 -> sortAusgabenByDate(SortDirection.ASCENDING, o1, o2) }
+    }
+
+    private fun sortByDatumAbsteigend() {
+        Collections.sort(ausgaben) { o1, o2 -> sortAusgabenByDate(SortDirection.DESCENDING, o1, o2) }
+    }
+
+    private fun sortAusgabenByDate(sortDirection: SortDirection, ausgabe: Ausgabe, otherAusgabe: Ausgabe): Int {
+        return if (SortDirection.ASCENDING == sortDirection) {
+            ausgabe.datum.compareTo(otherAusgabe.datum)
+        } else {
+            otherAusgabe.datum.compareTo(ausgabe.datum)
+        }
+    }
+
+    private fun sortByWertAufsteigend() {
+        Collections.sort(ausgaben) { o1, o2 -> sortAusgabenByWert(SortDirection.ASCENDING, o1, o2) }
+    }
+
+    private fun sortByWertAbsteigend() {
+        Collections.sort(ausgaben) { o1, o2 -> sortAusgabenByWert(SortDirection.DESCENDING, o1, o2) }
+    }
+
+    private fun sortAusgabenByWert(sortDirection: SortDirection, ausgabe: Ausgabe, otherAusgabe: Ausgabe): Int {
+        return if (SortDirection.ASCENDING == sortDirection) {
+            ausgabe.wert.compareTo(otherAusgabe.wert)
+        } else {
+            otherAusgabe.wert.compareTo(ausgabe.wert)
+        }
+    }
+
+    private fun sortAusgabenByBeschreibung() {
+        Collections.sort(ausgaben) { o1, o2 -> o1.beschreibung.compareTo(o2.beschreibung) }
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {
@@ -61,15 +125,15 @@ class AusgabeRecyclerViewAdapter(val ausgaben: List<Ausgabe>, val onClickSortBut
     }
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val datumTextView: TextView = itemView.findViewById(R.id.ausgabe_item_datum)
-        val wertTextView: TextView = itemView.findViewById(R.id.ausgabe_item_wert)
-        val beschreibungTextView: TextView = itemView.findViewById(R.id.ausgabe_item_beschreibung)
+        val datumTextView: TextView = itemView.findViewById(id.ausgabe_item_datum)
+        val wertTextView: TextView = itemView.findViewById(id.ausgabe_item_wert)
+        val beschreibungTextView: TextView = itemView.findViewById(id.ausgabe_item_beschreibung)
 
     }
 
     class HeaderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val datumTextView: TextView = itemView.findViewById(R.id.ausgabe_header_row_datum)
-        val wertTextView: TextView = itemView.findViewById(R.id.ausgabe_header_rowdatum_wert)
-        val beschreibungTextView: TextView = itemView.findViewById(R.id.ausgabe_header_rowdatum_beschreibung)
+        val datumTextView: TextView = itemView.findViewById(id.ausgabe_header_row_datum)
+        val wertTextView: TextView = itemView.findViewById(id.ausgabe_header_rowdatum_wert)
+        val beschreibungTextView: TextView = itemView.findViewById(id.ausgabe_header_rowdatum_beschreibung)
     }
 }
