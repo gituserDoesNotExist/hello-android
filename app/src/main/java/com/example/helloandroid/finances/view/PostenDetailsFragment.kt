@@ -35,7 +35,10 @@ class PostenDetailsFragment : Fragment() {
 
             postenDetailsVM.findAusgabenForPosten(postenDetailsVM.currentPosten).observe(
                 this,
-                Observer<List<Ausgabe>> { ausgaben -> createRecyclerViewForAusgaben(rootView, ausgaben) })
+                Observer<List<Ausgabe>> { ausgaben ->
+                    createRecyclerViewForAusgaben(rootView, ausgaben)
+
+                })
         }
 
         return rootView

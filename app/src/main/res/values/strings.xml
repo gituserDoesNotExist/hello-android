@@ -22,7 +22,7 @@
     <string name="title_activity_fragment">FragmentActivity</string>
     <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
 
-    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
+    <string name="title_posten_details_fragment">Gesamtausgaben-Ausgaben für %1$s</string>
 
 
 </resources>

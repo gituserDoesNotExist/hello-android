@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:background="@color/buttonBackgroundOrange"
+            android:background="@color/lightOrange"
             android:text="@string/label_btn_neuer_posten"
             android:textAllCaps="false"
             android:textSize="20sp"
