@@ -11,8 +11,9 @@ class BigDecimalConverter {
     }
 
     @TypeConverter
-    fun toBigDecimal(value: String): BigDecimal {
-        return BigDecimal(value)
+    fun toBigDecimal(value: String?): BigDecimal {
+        return value?.let { BigDecimal(it) } ?: BigDecimal.ZERO
     }
+
 
 }

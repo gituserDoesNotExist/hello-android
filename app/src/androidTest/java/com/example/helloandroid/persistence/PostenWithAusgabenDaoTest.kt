@@ -27,52 +27,7 @@ class PostenWithAusgabenDaoTest {
         testCandidate = database.postenWithAusgabeDao()
     }
 
-    @Test
-    fun getById() {
-        val posten = PostenEntity("Lebensmittel")
-        val postenId = postenDao.insertPosten(posten)
 
-        assertThat(postenId).isNotEqualTo(0)
-
-        val ausgabe = AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
-        ausgabe.postenId = postenId
-        val otherAusgabe = AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now())
-        otherAusgabe.postenId = postenId
-        val ausgaben = listOf(ausgabe, otherAusgabe)
-        ausgabeDao.insertAusgaben(ausgaben)
-
-        val result = testCandidate.getById(postenId)
-
-        assertThat(result.ausgaben.size).isEqualTo(2)
-        assertThat(result.ausgaben[0].wert).isEqualTo(BigDecimal.ONE)
-        assertThat(result.ausgaben[1].wert).isEqualTo(BigDecimal.TEN)
-    }
-
-    @Test
-    fun testGetPostenStubs() {
-        val lebensmittelPosten = PostenEntity("Lebensmittel")
-        val lebensmittelPostenId = postenDao.insertPosten(lebensmittelPosten)
-
-        val lebensmittelAusgabe = AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
-        lebensmittelAusgabe.postenId = lebensmittelPostenId
-        val otherlebensmittelAusgabe = AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now())
-        otherlebensmittelAusgabe.postenId = lebensmittelPostenId
-        ausgabeDao.insertAusgaben(listOf(lebensmittelAusgabe, otherlebensmittelAusgabe))
-
-        val reisePosten = PostenEntity("Reisen")
-        val reisePostenId = postenDao.insertPosten(reisePosten)
-
-        val reiseAusgabe = AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
-        reiseAusgabe.postenId = reisePostenId
-        val otherReiseAusgabe = AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now())
-        otherReiseAusgabe.postenId = reisePostenId
-        ausgabeDao.insertAusgaben(listOf(reiseAusgabe, otherReiseAusgabe))
-
-        val allPostenWithAusgaben = testCandidate.getAllPostenWithAusgabenTest()
-
-        val postenStubs = testCandidate.getPostenStubs()
-
-    }
 
 
 }

@@ -9,7 +9,7 @@ object BigDecimalConverter {
     @JvmStatic
     @InverseMethod("stringToBigDecimal")
     fun bigDecimalToString(value: BigDecimal): String {
-        return value.toString()
+        return if (BigDecimal.ZERO == value) "" else value.toString()
     }
 
     @JvmStatic

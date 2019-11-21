@@ -99,7 +99,7 @@
                 android:id="@+id/ausgabe_header_row_datum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="0.35"
                 android:text="Datum"
                 android:textStyle="bold" />
 

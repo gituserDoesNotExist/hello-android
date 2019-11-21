@@ -11,13 +11,10 @@ interface AusgabeDao {
     @Insert
     fun insertAusgabe(ausgaben: AusgabeEntity)
 
-    @Insert
-    fun insertAusgaben(ausgaben: List<AusgabeEntity>)
-
     @Query("select * from AUSGABE_ENTITY a where a.POSTEN_ID = :postenId")
     fun getAusgabenByPostenId(postenId: Long) : LiveData<List<AusgabeEntity>>
 
-    @Query("select * from AUSGABE_ENTITY")
-    fun getAll() : List<AusgabeEntity>
+    @Query("delete from AUSGABE_ENTITY where POSTEN_ID = :postenId")
+    fun deleteAusgabenWithPostenId(postenId: Long)
 
 }

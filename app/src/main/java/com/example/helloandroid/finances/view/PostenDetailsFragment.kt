@@ -2,51 +2,45 @@ package com.example.helloandroid.finances.view
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders.*
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.helloandroid.R
 import com.example.helloandroid.finances.Ausgabe
 
 class PostenDetailsFragment : Fragment() {
 
-    private lateinit var postenDetailsVM: PostenDetailsViewModel
+    private lateinit var postenDetailsViewModel: PostenDetailsViewModel
     private lateinit var sharedPostenViewModel: SharedPostenViewModel
-    private lateinit var btnNewAusgabe: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_posten_details, container, false)
 
-        btnNewAusgabe = rootView.findViewById(R.id.btn_new_ausgabe)
-        btnNewAusgabe.setOnClickListener { openNewAusgabeDialog() }
-
+        rootView.findViewById<Button>(R.id.btn_new_ausgabe).setOnClickListener { openNewAusgabeDialog() }
         activity?.let {
             initializeViewModels(it)
-            rootView.findViewById<TextView>(R.id.title_posten_details_fragment).text = anzeigeTextForPostenname(it)
-
-            postenDetailsVM.findAusgabenForPosten(postenDetailsVM.currentPostenStub.postenId)
-                .observe(this, Observer<List<Ausgabe>> { ausgaben ->
-                    createRecyclerViewForAusgaben(rootView, ausgaben, it)
-
-                })
+            val titlePostenDetailsTextView = rootView.findViewById<TextView>(R.id.title_posten_details_fragment)
+            postenDetailsViewModel.currentPosten.observe(this, Observer { posten ->
+                titlePostenDetailsTextView.text = anzeigeTextForPostenname(it, posten.name)
+                createRecyclerViewForAusgaben(rootView, posten.ausgaben, it)
+            })
         }
-
         return rootView
     }
 
     private fun initializeViewModels(it: FragmentActivity) {
-        sharedPostenViewModel = of(it).get(SharedPostenViewModel::class.java)
-        postenDetailsVM = of(it, FinancesViewModelFactory(it.application)).get(PostenDetailsViewModel::class.java)
-        postenDetailsVM.currentPostenStub = sharedPostenViewModel.currentPostenStub
+        sharedPostenViewModel = ViewModelProviders.of(it).get(SharedPostenViewModel::class.java)
+        postenDetailsViewModel = ViewModelProviders.of(it, FinancesViewModelFactory(it.application))//
+            .get(PostenDetailsViewModel::class.java)
+            .apply { this.initializePosten(sharedPostenViewModel.currentPostenStub.postenId) }
     }
 
     private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>, activity: FragmentActivity) {
@@ -69,8 +63,7 @@ class PostenDetailsFragment : Fragment() {
         }
     }
 
-    private fun anzeigeTextForPostenname(it: FragmentActivity): String {
-        val postenName = postenDetailsVM.currentPostenStub.postenName
+    private fun anzeigeTextForPostenname(it: FragmentActivity, postenName: String): String {
         return it.resources.getString(R.string.title_posten_details_fragment, postenName)
     }
 

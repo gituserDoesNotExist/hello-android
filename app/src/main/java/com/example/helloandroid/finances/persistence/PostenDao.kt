@@ -14,4 +14,7 @@ interface PostenDao {
     @Query("select * from POSTEN_ENTITY p where p.ID = :id")
     fun getById(id: Long) : PostenEntity
 
+    @Query("delete from POSTEN_ENTITY where ID = :id")
+    fun deletePosten(id: Long)
+
 }

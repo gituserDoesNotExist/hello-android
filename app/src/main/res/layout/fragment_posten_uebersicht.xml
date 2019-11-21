@@ -1,82 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <variable
-                name="postenUebersichtViewModel"
-                type="com.example.helloandroid.finances.view.PostenUebersichtViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background"
-            android:orientation="vertical"
-            tools:context=".finances.view.PostenUebersichtFragment">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical"
+        tools:context=".finances.view.PostenUebersichtFragment">
 
 
-        <Button
-                android:id="@+id/btn_open_new_posten_dialog"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginBottom="20dip"
-                android:background="@color/lightOrange"
-                android:text="@string/label_btn_neuer_posten"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/testit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+    <Button
+            android:id="@+id/btn_open_new_posten_dialog"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginBottom="20dip"
+            android:background="@color/lightOrange"
+            android:text="@string/label_btn_neuer_posten"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/testit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <ListView
-                android:id="@+id/testit"
-                android:layout_width="399dip"
-                android:layout_height="200dip"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorYellowLight"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btn_open_new_posten_dialog" />
+    <ListView
+            android:id="@+id/testit"
+            android:layout_width="399dip"
+            android:layout_height="200dip"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorYellowLight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_open_new_posten_dialog" />
 
-        <LinearLayout
-                android:id="@+id/layout_gesamtausgaben"
+    <LinearLayout
+            android:id="@+id/layout_gesamtausgaben"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/testit">
+
+        <TextView
+                android:id="@+id/txt_finances_money_spend_so_far"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/testit">
+                android:layout_marginRight="5dip"
+                android:text="@string/txt_finances_activity_total_amount"
+                android:textSize="20sp" />
 
-            <TextView
-                    android:id="@+id/txt_finances_money_spend_so_far"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dip"
-                    android:text="@string/txt_finances_activity_total_amount"
-                    android:textSize="20sp" />
+        <TextView
+                android:id="@+id/txt_finances_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="10"
+                android:textSize="20sp" />
 
-            <TextView
-                    android:id="@+id/txt_finances_total_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dip"
-                    android:text="10"
-                    android:textSize="20sp" />
+        <TextView
+                android:id="@+id/txt_finances_euro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Euro"
+                android:textSize="20sp" />
 
-            <TextView
-                    android:id="@+id/txt_finances_euro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Euro"
-                    android:textSize="20sp" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

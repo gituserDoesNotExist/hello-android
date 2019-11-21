@@ -14,17 +14,15 @@ class FinancesRepository(postenDao: PostenDao, ausgabeDao: AusgabeDao, postenWit
     private val postenDao = postenDao
     private val ausgabeDao = ausgabeDao
     private val postenWithAusgabeDao = postenWithAusgabenDao
-    private val postenWithAusgabeMapper = PostenWithAusgabenEntityToPostenMapper()
     private val ausgabeEntityToAusgabeMapper = AusgabeEntityToAusgabeMapper()
+    private val postenWithAusgabeEntityToPostenMapper = PostenWithAusgabenEntityToPostenMapper()
     private val postenStubMapper = PostenStubMapper()
 
-    fun findAllPosten(): LiveData<List<Posten>> {
-        val postenWithAusgaben = postenWithAusgabeDao.getAllPostenWithAusgaben()
-        return Transformations.map(postenWithAusgaben) { it.stream().map(this::asPosten).collect(Collectors.toList()) }
+    fun findPostenById(postenId: Long): LiveData<Posten> {
+        return Transformations.map(postenWithAusgabeDao.getPostenById(postenId)) {
+            postenWithAusgabeEntityToPostenMapper.fromPostenWithAusgabenToPosten(it)
+        }
     }
-
-    private fun asPosten(it: PostenWithAusgabenEntity) = postenWithAusgabeMapper.fromPostenWithAusgabenToPosten(it)
-
 
     fun saveAusgabeForPosten(ausgabe: AusgabeEntity, postenId: Long) {
         if (postenId == 0L) throw InvalidEntityException("Die ID des aktuellen Postens darf icht null sein")
@@ -38,14 +36,18 @@ class FinancesRepository(postenDao: PostenDao, ausgabeDao: AusgabeDao, postenWit
         }
     }
 
-    fun findAllAusgaben(): List<Ausgabe> {
-        return ausgabeDao.getAll().stream().map(ausgabeEntityToAusgabeMapper::asAusgabe).collect(Collectors.toList())
-    }
 
     fun findPostenStubs(): LiveData<List<PostenStub>> {
         return Transformations.map(postenWithAusgabeDao.getPostenStubs()) { stubs ->
             stubs.stream().map(postenStubMapper::asPostenStub).collect(Collectors.toList())
         }
+    }
+
+    fun deletePosten(postenId: Long) {
+        Thread(Runnable {
+            ausgabeDao.deleteAusgabenWithPostenId(postenId)
+            postenDao.deletePosten(postenId)
+        }).start()
     }
 
 }
