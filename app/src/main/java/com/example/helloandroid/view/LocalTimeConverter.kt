@@ -13,8 +13,8 @@ object LocalTimeConverter {
     }
 
     @JvmStatic
-    fun stringToLocalTime(value: String): LocalTime? {
-        return LocalTime.parse(value, DateTimeFormatter.ofPattern("HH:mm"))
+    fun stringToLocalTime(value: String): LocalTime {
+        return LocalTime.parse(value, DateTimeFormatter.ofPattern("H:m"))
     }
 
 

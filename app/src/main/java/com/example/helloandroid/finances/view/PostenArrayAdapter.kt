@@ -8,23 +8,23 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.helloandroid.R
 import com.example.helloandroid.finances.Posten
-import com.example.helloandroid.finances.persistence.PostenEntity
+import com.example.helloandroid.finances.PostenStub
 import java.math.BigDecimal
 import java.util.function.Consumer
 
-class PostenArrayAdapter constructor(context: Context, posten: List<Posten>, editConsumer: Consumer<Posten>) :
-    ArrayAdapter<Posten>(context, 0, posten) {
+class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>, editConsumer: Consumer<PostenStub>) :
+    ArrayAdapter<PostenStub>(context, 0, posten) {
 
     private val editConsumer = editConsumer
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val listItemView = convertView ?: inflateRow(parent)
-        val currentPosten = getItem(position)
+        val currentPostenStub = getItem(position)
 
-        findPostenItemNameView(listItemView).text = currentPosten?.name
-        findAusgabenForPostenView(listItemView).text = createAnzeigeText(currentPosten?.calculateGesamtausgaben())
-        findEditBtn(listItemView).setOnClickListener { currentPosten?.let { editConsumer.accept(it) } }
+        findPostenItemNameView(listItemView).text = currentPostenStub?.postenName
+        findAusgabenForPostenView(listItemView).text = createAnzeigeText(currentPostenStub?.gesamtausgabenForPosten)
+        findEditBtn(listItemView).setOnClickListener { currentPostenStub?.let { editConsumer.accept(it) } }
 
         return listItemView
     }

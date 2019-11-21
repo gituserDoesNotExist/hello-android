@@ -33,10 +33,9 @@ class PostenDetailsFragment : Fragment() {
             initializeViewModels(it)
             rootView.findViewById<TextView>(R.id.title_posten_details_fragment).text = anzeigeTextForPostenname(it)
 
-            postenDetailsVM.findAusgabenForPosten(postenDetailsVM.currentPosten).observe(
-                this,
-                Observer<List<Ausgabe>> { ausgaben ->
-                    createRecyclerViewForAusgaben(rootView, ausgaben)
+            postenDetailsVM.findAusgabenForPosten(postenDetailsVM.currentPostenStub.postenId)
+                .observe(this, Observer<List<Ausgabe>> { ausgaben ->
+                    createRecyclerViewForAusgaben(rootView, ausgaben, it)
 
                 })
         }
@@ -47,12 +46,12 @@ class PostenDetailsFragment : Fragment() {
     private fun initializeViewModels(it: FragmentActivity) {
         sharedPostenViewModel = of(it).get(SharedPostenViewModel::class.java)
         postenDetailsVM = of(it, FinancesViewModelFactory(it.application)).get(PostenDetailsViewModel::class.java)
-        postenDetailsVM.currentPosten = sharedPostenViewModel.currentPosten
+        postenDetailsVM.currentPostenStub = sharedPostenViewModel.currentPostenStub
     }
 
-    private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>) {
+    private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>, activity: FragmentActivity) {
         val ausgabenRecyclerView = rootView.findViewById<RecyclerView>(R.id.ausgaben_recycler_view)
-        val adapter = AusgabeRecyclerViewAdapter(ausgaben)
+        val adapter = AusgabeRecyclerViewAdapter(activity, ausgaben)
         ausgabenRecyclerView.adapter = adapter
         ausgabenRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
@@ -71,7 +70,8 @@ class PostenDetailsFragment : Fragment() {
     }
 
     private fun anzeigeTextForPostenname(it: FragmentActivity): String {
-        return it.resources.getString(R.string.title_posten_details_fragment, sharedPostenViewModel.currentPosten.name)
+        val postenName = postenDetailsVM.currentPostenStub.postenName
+        return it.resources.getString(R.string.title_posten_details_fragment, postenName)
     }
 
 }

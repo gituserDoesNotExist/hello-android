@@ -14,25 +14,10 @@
             android:layout_height="wrap_content"
             android:text="@string/title_posten_details_fragment"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/text_view_gesamtausgaben"
+            android:layout_marginBottom="20dip"
+            app:layout_constraintBottom_toTopOf="@id/ausgaben_recycler_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-            android:id="@+id/text_view_gesamtausgaben"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circular_textview"
-            android:gravity="center"
-            android:text="3000.54 €"
-            android:textAlignment="center"
-            android:layout_marginBottom="15dip"
-            android:layout_marginTop="15dip"
-            app:layout_constraintTop_toBottomOf="@id/title_posten_details_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ausgaben_recycler_view" />
-
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ausgaben_recycler_view"
@@ -50,14 +35,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.24" />
+            app:layout_constraintGuide_percent="0.06" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom_of_table"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
+            app:layout_constraintGuide_percent="0.87" />
 
     <Button
             android:id="@+id/btn_new_ausgabe"

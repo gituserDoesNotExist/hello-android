@@ -10,10 +10,10 @@ class FinancesActivity : FragmentActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances)
 
-        val ausgabenUebersichtFragment = PostenUebersichtFragment()
-        ausgabenUebersichtFragment.openFragmentCallback = this
+        val postenUebersichtFragment = PostenUebersichtFragment()
+        postenUebersichtFragment.openFragmentCallback = this
         supportFragmentManager.beginTransaction()//
-            .add(R.id.fragment_container_ausgaben, ausgabenUebersichtFragment)//
+            .add(R.id.fragment_container_ausgaben, postenUebersichtFragment)//
             .commit()
     }
 

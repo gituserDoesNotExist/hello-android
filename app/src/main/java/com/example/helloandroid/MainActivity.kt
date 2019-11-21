@@ -1,18 +1,17 @@
 package com.example.helloandroid
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.helloandroid.count.CountActivity
 import com.example.helloandroid.count.CountViewModel
+import com.example.helloandroid.databinding.DatabindingActivity
 import com.example.helloandroid.finances.view.FinancesActivity
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
 import com.example.helloandroid.verzicht.VerzichtUebersichtActivity
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var countViewModel: CountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +27,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startFragmentPlayground(currentView: View) {
-        startActivity(Intent(this,FunWithFragmentsActivity::class.java))
+        startActivity(Intent(this, FunWithFragmentsActivity::class.java))
     }
 
     fun startFincancesActivity(view: View) {
         startActivity(Intent(this, FinancesActivity::class.java))
+    }
+
+    fun startDatabindingActivity(view: View) {
+        startActivity(Intent(this, DatabindingActivity::class.java))
     }
 
 

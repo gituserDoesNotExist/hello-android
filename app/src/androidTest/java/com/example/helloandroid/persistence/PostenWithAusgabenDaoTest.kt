@@ -1,8 +1,6 @@
 package com.example.helloandroid.persistence
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.example.helloandroid.finances.persistence.*
@@ -12,7 +10,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.concurrent.Executors
 
 @RunWith(AndroidJUnit4::class)
 class PostenWithAusgabenDaoTest {
@@ -49,6 +46,32 @@ class PostenWithAusgabenDaoTest {
         assertThat(result.ausgaben.size).isEqualTo(2)
         assertThat(result.ausgaben[0].wert).isEqualTo(BigDecimal.ONE)
         assertThat(result.ausgaben[1].wert).isEqualTo(BigDecimal.TEN)
+    }
+
+    @Test
+    fun testGetPostenStubs() {
+        val lebensmittelPosten = PostenEntity("Lebensmittel")
+        val lebensmittelPostenId = postenDao.insertPosten(lebensmittelPosten)
+
+        val lebensmittelAusgabe = AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
+        lebensmittelAusgabe.postenId = lebensmittelPostenId
+        val otherlebensmittelAusgabe = AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now())
+        otherlebensmittelAusgabe.postenId = lebensmittelPostenId
+        ausgabeDao.insertAusgaben(listOf(lebensmittelAusgabe, otherlebensmittelAusgabe))
+
+        val reisePosten = PostenEntity("Reisen")
+        val reisePostenId = postenDao.insertPosten(reisePosten)
+
+        val reiseAusgabe = AusgabeEntity(BigDecimal.ONE, "-", LocalDateTime.now())
+        reiseAusgabe.postenId = reisePostenId
+        val otherReiseAusgabe = AusgabeEntity(BigDecimal.TEN, "-", LocalDateTime.now())
+        otherReiseAusgabe.postenId = reisePostenId
+        ausgabeDao.insertAusgaben(listOf(reiseAusgabe, otherReiseAusgabe))
+
+        val allPostenWithAusgaben = testCandidate.getAllPostenWithAusgabenTest()
+
+        val postenStubs = testCandidate.getPostenStubs()
+
     }
 
 

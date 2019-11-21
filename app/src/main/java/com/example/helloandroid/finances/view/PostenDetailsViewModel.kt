@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.AusgabeMapper
 import com.example.helloandroid.finances.Posten
+import com.example.helloandroid.finances.PostenStub
 import com.example.helloandroid.finances.persistence.AusgabeEntity
 import com.example.helloandroid.finances.persistence.FinancesRepository
 import com.example.helloandroid.finances.persistence.PostenEntity
@@ -12,17 +13,17 @@ import com.example.helloandroid.finances.persistence.PostenEntity
 class PostenDetailsViewModel constructor(financesRepository: FinancesRepository) : ViewModel() {
 
     private val financesRepository = financesRepository
-    lateinit var currentPosten: Posten
+    lateinit var currentPostenStub: PostenStub
     private val ausgabeMapper: AusgabeMapper = AusgabeMapper()
 
 
     fun saveAusgabeForPosten(ausgabeDto: AusgabeDTO) {
         val ausgabe = ausgabeMapper.fromDTO(ausgabeDto)
-        financesRepository.saveAusgabeForPosten(ausgabe,currentPosten.id)
+        financesRepository.saveAusgabeForPosten(ausgabe,currentPostenStub.postenId)
     }
 
-    fun findAusgabenForPosten(posten: Posten): LiveData<List<Ausgabe>> {
-        return financesRepository.findAusgabenForPosten(posten.id)
+    fun findAusgabenForPosten(postenId: Long): LiveData<List<Ausgabe>> {
+        return financesRepository.findAusgabenForPosten(postenId)
     }
 
 

@@ -69,7 +69,23 @@
             android:text="@string/label_btn_start_fragment_activity"
             android:textAllCaps="false"
             android:textSize="30dip"
-            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_of_table"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_count_activity"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_databinding_activity"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+
+    <Button
+            android:id="@+id/btn_start_databinding_activity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:background="@color/lightOrange"
+            android:onClick="startDatabindingActivity"
+            android:padding="10dip"
+            android:text="@string/label_btn_start_databinding_activity"
+            android:textAllCaps="false"
+            android:textSize="30dip"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_fragment_activity"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_finances_activity"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left" />
 
@@ -83,6 +99,7 @@
             android:text="@string/label_btn_start_finances_activity"
             android:textAllCaps="false"
             android:textSize="30dip"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_databinding_activity"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_of_table"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left" />
@@ -93,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="394dp" />
+            app:layout_constraintGuide_begin="556dp" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_left"

@@ -6,6 +6,7 @@
     <string name="label_btn_start_count_activity">Count it!</string>
     <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
     <string name="label_btn_start_finances_activity">Finances</string>
+    <string name="label_btn_start_databinding_activity">Databinding</string>
 
     <string name="label_btn_add_day_to_verzicht">Add day...</string>
     <string name="label_btn_save_verzicht">Speichern</string>
@@ -22,7 +23,7 @@
     <string name="title_activity_fragment">FragmentActivity</string>
     <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
 
-    <string name="title_posten_details_fragment">Gesamtausgaben-Ausgaben für %1$s</string>
+    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
 
 
 </resources>
