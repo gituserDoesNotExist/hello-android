@@ -9,11 +9,13 @@ import com.example.helloandroid.databinding.DatabindingActivity
 import com.example.helloandroid.finances.view.FinancesActivity
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
 import com.example.helloandroid.verzicht.view.VerzichtUebersichtActivity
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
         setContentView(R.layout.activity_main)
     }
 

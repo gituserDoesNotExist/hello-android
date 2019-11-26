@@ -10,7 +10,7 @@ interface VerzichtDao {
     fun insertVerzicht(verzicht: Verzicht): Long
 
     @Update
-    fun updateVerzicht(verzicht: Verzicht) : Long
+    fun updateVerzicht(verzicht: Verzicht)
 
     @Delete
     fun deleteVerzicht(verzicht: Verzicht)

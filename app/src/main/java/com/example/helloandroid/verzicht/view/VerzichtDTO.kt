@@ -15,4 +15,22 @@ class VerzichtDTO : BaseObservable() {
             }
         }
 
+    var days: String = ""
+        @Bindable get(): String = field
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyPropertyChanged(BR.days)
+            }
+        }
+
+    var daysIncreasedToday = false
+        @Bindable get(): Boolean = field
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyPropertyChanged(BR.daysIncreasedToday)
+            }
+        }
+
 }

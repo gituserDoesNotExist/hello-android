@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
-import com.example.helloandroid.databinding.AddAusgabeDialogBinding
+import com.example.helloandroid.databinding.AusgabeDialogBinding
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 
-class AddAusgabeDialog : DialogFragment() {
+class AusgabeDialog : DialogFragment() {
 
     private lateinit var postenDetailsViewModel: PostenDetailsViewModel
     val ausgabeDTO: AusgabeDTO = AusgabeDTO()
@@ -22,8 +22,8 @@ class AddAusgabeDialog : DialogFragment() {
             postenDetailsViewModel = ViewModelProviders.of(it, FinancesViewModelFactory(it.application))
                 .get(PostenDetailsViewModel::class.java)
         }
-        val binding: AddAusgabeDialogBinding = AddAusgabeDialogBinding.inflate(inflater, container, false)
-        binding.addAusgabeDialog = this
+        val binding: AusgabeDialogBinding = AusgabeDialogBinding.inflate(inflater, container, false)
+        binding.ausgabeDialog = this
 
         return binding.root
     }

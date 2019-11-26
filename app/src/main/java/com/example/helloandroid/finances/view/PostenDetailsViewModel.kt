@@ -6,10 +6,7 @@ import com.example.helloandroid.LiveDataNotInitializedException
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.AusgabeMapper
 import com.example.helloandroid.finances.Posten
-import com.example.helloandroid.finances.PostenStub
-import com.example.helloandroid.finances.persistence.AusgabeEntity
 import com.example.helloandroid.finances.persistence.FinancesRepository
-import com.example.helloandroid.finances.persistence.PostenEntity
 
 class PostenDetailsViewModel constructor(financesRepository: FinancesRepository) : ViewModel() {
 
@@ -25,5 +22,9 @@ class PostenDetailsViewModel constructor(financesRepository: FinancesRepository)
         val p: Posten = currentPosten.value ?: throw LiveDataNotInitializedException("Posten wurde nicht initialisiert")
         val ausgabe = ausgabeMapper.fromDTO(ausgabeDto)
         financesRepository.saveAusgabeForPosten(ausgabe,p.id)
+    }
+
+    fun deleteAusgabe(ausgabe: Ausgabe) {
+        financesRepository.deleteAusgabe(ausgabe)
     }
 }

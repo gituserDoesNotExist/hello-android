@@ -11,8 +11,8 @@
         <import type="com.example.helloandroid.view.BigDecimalConverter" />
 
         <variable
-                name="addAusgabeDialog"
-                type="com.example.helloandroid.finances.view.AddAusgabeDialog" />
+                name="ausgabeDialog"
+                type="com.example.helloandroid.finances.view.AusgabeDialog" />
     </data>
 
     <TableLayout
@@ -30,11 +30,11 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_datum"
                     android:gravity="bottom"
-                    android:text="@={LocalDateConverter.dateToString(addAusgabeDialog.ausgabeDTO.datum)}" />
+                    android:text="@={LocalDateConverter.dateToString(ausgabeDialog.ausgabeDTO.datum)}" />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_date"
-                    android:onClick="@{() -> addAusgabeDialog.openDatePickerDialog()}"
+                    android:onClick="@{() -> ausgabeDialog.openDatePickerDialog()}"
                     android:src="@drawable/date_picker_icon" />
         </TableRow>
 
@@ -47,11 +47,11 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_time"
                     android:gravity="bottom"
-                    android:text="@={LocalTimeConverter.timeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}" />
+                    android:text="@={LocalTimeConverter.timeToString(ausgabeDialog.ausgabeDTO.uhrzeit)}" />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_time"
-                    android:onClick="@{() -> addAusgabeDialog.openTimePickerDialog()}"
+                    android:onClick="@{() -> ausgabeDialog.openTimePickerDialog()}"
                     android:src="@drawable/time_icon" />
         </TableRow>
 
@@ -66,7 +66,7 @@
                     android:gravity="bottom"
                     android:hint="xy.yz"
                     android:inputType="numberDecimal"
-                    android:text="@={BigDecimalConverter.bigDecimalToString(addAusgabeDialog.ausgabeDTO.wert)}" />
+                    android:text="@={BigDecimalConverter.bigDecimalToString(ausgabeDialog.ausgabeDTO.wert)}" />
         </TableRow>
 
         <TableRow>
@@ -78,7 +78,7 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_description"
                     android:gravity="bottom"
-                    android:text="@={addAusgabeDialog.ausgabeDTO.beschreibung}" />
+                    android:text="@={ausgabeDialog.ausgabeDTO.beschreibung}" />
         </TableRow>
 
         <View
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="left"
-                    android:onClick="@{() -> addAusgabeDialog.saveAusgabeAndCloseDialog()}"
+                    android:onClick="@{() -> ausgabeDialog.saveAusgabeAndCloseDialog()}"
                     android:src="@drawable/btn_confirm"
                     android:textSize="20sp" />
 
@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="right"
-                    android:onClick="@{() -> addAusgabeDialog.closeDialog()}"
+                    android:onClick="@{() -> ausgabeDialog.closeDialog()}"
                     android:src="@drawable/btn_cancel"
                     android:textSize="20sp" />
         </LinearLayout>

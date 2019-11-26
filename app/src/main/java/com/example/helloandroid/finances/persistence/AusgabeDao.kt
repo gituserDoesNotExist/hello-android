@@ -11,6 +11,9 @@ interface AusgabeDao {
     @Insert
     fun insertAusgabe(ausgaben: AusgabeEntity)
 
+    @Query("delete from AUSGABE_ENTITY where ID = :ausgabeId")
+    fun deleteAusgabe(ausgabeId: Long)
+
     @Query("select * from AUSGABE_ENTITY a where a.POSTEN_ID = :postenId")
     fun getAusgabenByPostenId(postenId: Long) : LiveData<List<AusgabeEntity>>
 

@@ -5,12 +5,13 @@ import java.util.stream.Collectors
 
 class AusgabeEntityToAusgabeMapper {
 
-    fun asAusgabe(ausgabeEntity: AusgabeEntity): Ausgabe {
-        return Ausgabe(ausgabeEntity.wert, ausgabeEntity.datum, ausgabeEntity.beschreibung, ausgabeEntity.postenId)
-    }
 
     fun asAusgaben(ausgabenEntities: List<AusgabeEntity>): List<Ausgabe> {
         return ausgabenEntities.stream().map(this::asAusgabe).collect(Collectors.toList())
+    }
+
+    private fun asAusgabe(value: AusgabeEntity): Ausgabe {
+        return Ausgabe(value.id, value.wert, value.datum, value.beschreibung, value.postenId)
     }
 
     fun asAusgabeEntity(ausgabe: Ausgabe): AusgabeEntity {

@@ -2,6 +2,7 @@ package com.example.helloandroid.finances.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.example.helloandroid.DatabaseAsyncTask
 import com.example.helloandroid.InvalidEntityException
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.Posten
@@ -24,7 +25,12 @@ class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDa
     fun saveAusgabeForPosten(ausgabe: Ausgabe, postenId: Long) {
         if (postenId == 0L) throw InvalidEntityException("Die ID des aktuellen Postens darf icht null sein")
         ausgabe.postenId = postenId
-        Thread(Runnable { ausgabeDao.insertAusgabe(ausgabeEntityToAusgabeMapper.asAusgabeEntity(ausgabe)) }).start()
+        val ausgabeEntity = ausgabeEntityToAusgabeMapper.asAusgabeEntity(ausgabe)
+        DatabaseAsyncTask(ausgabeDao::insertAusgabe).execute(ausgabeEntity)
+    }
+
+    fun deleteAusgabe(ausgabe: Ausgabe) {
+        DatabaseAsyncTask(ausgabeDao::deleteAusgabe).execute(ausgabe.id)
     }
 
     fun findPostenStubs(): LiveData<List<PostenStub>> {
@@ -34,10 +40,10 @@ class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDa
     }
 
     fun deletePosten(postenId: Long) {
-        Thread(Runnable {
+        DatabaseAsyncTask<Long, Unit>({
             ausgabeDao.deleteAusgabenWithPostenId(postenId)
             postenDao.deletePosten(postenId)
-        }).start()
+        }).execute(postenId)
     }
 
 }

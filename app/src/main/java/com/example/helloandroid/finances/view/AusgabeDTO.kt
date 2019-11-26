@@ -9,6 +9,8 @@ import java.math.BigDecimal
 
 class AusgabeDTO : BaseObservable() {
 
+    var id: Long = 0
+
     var datum: LocalDate = LocalDate.now()
         @Bindable get(): LocalDate = field
         set(value) {

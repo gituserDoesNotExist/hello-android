@@ -9,7 +9,7 @@ class AusgabeMapper {
         val date = ausgabeDto.datum
         val time = ausgabeDto.uhrzeit
 
-        return Ausgabe(ausgabeDto.wert, LocalDateTime.of(date, time), ausgabeDto.beschreibung)
+        return Ausgabe(ausgabeDto.id, ausgabeDto.wert, LocalDateTime.of(date, time), ausgabeDto.beschreibung)
     }
 
 }

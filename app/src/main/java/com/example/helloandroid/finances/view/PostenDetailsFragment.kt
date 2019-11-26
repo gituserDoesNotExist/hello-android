@@ -45,12 +45,30 @@ class PostenDetailsFragment : Fragment() {
 
     private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>, activity: FragmentActivity) {
         val ausgabenRecyclerView = rootView.findViewById<RecyclerView>(R.id.ausgaben_recycler_view)
-        val adapter = AusgabeRecyclerViewAdapter(activity, ausgaben)
-        ausgabenRecyclerView.adapter = adapter
+        ausgabenRecyclerView.adapter =
+            AusgabeRecyclerViewAdapter(activity, ausgaben, this::deleteAusgabe, this::editAusgabe)
         ausgabenRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
+    private fun deleteAusgabe(ausgabe: Ausgabe) {
+        postenDetailsViewModel.deleteAusgabe(ausgabe)
+    }
+
+    private fun editAusgabe(ausgabe: Ausgabe) {
+        openAusgabeDialog(AusgabeDialog().apply {
+            this.ausgabeDTO.beschreibung = ausgabe.beschreibung
+            this.ausgabeDTO.datum = ausgabe.datum.toLocalDate()
+            this.ausgabeDTO.uhrzeit = ausgabe.datum.toLocalTime()
+            this.ausgabeDTO.wert = ausgabe.wert
+            this.ausgabeDTO.id = ausgabe.id
+        })
+    }
+
     private fun openNewAusgabeDialog() {
+        openAusgabeDialog(AusgabeDialog())
+    }
+
+    private fun openAusgabeDialog(ausgabeDialog: AusgabeDialog) {
         activity?.let {
             val transaction = it.supportFragmentManager.beginTransaction()
             val prev = it.supportFragmentManager.findFragmentByTag("ausgabe_dialog")
@@ -58,8 +76,7 @@ class PostenDetailsFragment : Fragment() {
                 transaction.remove(prev)
             }
             transaction.addToBackStack(null)
-            val addPostenDialog = AddAusgabeDialog()
-            addPostenDialog.show(transaction, "ausgabe_dialog")
+            ausgabeDialog.show(transaction, "ausgabe_dialog")
         }
     }
 

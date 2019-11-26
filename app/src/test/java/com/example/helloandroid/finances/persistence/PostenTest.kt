@@ -14,8 +14,8 @@ class PostenTest {
         val posten = Posten("PostenWithAusgaben")
         posten.ausgaben.addAll(
             listOf(
-                Ausgabe(BigDecimal.TEN, LocalDateTime.now(),"",1),
-                Ausgabe(BigDecimal.ONE, LocalDateTime.now(),"",1)
+                Ausgabe(0, BigDecimal.TEN, LocalDateTime.now(), "", 1),
+                Ausgabe(0, BigDecimal.ONE, LocalDateTime.now(), "", 1)
             )
         )
 

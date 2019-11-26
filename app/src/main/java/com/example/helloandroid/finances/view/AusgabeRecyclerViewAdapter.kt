@@ -2,9 +2,7 @@ package com.example.helloandroid.finances.view
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
@@ -23,11 +21,11 @@ import java.math.BigDecimal
 import java.util.*
 import java.util.stream.Collectors
 
-class AusgabeRecyclerViewAdapter(parentActivity: Activity, ausgaben: List<Ausgabe>) :
+class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private val allAusgaben: List<Ausgabe>,
+                                 private val deleteAusgabe: (Ausgabe) -> Unit,
+                                 private val editAusgabe: (Ausgabe) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val parentActivity = parentActivity
-    private val allAusgaben = ausgaben
     private var startDateAusgabe: LocalDate
     private var endDateAusgabe: LocalDate
     private var ausgabenForDateRange: List<Ausgabe>
@@ -50,6 +48,8 @@ class AusgabeRecyclerViewAdapter(parentActivity: Activity, ausgaben: List<Ausgab
         const val VIEW_TYPE_ITEM: Int = 1
         private val DROPDOWN_ENTRIES =
             listOf("Datum aufsteigend", "Datum absteigend", "Wert aufsteigend", "Wert absteigend", "Beschreibung")
+        const val MENU_ITEM_EDIT_AUSGABE = 1
+        const val MENU_ITEM_DELETE_AUSGABE = 2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -171,6 +171,13 @@ class AusgabeRecyclerViewAdapter(parentActivity: Activity, ausgaben: List<Ausgab
             holder.datumTextView.text = createDateTimeForAnzeige(currentAusgabe.datum)
             holder.wertTextView.text = currentAusgabe.wert.toString()
             holder.beschreibungTextView.text = currentAusgabe.beschreibung
+            holder.setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener {
+                when (it.itemId) {
+                    MENU_ITEM_EDIT_AUSGABE -> editAusgabe(currentAusgabe)
+                    MENU_ITEM_DELETE_AUSGABE -> deleteAusgabe(currentAusgabe)
+                }
+                true
+            })
         }
     }
 
@@ -200,11 +207,25 @@ class AusgabeRecyclerViewAdapter(parentActivity: Activity, ausgaben: List<Ausgab
         return if (position == VIEW_TYPE_HEADER) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+
         val datumTextView: TextView = itemView.findViewById(id.ausgabe_item_datum)
         val wertTextView: TextView = itemView.findViewById(id.ausgabe_item_wert)
         val beschreibungTextView: TextView = itemView.findViewById(id.ausgabe_item_beschreibung)
+        private lateinit var itemClickListener: MenuItem.OnMenuItemClickListener
 
+        init {
+            itemView.setOnCreateContextMenuListener(this) //REGISTER ONCREATE MENU LISTENER
+        }
+
+        fun setOnMenuItemClickListener(listener: MenuItem.OnMenuItemClickListener) {
+            this.itemClickListener = listener
+        }
+
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            menu?.add(Menu.NONE, MENU_ITEM_EDIT_AUSGABE, 1, "Edit")?.setOnMenuItemClickListener(itemClickListener)
+            menu?.add(Menu.NONE, MENU_ITEM_DELETE_AUSGABE, 2, "Delete")?.setOnMenuItemClickListener(itemClickListener)
+        }
     }
 
     class HeaderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
