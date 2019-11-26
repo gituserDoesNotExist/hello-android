@@ -9,12 +9,12 @@ object LocalTimeConverter {
     @JvmStatic
     @InverseMethod("stringToTime")
     fun timeToString(value: LocalTime): String {
-        return "${value.hour}:${value.minute}"
+        return value.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
 
     @JvmStatic
     fun stringToTime(value: String): LocalTime {
-        return LocalTime.parse(value, DateTimeFormatter.ofPattern("h.m"))
+        return LocalTime.parse(value, DateTimeFormatter.ofPattern("HH:mm"))
     }
 
 

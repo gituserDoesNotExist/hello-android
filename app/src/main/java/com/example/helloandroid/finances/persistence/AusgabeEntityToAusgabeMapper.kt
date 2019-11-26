@@ -15,7 +15,10 @@ class AusgabeEntityToAusgabeMapper {
     }
 
     fun asAusgabeEntity(ausgabe: Ausgabe): AusgabeEntity {
-        return AusgabeEntity(ausgabe.wert, ausgabe.beschreibung, ausgabe.datum).apply { postenId = ausgabe.postenId }
+        return AusgabeEntity(ausgabe.wert, ausgabe.beschreibung, ausgabe.datum).apply {
+            this.postenId = ausgabe.postenId
+            this.id = ausgabe.id
+        }
     }
 
 }

@@ -26,7 +26,14 @@ class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDa
         if (postenId == 0L) throw InvalidEntityException("Die ID des aktuellen Postens darf icht null sein")
         ausgabe.postenId = postenId
         val ausgabeEntity = ausgabeEntityToAusgabeMapper.asAusgabeEntity(ausgabe)
-        DatabaseAsyncTask(ausgabeDao::insertAusgabe).execute(ausgabeEntity)
+        DatabaseAsyncTask(this::upsertAusgabe).execute(ausgabeEntity)
+    }
+
+    private fun upsertAusgabe(ausgabe: AusgabeEntity) {
+        if (ausgabeDao.doesAusgabeExist(ausgabe.id)) {
+            ausgabeDao.updateAusgabe(ausgabe)
+        } else
+            ausgabeDao.insertAusgabe(ausgabe)
     }
 
     fun deleteAusgabe(ausgabe: Ausgabe) {

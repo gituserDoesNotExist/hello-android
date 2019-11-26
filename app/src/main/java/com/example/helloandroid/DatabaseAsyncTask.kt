@@ -18,6 +18,9 @@ class DatabaseAsyncTask<INPUT, RESULT>(private val backgroundOperationFunc: (INP
         } catch (e: DatabaseOperationException) {
             this.databaseOperationException = e
             cancel(true)
+        } catch(e: Exception) {
+            this.databaseOperationException = DatabaseOperationException("This should not happen!")
+            cancel(true)
         }
         return Optional.empty()
     }

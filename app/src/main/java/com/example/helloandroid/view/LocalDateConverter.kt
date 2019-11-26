@@ -9,12 +9,12 @@ object LocalDateConverter {
     @JvmStatic
     @InverseMethod("stringToDate")
     fun dateToString(value: LocalDate): String {
-        return "${value.dayOfMonth}.${value.monthValue}.${value.year}"
+        return value.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     }
 
     @JvmStatic
     fun stringToDate(value: String): LocalDate {
-        return LocalDate.parse(value, DateTimeFormatter.ofPattern("d.M.yyyy"))
+        return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     }
 
 
