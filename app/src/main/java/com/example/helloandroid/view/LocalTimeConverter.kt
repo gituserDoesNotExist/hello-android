@@ -6,15 +6,17 @@ import org.threeten.bp.format.DateTimeFormatter
 
 object LocalTimeConverter {
 
+    private val FORMATTER = DateTimeFormatter.ofPattern("HH:mm")
+
     @JvmStatic
     @InverseMethod("stringToTime")
     fun timeToString(value: LocalTime): String {
-        return value.format(DateTimeFormatter.ofPattern("HH:mm"))
+        return value.format(FORMATTER)
     }
 
     @JvmStatic
     fun stringToTime(value: String): LocalTime {
-        return LocalTime.parse(value, DateTimeFormatter.ofPattern("HH:mm"))
+        return LocalTime.parse(value, FORMATTER)
     }
 
 

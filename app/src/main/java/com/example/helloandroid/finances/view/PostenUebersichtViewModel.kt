@@ -2,6 +2,7 @@ package com.example.helloandroid.finances.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.helloandroid.finances.Posten
 import com.example.helloandroid.finances.PostenStub
 import com.example.helloandroid.finances.persistence.FinancesRepository
 import java.math.BigDecimal
@@ -18,6 +19,10 @@ class PostenUebersichtViewModel(private val financesRepository: FinancesReposito
 
     fun deletePosten(posten: PostenStub) {
         financesRepository.deletePosten(posten.postenId)
+    }
+
+    fun savePosten(posten: Posten) {
+        financesRepository.savePosten(posten)
     }
 
 

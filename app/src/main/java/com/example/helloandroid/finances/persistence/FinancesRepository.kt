@@ -15,6 +15,7 @@ class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDa
     private val ausgabeEntityToAusgabeMapper = AusgabeEntityToAusgabeMapper()
     private val postenWithAusgabeEntityToPostenMapper = PostenWithAusgabenEntityToPostenMapper()
     private val postenStubMapper = PostenStubMapper()
+    private val postenEntityToPostenMapper: PostenEntityToPostenMapper = PostenEntityToPostenMapper()
 
     fun findPostenById(postenId: Long): LiveData<Posten> {
         return Transformations.map(postenWithAusgabenDao.getPostenById(postenId)) {
@@ -44,6 +45,12 @@ class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDa
         return Transformations.map(postenWithAusgabenDao.getPostenStubs()) { stubs ->
             stubs.stream().map(postenStubMapper::asPostenStub).collect(Collectors.toList())
         }
+    }
+
+
+    fun savePosten(posten: Posten) {
+        val postenEntity = postenEntityToPostenMapper.asPostenEntity(posten)
+        Thread(Runnable { postenDao.insertPosten(postenEntity) }).start()
     }
 
     fun deletePosten(postenId: Long) {

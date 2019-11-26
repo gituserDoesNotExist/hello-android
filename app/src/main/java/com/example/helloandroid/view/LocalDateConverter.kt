@@ -6,15 +6,17 @@ import org.threeten.bp.format.DateTimeFormatter
 
 object LocalDateConverter {
 
+    private val FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
     @JvmStatic
     @InverseMethod("stringToDate")
     fun dateToString(value: LocalDate): String {
-        return value.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        return value.format(FORMATTER)
     }
 
     @JvmStatic
     fun stringToDate(value: String): LocalDate {
-        return LocalDate.parse(value, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        return LocalDate.parse(value, FORMATTER)
     }
 
 
