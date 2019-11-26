@@ -1,6 +1,5 @@
 package com.example.helloandroid.finances.persistence
 
-import androidx.arch.core.util.Function
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.helloandroid.InvalidEntityException
@@ -9,36 +8,27 @@ import com.example.helloandroid.finances.Posten
 import com.example.helloandroid.finances.PostenStub
 import java.util.stream.Collectors
 
-class FinancesRepository(postenDao: PostenDao, ausgabeDao: AusgabeDao, postenWithAusgabenDao: PostenWithAusgabenDao) {
+class FinancesRepository(private val postenDao: PostenDao, private val ausgabeDao: AusgabeDao,
+                         private val postenWithAusgabenDao: PostenWithAusgabenDao) {
 
-    private val postenDao = postenDao
-    private val ausgabeDao = ausgabeDao
-    private val postenWithAusgabeDao = postenWithAusgabenDao
     private val ausgabeEntityToAusgabeMapper = AusgabeEntityToAusgabeMapper()
     private val postenWithAusgabeEntityToPostenMapper = PostenWithAusgabenEntityToPostenMapper()
     private val postenStubMapper = PostenStubMapper()
 
     fun findPostenById(postenId: Long): LiveData<Posten> {
-        return Transformations.map(postenWithAusgabeDao.getPostenById(postenId)) {
+        return Transformations.map(postenWithAusgabenDao.getPostenById(postenId)) {
             postenWithAusgabeEntityToPostenMapper.fromPostenWithAusgabenToPosten(it)
         }
     }
 
-    fun saveAusgabeForPosten(ausgabe: AusgabeEntity, postenId: Long) {
+    fun saveAusgabeForPosten(ausgabe: Ausgabe, postenId: Long) {
         if (postenId == 0L) throw InvalidEntityException("Die ID des aktuellen Postens darf icht null sein")
         ausgabe.postenId = postenId
-        Thread(Runnable { ausgabeDao.insertAusgabe(ausgabe) }).start()
+        Thread(Runnable { ausgabeDao.insertAusgabe(ausgabeEntityToAusgabeMapper.asAusgabeEntity(ausgabe)) }).start()
     }
-
-    fun findAusgabenForPosten(postenId: Long): LiveData<List<Ausgabe>> {
-        return Transformations.map(ausgabeDao.getAusgabenByPostenId(postenId)) { ausgabenEntities ->
-            ausgabenEntities.stream().map(ausgabeEntityToAusgabeMapper::asAusgabe).collect(Collectors.toList())
-        }
-    }
-
 
     fun findPostenStubs(): LiveData<List<PostenStub>> {
-        return Transformations.map(postenWithAusgabeDao.getPostenStubs()) { stubs ->
+        return Transformations.map(postenWithAusgabenDao.getPostenStubs()) { stubs ->
             stubs.stream().map(postenStubMapper::asPostenStub).collect(Collectors.toList())
         }
     }

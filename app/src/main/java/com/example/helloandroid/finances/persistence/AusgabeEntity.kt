@@ -4,8 +4,8 @@ import androidx.room.*
 import com.example.helloandroid.persistence.BaseEntity
 import com.example.helloandroid.persistence.BigDecimalConverter
 import com.example.helloandroid.persistence.LocalDateTimeConverter
+import org.threeten.bp.LocalDateTime
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 @Entity(
     tableName = "AUSGABE_ENTITY",indices = [Index(value = ["POSTEN_ID"])], foreignKeys = [ForeignKey(

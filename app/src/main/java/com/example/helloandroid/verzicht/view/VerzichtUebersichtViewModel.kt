@@ -1,4 +1,4 @@
-package com.example.helloandroid.verzicht
+package com.example.helloandroid.verzicht.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -15,12 +15,8 @@ class VerzichtUebersichtViewModel(verzichtRepository: VerzichtRepository) : View
         verzichteLiveData = verzichtRepository.findAllVerzichte()
     }
 
-    fun findAllVerzichte() : List<Verzicht> {
-        return verzichtRepository.findAllVerzichteTest()
-    }
-
-    fun saveVerzicht(verzicht: Verzicht) {
-        verzichtRepository.saveVerzicht(verzicht)
+    fun saveVerzicht(verzichtDto: VerzichtDTO): Long {
+        return verzichtRepository.saveVerzicht(Verzicht(verzichtDto.name))
     }
 
     fun deleteVerzicht(verzicht: Verzicht) {

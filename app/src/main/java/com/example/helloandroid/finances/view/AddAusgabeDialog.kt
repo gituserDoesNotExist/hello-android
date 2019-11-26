@@ -9,9 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.databinding.AddAusgabeDialogBinding
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 
 class AddAusgabeDialog : DialogFragment() {
 
@@ -41,17 +40,17 @@ class AddAusgabeDialog : DialogFragment() {
     fun openDatePickerDialog() {
         val crrntDate = LocalDate.now()
         val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            ausgabeDTO.datum = LocalDate.of(year,month,dayOfMonth)
+            ausgabeDTO.datum = LocalDate.of(year,month, dayOfMonth)
         }
         activity?.let {
-            DatePickerDialog(it, onDateSetListener, crrntDate.year, crrntDate.month.value, crrntDate.dayOfMonth).show()
+            DatePickerDialog(it, onDateSetListener, crrntDate.year, crrntDate.monthValue, crrntDate.dayOfMonth).show()
         }
     }
 
     fun openTimePickerDialog() {
-        val currentTime = LocalDateTime.now()
+        val currentTime = LocalTime.now()
         val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            ausgabeDTO.uhrzeit = LocalTime.of(hourOfDay, minute)
+            ausgabeDTO.uhrzeit = LocalTime.of(hourOfDay,minute)
         }
         activity?.let {
             TimePickerDialog(it, onTimeSetListener, currentTime.hour, currentTime.minute, true).show()
@@ -59,17 +58,5 @@ class AddAusgabeDialog : DialogFragment() {
     }
 
 
-    private fun buildDateForAnzeige(year: Int, month: Int, dayOfMonth: Int): String {
-        return "$dayOfMonth.$month.$year"
-    }
-
-    private fun buildCurrentTimeForAnzeige(): String {
-        val currentTime = LocalDateTime.now()
-        return buildTimeForAnzeige(currentTime.hour, currentTime.minute)
-    }
-
-    private fun buildTimeForAnzeige(hour: Int, minute: Int): String {
-        return "$hour:$minute"
-    }
 
 }

@@ -10,15 +10,16 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.helloandroid.R.*
+import com.example.helloandroid.R.id
+import com.example.helloandroid.R.layout
 import com.example.helloandroid.SortDirection
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.view.BigDecimalConverter
 import com.example.helloandroid.view.LocalDateConverter
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import java.math.BigDecimal
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.stream.Collectors
 

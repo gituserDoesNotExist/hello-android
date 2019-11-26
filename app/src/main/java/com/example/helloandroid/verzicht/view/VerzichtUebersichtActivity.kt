@@ -1,4 +1,4 @@
-package com.example.helloandroid.verzicht
+package com.example.helloandroid.verzicht.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +7,14 @@ import android.view.View
 import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
 
-class VerzichtUebersichtActivity : AppCompatActivity(), VerzichtListFragment.EditVerzichtFragmentOpener {
+class VerzichtUebersichtActivity : AppCompatActivity(),
+    VerzichtUebersichtFragment.EditVerzichtFragmentOpener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verzicht_uebersicht)
 
-        val verzichtListFragment = VerzichtListFragment()
+        val verzichtListFragment = VerzichtUebersichtFragment()
         verzichtListFragment.openEditVerzichtFragmentCallback = this
         supportFragmentManager.beginTransaction()//
             .add(R.id.fragment_container_verzicht, verzichtListFragment)//
@@ -26,7 +27,7 @@ class VerzichtUebersichtActivity : AppCompatActivity(), VerzichtListFragment.Edi
 
     override fun openEditVerzichtFragment() {
         supportFragmentManager.beginTransaction()//
-            .replace(R.id.fragment_container_verzicht, EditVerzichtFragment())//
+            .replace(R.id.fragment_container_verzicht, VerzichtDetailsFragment())//
             .addToBackStack("egal")
             .commit()
     }

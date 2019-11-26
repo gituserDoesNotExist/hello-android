@@ -3,13 +3,11 @@ package com.example.helloandroid.persistence
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
-import com.example.helloandroid.finances.persistence.*
-import org.assertj.core.api.Assertions.assertThat
+import com.example.helloandroid.finances.persistence.AusgabeDao
+import com.example.helloandroid.finances.persistence.PostenDao
+import com.example.helloandroid.finances.persistence.PostenWithAusgabenDao
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
-import java.math.BigDecimal
-import java.time.LocalDateTime
 
 @RunWith(AndroidJUnit4::class)
 class PostenWithAusgabenDaoTest {

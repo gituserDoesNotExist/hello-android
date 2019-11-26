@@ -18,7 +18,7 @@
         <activity android:name=".finances.view.FinancesActivity" />
         <activity android:name=".fragmentsht.FunWithFragmentsActivity" />
         <activity android:name=".count.CountActivity" />
-        <activity android:name=".verzicht.VerzichtUebersichtActivity" />
+        <activity android:name=".verzicht.view.VerzichtUebersichtActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

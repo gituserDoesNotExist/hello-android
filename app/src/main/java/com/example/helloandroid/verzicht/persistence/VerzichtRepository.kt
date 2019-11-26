@@ -1,18 +1,12 @@
 package com.example.helloandroid.verzicht.persistence
 
+import android.database.SQLException
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.example.helloandroid.verzicht.persistence.Verzicht
-import com.example.helloandroid.verzicht.persistence.VerzichtDao
+import com.example.helloandroid.DatabaseAsyncTask
+import com.example.helloandroid.DatabaseOperationException
 
 
-class VerzichtRepository(verzichtDao: VerzichtDao)  {
-
-    private var verzichtDao = verzichtDao
-
-    fun findByVerzichtName(name: String): LiveData<Verzicht> {
-        return verzichtDao.getByName(name)
-    }
+class VerzichtRepository(private var verzichtDao: VerzichtDao) {
 
     fun findById(id: Long): LiveData<Verzicht> {
         return verzichtDao.getById(id)
@@ -23,18 +17,22 @@ class VerzichtRepository(verzichtDao: VerzichtDao)  {
     }
 
     fun updateVerzicht(verzicht: Verzicht) {
-        Thread { verzichtDao.updateVerzicht(verzicht) }.start()
+        DatabaseAsyncTask(verzichtDao::updateVerzicht).execute(verzicht)
     }
 
-    fun saveVerzicht(verzicht: Verzicht) {
-        Thread { verzichtDao.insertVerzicht(verzicht) }.start()
+    fun saveVerzicht(verzicht: Verzicht): Long {
+        try {
+            return verzichtDao.insertVerzicht(verzicht)
+        } catch (e: SQLException) {
+            throw DatabaseOperationException("Fehler beim Einfügen von \"${verzicht.verzichtName}\": ${e.message ?: ""}", e)
+        } catch (e: Exception) {
+            throw DatabaseOperationException("Unknown error")
+        }
+
     }
 
     fun deleteVerzicht(verzicht: Verzicht) {
-        Thread { verzichtDao.deleteVerzicht(verzicht) }.start()
+        DatabaseAsyncTask(verzichtDao::deleteVerzicht).execute(verzicht)
     }
 
-    fun findAllVerzichteTest(): List<Verzicht> {
-        return verzichtDao.getAllTest()
-    }
 }

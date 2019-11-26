@@ -47,7 +47,7 @@
             <EditText
                     android:id="@+id/input_add_ausgabe_time"
                     android:gravity="bottom"
-                    android:text="@={LocalTimeConverter.localTimeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}" />
+                    android:text="@={LocalTimeConverter.timeToString(addAusgabeDialog.ausgabeDTO.uhrzeit)}" />
 
             <ImageButton
                     android:id="@+id/btn_add_ausgabe_dialog_select_time"

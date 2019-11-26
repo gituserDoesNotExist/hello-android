@@ -1,4 +1,4 @@
-package com.example.helloandroid.verzicht
+package com.example.helloandroid.verzicht.view
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

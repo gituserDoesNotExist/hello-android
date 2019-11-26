@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+                name="fragmentVerzichtUebersicht"
+                type="com.example.helloandroid.verzicht.view.VerzichtUebersichtFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="vertical"
+            tools:context=".verzicht.view.VerzichtUebersichtActivity">
+
+        <EditText
+                android:id="@+id/input_new_verzicht_name"
+                android:layout_width="wrap_content"
+                android:layout_height="50dip"
+                android:layout_marginTop="24dp"
+                android:hint="Name des neuen Verzichts"
+                android:text="@={fragmentVerzichtUebersicht.verzichtDTO.name}"
+                android:inputType="textPersonName"
+                android:textSize="20dip"
+                app:layout_constraintEnd_toStartOf="@+id/btn_new_verzicht"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_verzicht_activity" />
+
+        <ImageButton
+                android:id="@+id/btn_new_verzicht"
+                android:layout_width="wrap_content"
+                android:layout_height="50dip"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                android:background="@color/background"
+                android:imeOptions="actionDone"
+                android:onClick="@{(view) -> fragmentVerzichtUebersicht.saveVerzichtAndResetInputField(view)}"
+                android:src="@drawable/add_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_verzicht_activity" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verzicht_list_guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="75dp" />
+
+        <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dip"
+                android:layout_marginEnd="10dip"
+                android:background="@color/colorYellowLight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/verzicht_list_guideline_top" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

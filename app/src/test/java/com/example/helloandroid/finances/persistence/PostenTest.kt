@@ -4,8 +4,8 @@ import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.finances.Posten
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.threeten.bp.LocalDateTime
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 class PostenTest {
 

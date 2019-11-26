@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.TypeConverters
 import com.example.helloandroid.persistence.BaseEntity
 import com.example.helloandroid.persistence.OptionalLocalDateTimeConverter
-import java.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
 import java.util.*
 
 @Entity(tableName = "VERZICHT", indices = [Index(value = ["VERZICHT_NAME"], unique = true)])

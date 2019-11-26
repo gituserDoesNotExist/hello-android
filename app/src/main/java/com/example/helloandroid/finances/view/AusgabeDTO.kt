@@ -3,9 +3,9 @@ package com.example.helloandroid.finances.view
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 import java.math.BigDecimal
-import java.time.LocalDate
-import java.time.LocalTime
 
 class AusgabeDTO : BaseObservable() {
 
@@ -19,13 +19,14 @@ class AusgabeDTO : BaseObservable() {
         }
 
     var uhrzeit: LocalTime = LocalTime.now()
-        @Bindable get
+        @Bindable get(): LocalTime = field
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.uhrzeit)
+                notifyPropertyChanged(BR.datum)
             }
         }
+
 
     var wert: BigDecimal = BigDecimal.ZERO
         @Bindable get

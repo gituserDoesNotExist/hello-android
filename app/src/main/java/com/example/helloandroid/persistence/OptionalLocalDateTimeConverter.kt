@@ -1,24 +1,25 @@
 package com.example.helloandroid.persistence
 
 import androidx.room.TypeConverter
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import org.threeten.bp.LocalDateTime
 import java.util.*
 
 
 class OptionalLocalDateTimeConverter {
 
     @TypeConverter
-    fun fromLocalDateTime(value: Optional<LocalDateTime>): String {
-        return value.map { ldt -> ldt.format(DateTimeFormatter.ISO_DATE_TIME) }.orElse("")
+    fun fromOptionalCalendar(value: Optional<LocalDateTime>): String {
+        val converter = LocalDateTimeConverter()
+        return value.map { c -> converter.fromLocalDateTime(c) }.orElse("")
     }
 
     @TypeConverter
-    fun toLocalDateTime(value: String): Optional<LocalDateTime> {
-        if (value == null || value.isEmpty()) {
+    fun toOptionalCalendar(value: String): Optional<LocalDateTime> {
+        val converter = LocalDateTimeConverter()
+        if (value.isEmpty()) {
             return Optional.empty()
         }
-        return Optional.ofNullable(LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME))
+        return Optional.ofNullable(converter.toLocalDateTime(value))
     }
 
 

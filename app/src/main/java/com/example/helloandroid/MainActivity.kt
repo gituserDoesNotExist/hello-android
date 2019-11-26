@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.helloandroid.count.CountActivity
-import com.example.helloandroid.count.CountViewModel
 import com.example.helloandroid.databinding.DatabindingActivity
 import com.example.helloandroid.finances.view.FinancesActivity
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
-import com.example.helloandroid.verzicht.VerzichtUebersichtActivity
+import com.example.helloandroid.verzicht.view.VerzichtUebersichtActivity
 
 class MainActivity : AppCompatActivity() {
 

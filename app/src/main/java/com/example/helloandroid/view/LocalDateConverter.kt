@@ -1,8 +1,8 @@
 package com.example.helloandroid.view
 
 import androidx.databinding.InverseMethod
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
 object LocalDateConverter {
 
@@ -14,8 +14,7 @@ object LocalDateConverter {
 
     @JvmStatic
     fun stringToDate(value: String): LocalDate {
-        val dateTimeFormatter = DateTimeFormatter.ofPattern("d.M.yyyy")
-        return LocalDate.parse(value,dateTimeFormatter)
+        return LocalDate.parse(value, DateTimeFormatter.ofPattern("d.M.yyyy"))
     }
 
 

@@ -9,8 +9,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.helloandroid.finances.persistence.*
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
+import org.threeten.bp.LocalDateTime
 import java.math.BigDecimal
-import java.time.LocalDateTime.*
 import java.util.concurrent.Executors
 
 @Database(entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class], version = 1)
@@ -30,30 +30,27 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getDb(context: Context): AppDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-            }
+        fun getDb(context: Context): AppDatabase = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+        }
 
         private fun buildDatabase(context: Context): AppDatabase {
             val instance =
-                Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).allowMainThreadQueries()
-                    .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
+                Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME).addCallback(object : Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
 
-                            ioThread { prepopulateDatabase(context) }
-                        }
-                    })
-                    .build()
+                        ioThread { prepopulateDatabase(context) }
+                    }
+                }).build()
             INSTANCE = instance
             return instance
         }
 
         private fun prepopulateDatabase(context: Context) {
             val postenId = getDb(context).postenDao().insertPosten(PostenEntity("Lebensmittel"))
-            IntRange(1,5).forEach {
-                val ausgabe = AusgabeEntity(BigDecimal(it), "egal", now())
+            IntRange(1, 5).forEach {
+                val ausgabe = AusgabeEntity(BigDecimal(it), "egal", LocalDateTime.now())
                 ausgabe.postenId = postenId
                 getDb(context).ausgabeDao().insertAusgabe(ausgabe)
             }
