@@ -27,9 +27,11 @@
 
     <ListView
             android:id="@+id/testit"
-            android:layout_width="399dip"
+            android:layout_width="0dip"
             android:layout_height="0dip"
+            android:layout_marginStart="10dip"
             android:layout_marginTop="20dip"
+            android:layout_marginEnd="10dip"
             android:background="@color/colorYellowLight"
             app:layout_constraintBottom_toTopOf="@id/guideline_lower_bound_posten_list"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +52,7 @@
                 android:id="@+id/txt_finances_money_spend_so_far"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
+                android:layout_marginEnd="5dip"
                 android:text="@string/txt_finances_activity_total_amount"
                 android:textSize="20sp" />
 
@@ -58,16 +60,18 @@
                 android:id="@+id/txt_finances_total_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
+                android:layout_marginEnd="5dip"
                 android:text="10"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
 
         <TextView
                 android:id="@+id/txt_finances_euro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Euro"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
@@ -76,6 +80,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="481dp" />
+            app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

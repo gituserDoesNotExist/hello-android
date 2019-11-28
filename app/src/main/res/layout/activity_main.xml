@@ -12,11 +12,13 @@
             android:id="@+id/title_main_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Dashboard"
-            android:textSize="32dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginBottom="20dip"
+            android:text="@string/title_main_activity"
+            android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guideline_top"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -25,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="100dp" />
+            app:layout_constraintGuide_percent="0.13" />
 
     <Button
             android:id="@+id/btn_start_verzicht_activity"
@@ -36,12 +38,41 @@
             android:padding="10dip"
             android:text="@string/label_btn_start_verzicht_activity"
             android:textAllCaps="false"
-            android:textSize="28sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_start_count_activity"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_start_finances_activity"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toTopOf="@+id/guideline_top" />
 
+    <Button
+            android:id="@+id/btn_start_finances_activity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:background="@color/lightOrange"
+            android:onClick="startFincancesActivity"
+            android:padding="10dip"
+            android:text="@string/label_btn_start_finances_activity"
+            android:textAllCaps="false"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_timerecording_activity"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_verzicht_activity" />
+
+    <Button
+            android:id="@+id/btn_start_timerecording_activity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:background="@color/lightOrange"
+            android:onClick="startTimerecordingActivity"
+            android:padding="10dip"
+            android:text="@string/label_btn_start_timerecording_activity"
+            android:textAllCaps="false"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_count_activity"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_finances_activity" />
 
     <Button
             android:id="@+id/btn_start_count_activity"
@@ -53,11 +84,11 @@
             android:padding="10dip"
             android:text="@string/label_btn_start_count_activity"
             android:textAllCaps="false"
-            android:textSize="28sp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@id/btn_start_fragment_activity"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toBottomOf="@+id/btn_start_verzicht_activity" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_start_timerecording_activity" />
 
     <Button
             android:id="@+id/btn_start_fragment_activity"
@@ -68,11 +99,11 @@
             android:padding="10dip"
             android:text="@string/label_btn_start_fragment_activity"
             android:textAllCaps="false"
-            android:textSize="30dip"
-            app:layout_constraintTop_toBottomOf="@id/btn_start_count_activity"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_start_databinding_activity"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_count_activity" />
 
     <Button
             android:id="@+id/btn_start_databinding_activity"
@@ -83,26 +114,11 @@
             android:padding="10dip"
             android:text="@string/label_btn_start_databinding_activity"
             android:textAllCaps="false"
-            android:textSize="30dip"
-            app:layout_constraintTop_toBottomOf="@id/btn_start_fragment_activity"
-            app:layout_constraintBottom_toTopOf="@+id/btn_start_finances_activity"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
-
-    <Button
-            android:id="@+id/btn_start_finances_activity"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
-            android:onClick="startFincancesActivity"
-            android:padding="10dip"
-            android:text="@string/label_btn_start_finances_activity"
-            android:textAllCaps="false"
-            android:textSize="30dip"
-            app:layout_constraintTop_toBottomOf="@id/btn_start_databinding_activity"
+            android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_of_table"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left" />
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_fragment_activity" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -110,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="556dp" />
+            app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_left"
@@ -128,3 +144,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

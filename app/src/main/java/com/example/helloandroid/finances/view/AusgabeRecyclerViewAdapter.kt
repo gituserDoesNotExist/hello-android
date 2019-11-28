@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R.id
 import com.example.helloandroid.R.layout
-import com.example.helloandroid.SortDirection
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.view.BigDecimalConverter
 import com.example.helloandroid.view.LocalDateConverter
+import com.example.helloandroid.view.SortDirection
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -28,7 +28,7 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
 
     private var startDateAusgabe: LocalDate
     private var endDateAusgabe: LocalDate
-    private var ausgabenForDateRange: List<Ausgabe>
+    private var ausgabenForDateRange: MutableList<Ausgabe>
 
     init {
         startDateAusgabe = findEarliestAusgabe(allAusgaben)
@@ -98,11 +98,11 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     private fun sortByDatumAufsteigend() {
-        Collections.sort(ausgabenForDateRange) { o1, o2 -> sortAusgabenByDate(SortDirection.ASCENDING, o1, o2) }
+        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> sortAusgabenByDate(SortDirection.ASCENDING, o1, o2) })
     }
 
     private fun sortByDatumAbsteigend() {
-        Collections.sort(ausgabenForDateRange) { o1, o2 -> sortAusgabenByDate(SortDirection.DESCENDING, o1, o2) }
+        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> sortAusgabenByDate(SortDirection.DESCENDING, o1, o2) })
     }
 
     private fun sortAusgabenByDate(sortDirection: SortDirection, ausgabe: Ausgabe, otherAusgabe: Ausgabe): Int {
@@ -114,11 +114,11 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     private fun sortByWertAufsteigend() {
-        Collections.sort(ausgabenForDateRange) { o1, o2 -> sortAusgabenByWert(SortDirection.ASCENDING, o1, o2) }
+        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> sortAusgabenByWert(SortDirection.ASCENDING, o1, o2) })
     }
 
     private fun sortByWertAbsteigend() {
-        Collections.sort(ausgabenForDateRange) { o1, o2 -> sortAusgabenByWert(SortDirection.DESCENDING, o1, o2) }
+        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> sortAusgabenByWert(SortDirection.DESCENDING, o1, o2) })
     }
 
     private fun sortAusgabenByWert(sortDirection: SortDirection, ausgabe: Ausgabe, otherAusgabe: Ausgabe): Int {
@@ -130,7 +130,7 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     private fun sortAusgabenByBeschreibung() {
-        Collections.sort(ausgabenForDateRange) { o1, o2 -> o1.beschreibung.compareTo(o2.beschreibung) }
+        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> o1.beschreibung.compareTo(o2.beschreibung) })
     }
 
 
@@ -188,7 +188,7 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
             .orElse(BigDecimal.ZERO)
     }
 
-    private fun findAusgabenForDateRange(startDate: LocalDate, endDate: LocalDate): List<Ausgabe> {
+    private fun findAusgabenForDateRange(startDate: LocalDate, endDate: LocalDate): MutableList<Ausgabe> {
         return allAusgaben.stream()//
             .filter { t -> !t.datum.toLocalDate().isBefore(startDate) && !t.datum.toLocalDate().isAfter(endDate) }//
             .collect(Collectors.toList())

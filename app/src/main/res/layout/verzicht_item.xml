@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -8,33 +9,32 @@
 
     <TextView
             android:id="@+id/verzicht_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:paddingStart="?android:attr/listPreferredItemPaddingStart"
             android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:text="test it"
+            android:text="test ittest ittest ittest ittest ittest it"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:textSize="24sp" />
+            android:layout_weight="1"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText" />
 
-    <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1" />
 
     <ImageButton
             android:id="@+id/btn_delete_verzicht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:src="@drawable/delete_icon_36x36" />
+            android:src="@drawable/delete_icon_36x36"
+            android:contentDescription="@string/content_description_delete_verzicht_image" />
 
     <ImageButton
             android:id="@+id/btn_open_verzicht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:src="@drawable/open_verzicht" />
+            android:src="@drawable/open_verzicht"
+            android:contentDescription="@string/content_description_edit_verzicht_image" />
 </LinearLayout>

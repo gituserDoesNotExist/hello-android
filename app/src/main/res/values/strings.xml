@@ -3,27 +3,34 @@
 
     <!--    button titles-->
     <string name="label_btn_start_verzicht_activity">Verzicht</string>
-    <string name="label_btn_start_count_activity">Count it!</string>
-    <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
     <string name="label_btn_start_finances_activity">Finances</string>
+    <string name="label_btn_start_count_activity">Count it!</string>
+    <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
+    <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
     <string name="label_btn_start_databinding_activity">Databinding</string>
 
-    <string name="label_btn_add_day_to_verzicht">Add day...</string>
+    <string name="label_btn_add_day_to_verzicht">Add day…</string>
     <string name="label_btn_save_verzicht">Speichern</string>
     <string name="label_btn_neuer_posten">Neuer Posten</string>
+    <string name="label_btn_neue_ausgabe">Neue Ausgabe erfassen</string>
 
 
     <!--    titles-->
     <string name="title_verzicht_activity">You must </string>
     <string name="title_count_activity">CountActivity</string>
     <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
+    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
+    <string name="title_main_activity">Dashboard</string>
 
     <string name="description_add_verzicht_name">Name</string>
     <string name="ausgaben_posten">%1$s €</string>
     <string name="title_activity_fragment">FragmentActivity</string>
     <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
 
-    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
+<!--    content descriptions-->
+    <string name="content_description_finances_image">Some image</string>
+    <string name="content_description_delete_verzicht_image">delete verzicht image</string>
+    <string name="content_description_edit_verzicht_image">edit verzicht image</string>
 
 
 </resources>

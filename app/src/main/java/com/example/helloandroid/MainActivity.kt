@@ -39,5 +39,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, DatabindingActivity::class.java))
     }
 
+    fun startTimerecordingActivity(view: View) {
+        startActivity(Intent(this, DatabindingActivity::class.java))
+    }
 
 }

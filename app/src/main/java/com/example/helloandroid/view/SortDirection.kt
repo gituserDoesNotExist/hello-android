@@ -1,4 +1,4 @@
-package com.example.helloandroid
+package com.example.helloandroid.view
 
 enum class SortDirection {
 

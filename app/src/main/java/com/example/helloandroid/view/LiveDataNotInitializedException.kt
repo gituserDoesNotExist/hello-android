@@ -1,5 +1,3 @@
-package com.example.helloandroid
-
-import java.lang.RuntimeException
+package com.example.helloandroid.view
 
 class LiveDataNotInitializedException(msg: String) : RuntimeException(msg) {}
