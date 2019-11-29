@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.finances.Ausgabe
 
@@ -70,13 +71,7 @@ class PostenDetailsFragment : Fragment() {
 
     private fun openAusgabeDialog(ausgabeDialog: AusgabeDialog) {
         activity?.let {
-            val transaction = it.supportFragmentManager.beginTransaction()
-            val prev = it.supportFragmentManager.findFragmentByTag("ausgabe_dialog")
-            if (prev != null) {
-                transaction.remove(prev)
-            }
-            transaction.addToBackStack(null)
-            ausgabeDialog.show(transaction, "ausgabe_dialog")
+            DialogOpener.openDialog(it, ausgabeDialog, "dialog_ausgabe")
         }
     }
 

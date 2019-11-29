@@ -3,7 +3,7 @@ package com.example.helloandroid.finances.view
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import com.example.helloandroid.HelloZoneID
+import com.example.helloandroid.ZoneIds
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
@@ -22,7 +22,7 @@ class AusgabeDTO : BaseObservable() {
             }
         }
 
-    var uhrzeit: LocalTime = LocalTime.now(ZoneId.of(HelloZoneID.EUROPE_BERLIN.zoneId))
+    var uhrzeit: LocalTime = LocalTime.now(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId))
         @Bindable get(): LocalTime = field
         set(value) {
             if (field != value) {

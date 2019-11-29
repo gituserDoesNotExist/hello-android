@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders.of
+import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.finances.PostenStub
 import com.example.helloandroid.view.BigDecimalConverter
@@ -49,14 +50,7 @@ class PostenUebersichtFragment : Fragment() {
 
     private fun openNewPostenDialog() {
         activity?.let {
-            val transaction = it.supportFragmentManager.beginTransaction()
-            val prev = it.supportFragmentManager.findFragmentByTag("dialog")
-            if (prev != null) {
-                transaction.remove(prev)
-            }
-            transaction.addToBackStack(null)
-            val addPostenDialog = AddPostenDialog()
-            addPostenDialog.show(transaction, "dialog")
+            DialogOpener.openDialog(it, AddPostenDialog(), "dialog_add_posten")
         }
     }
 

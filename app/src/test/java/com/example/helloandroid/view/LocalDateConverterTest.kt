@@ -17,6 +17,9 @@ class LocalDateConverterTest {
     fun stringToDate() {
         val result = LocalDateConverter.stringToDate("08.09.2000")
 
-        assertThat(result).isEqualTo(LocalDate.of(2000,9,8))
+        assertThat(result).isEqualTo(LocalDate.of(2000, 9, 8))
     }
+
+
+
 }

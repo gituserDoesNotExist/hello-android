@@ -2,7 +2,7 @@ package com.example.helloandroid.verzicht.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloandroid.HelloZoneID
+import com.example.helloandroid.ZoneIds
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 import org.threeten.bp.LocalDate
@@ -35,7 +35,7 @@ class VerzichtDetailsViewModel(private val verzichtRepository: VerzichtRepositor
 
     private fun increaseAndUpdate(verzicht: Verzicht) {
         verzicht.days = verzicht.days.plus(1)
-        verzicht.timestampDayAdded = Optional.ofNullable(LocalDateTime.now(ZoneId.of(HelloZoneID.EUROPE_BERLIN.zoneId)))
+        verzicht.timestampDayAdded = Optional.ofNullable(LocalDateTime.now(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId)))
         verzichtRepository.updateVerzicht(verzicht)
     }
 

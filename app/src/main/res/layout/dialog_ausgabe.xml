@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.example.helloandroid.view.LocalTimeConverter" />
+
+        <import type="com.example.helloandroid.view.LocalDateConverter" />
+
+        <import type="com.example.helloandroid.view.BigDecimalConverter" />
+
+        <variable
+                name="ausgabeDialog"
+                type="com.example.helloandroid.finances.view.AusgabeDialog" />
+    </data>
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dlg_padding"
+            android:stretchColumns="1">
+
+        <TableRow>
+
+            <TextView
+                    android:text="Datum"
+                    android:textSize="20sp" />
+
+            <EditText
+                    android:id="@+id/input_add_ausgabe_datum"
+                    android:gravity="bottom"
+                    android:text="@={LocalDateConverter.dateToString(ausgabeDialog.ausgabeDTO.datum)}" />
+
+            <ImageButton
+                    android:id="@+id/btn_add_ausgabe_dialog_select_date"
+                    android:onClick="@{() -> ausgabeDialog.openDatePickerDialog()}"
+                    android:src="@drawable/date_picker_icon" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:text="Uhrzeit"
+                    android:textSize="20sp" />
+
+            <EditText
+                    android:id="@+id/input_add_ausgabe_time"
+                    android:gravity="bottom"
+                    android:text="@={LocalTimeConverter.timeToString(ausgabeDialog.ausgabeDTO.uhrzeit)}" />
+
+            <ImageButton
+                    android:id="@+id/btn_add_ausgabe_dialog_select_time"
+                    android:onClick="@{() -> ausgabeDialog.openTimePickerDialog()}"
+                    android:src="@drawable/time_icon" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:text="Wert"
+                    android:textSize="20sp" />
+
+            <EditText
+                    android:id="@+id/input_add_ausgabe_wert"
+                    android:gravity="bottom"
+                    android:hint="xy.yz"
+                    android:inputType="numberDecimal"
+                    android:text="@={BigDecimalConverter.bigDecimalToString(ausgabeDialog.ausgabeDTO.wert)}" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:text="Beschreibung"
+                    android:textSize="20sp" />
+
+            <EditText
+                    android:id="@+id/input_add_ausgabe_description"
+                    android:gravity="bottom"
+                    android:text="@={ausgabeDialog.ausgabeDTO.beschreibung}" />
+        </TableRow>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="20dip" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dip">
+
+            <ImageButton
+                    android:id="@+id/btn_ausgabe_hinzufuegen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="left"
+                    android:onClick="@{() -> ausgabeDialog.saveAusgabeAndCloseDialog()}"
+                    android:src="@drawable/btn_confirm"
+                    android:textSize="20sp" />
+
+            <ImageButton
+                    android:id="@+id/btn_ausgabe_hinzufuegen_abbrechen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="right"
+                    android:onClick="@{() -> ausgabeDialog.closeDialog()}"
+                    android:src="@drawable/btn_cancel"
+                    android:textSize="20sp" />
+        </LinearLayout>
+
+    </TableLayout>
+
+</layout>

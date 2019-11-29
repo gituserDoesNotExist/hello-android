@@ -1,36 +1,49 @@
 <resources>
     <string name="app_name">HelloAndroid</string>
 
-    <!--    button titles-->
-    <string name="label_btn_start_verzicht_activity">Verzicht</string>
-    <string name="label_btn_start_finances_activity">Finances</string>
-    <string name="label_btn_start_count_activity">Count it!</string>
-    <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
-    <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
-    <string name="label_btn_start_databinding_activity">Databinding</string>
 
+    <!--    finances-->
+    <string name="label_btn_start_finances_activity">Finances</string>
+    <string name="label_btn_neuer_posten">Neuer Posten</string>
+    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
+    <string name="label_btn_neue_ausgabe">Neue Ausgabe erfassen</string>
+    <string name="ausgaben_posten">%1$s €</string>
+    <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
+    <string name="content_description_finances_image">finances image</string>
+
+    <!--    verzicht-->
+    <string name="title_verzicht_activity">You must </string>
+    <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
+    <string name="label_btn_start_verzicht_activity">Verzicht</string>
+    <string name="description_add_verzicht_name">Name</string>
     <string name="label_btn_add_day_to_verzicht">Add day…</string>
     <string name="label_btn_save_verzicht">Speichern</string>
-    <string name="label_btn_neuer_posten">Neuer Posten</string>
-    <string name="label_btn_neue_ausgabe">Neue Ausgabe erfassen</string>
-
-
-    <!--    titles-->
-    <string name="title_verzicht_activity">You must </string>
-    <string name="title_count_activity">CountActivity</string>
-    <string name="title_add_verzicht_activity">Bitte geben Sie die Daten ein</string>
-    <string name="title_posten_details_fragment">Ausgaben für %1$s</string>
-    <string name="title_main_activity">Dashboard</string>
-
-    <string name="description_add_verzicht_name">Name</string>
-    <string name="ausgaben_posten">%1$s €</string>
-    <string name="title_activity_fragment">FragmentActivity</string>
-    <string name="txt_finances_activity_total_amount">Gesamtausgaben:</string>
-
-<!--    content descriptions-->
-    <string name="content_description_finances_image">Some image</string>
     <string name="content_description_delete_verzicht_image">delete verzicht image</string>
     <string name="content_description_edit_verzicht_image">edit verzicht image</string>
+    <string name="hint_input_text_new_verzicht">Name des neuen Verzichts</string>
+    <string name="content_description_btn_add_new_verzicht">neuer Verzicht</string>
 
+    <!--    count-->
+    <string name="label_btn_start_count_activity">Count it!</string>
+    <string name="title_count_activity">CountActivity</string>
+
+    <!--    timerecording-->
+    <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
+    <string name="title_zeiterfassung_uebersicht_fragment">Erfasste Stunden</string>
+    <string name="content_description_timerecording_image">timerecording image</string>
+    <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
+    <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Stunden</string>
+    <string name="label_edit_text_neue_zeiterfassung_datum">Datum</string>
+
+
+    <!--    fragment-sht-->
+    <string name="label_btn_start_fragment_activity">Fun with Fragments</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
+
+    <!--    databinding sht-->
+    <string name="label_btn_start_databinding_activity">Databinding</string>
+
+    <!--    main-activity-->
+    <string name="title_main_activity">Dashboard</string>
 
 </resources>

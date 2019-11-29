@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.helloandroid.persistence.AppDatabase
 import com.example.helloandroid.verzicht.persistence.VerzichtRepository
 
-/** Factory um ViewModels anzulegen, welche das VerzichtDao benoetigen */
-class VerzichtViewModelFactory(context: Context) : ViewModelProvider.Factory {
-
-    private val context: Context = context
+class VerzichtViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val verzichtDao = AppDatabase.getDb(context).verzichtDao()

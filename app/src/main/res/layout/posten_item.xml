@@ -8,36 +8,31 @@
 
     <TextView
             android:id="@+id/posten_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:paddingStart="?android:attr/listPreferredItemPaddingStart"
             android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:text="test it test itt"
+            android:text="test it test isdfsdfsdfsdfsdfsdftt"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textSize="24sp" />
-
-    <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical" />
 
     <TextView
             android:id="@+id/ausgaben_for_posten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ausgaben_posten"
             android:gravity="center_vertical"
+            android:text="@string/ausgaben_posten"
             android:textSize="20sp" />
 
     <ImageButton
             android:id="@+id/btn_delete_posten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginLeft="20dip"
+            android:gravity="center_vertical"
             android:src="@drawable/ic_delete_red_24x24dp" />
 
     <ImageButton

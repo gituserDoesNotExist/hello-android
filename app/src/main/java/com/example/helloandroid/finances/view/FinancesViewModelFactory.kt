@@ -4,13 +4,11 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.helloandroid.finances.persistence.FinancesRepository
-import com.example.helloandroid.finances.persistence.PostenWithAusgabenDao
 import com.example.helloandroid.persistence.AppDatabase
 
 /** Factory um ViewModels anzulegen, welche das VerzichtDao benoetigen */
-class FinancesViewModelFactory(context: Context) : ViewModelProvider.Factory {
+class FinancesViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
-    private val context: Context = context
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val postenDao = AppDatabase.getDb(context).postenDao()

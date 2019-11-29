@@ -8,6 +8,7 @@ import com.example.helloandroid.count.CountActivity
 import com.example.helloandroid.databinding.DatabindingActivity
 import com.example.helloandroid.finances.view.FinancesActivity
 import com.example.helloandroid.fragmentsht.FunWithFragmentsActivity
+import com.example.helloandroid.timerecording.view.ZeiterfassungActivity
 import com.example.helloandroid.verzicht.view.VerzichtUebersichtActivity
 import com.jakewharton.threetenabp.AndroidThreeTen
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startTimerecordingActivity(view: View) {
-        startActivity(Intent(this, DatabindingActivity::class.java))
+        startActivity(Intent(this, ZeiterfassungActivity::class.java))
     }
 
 }
