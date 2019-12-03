@@ -4,22 +4,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:orientation="vertical"
+        android:theme="@style/Theme.Zeiterfassung"
         tools:context=".MainActivity">
 
-    <TextView
-            android:id="@+id/title_main_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:layout_marginBottom="20dip"
-            android:text="@string/title_main_activity"
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/guideline_top"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -33,7 +29,6 @@
             android:id="@+id/btn_start_verzicht_activity"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
             android:onClick="startVerzicht"
             android:padding="10dip"
             android:text="@string/label_btn_start_verzicht_activity"
@@ -48,7 +43,6 @@
             android:id="@+id/btn_start_finances_activity"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
             android:onClick="startFincancesActivity"
             android:padding="10dip"
             android:text="@string/label_btn_start_finances_activity"
@@ -63,7 +57,6 @@
             android:id="@+id/btn_start_timerecording_activity"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
             android:onClick="startTimerecordingActivity"
             android:padding="10dip"
             android:text="@string/label_btn_start_timerecording_activity"
@@ -79,7 +72,6 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:background="@color/lightOrange"
             android:onClick="startCount"
             android:padding="10dip"
             android:text="@string/label_btn_start_count_activity"
@@ -94,7 +86,6 @@
             android:id="@+id/btn_start_fragment_activity"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
             android:onClick="startFragmentPlayground"
             android:padding="10dip"
             android:text="@string/label_btn_start_fragment_activity"
@@ -109,7 +100,6 @@
             android:id="@+id/btn_start_databinding_activity"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:background="@color/lightOrange"
             android:onClick="startDatabindingActivity"
             android:padding="10dip"
             android:text="@string/label_btn_start_databinding_activity"

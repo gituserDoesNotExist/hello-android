@@ -29,11 +29,13 @@
 
     <!--    timerecording-->
     <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
-    <string name="title_zeiterfassung_uebersicht_fragment">Erfasste Stunden</string>
     <string name="content_description_timerecording_image">timerecording image</string>
     <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
     <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Stunden</string>
     <string name="label_edit_text_neue_zeiterfassung_datum">Datum</string>
+    <string name="title_configure_app_user_fragment">Konfiguration</string>
+    <string name="label_who_is_app_user">Wer benutzt die App?</string>
+    <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
 
 
     <!--    fragment-sht-->
@@ -45,5 +47,6 @@
 
     <!--    main-activity-->
     <string name="title_main_activity">Dashboard</string>
+
 
 </resources>

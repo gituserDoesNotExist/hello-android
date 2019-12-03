@@ -6,7 +6,7 @@ import java.util.*
 
 class DatabaseAsyncTask<INPUT, RESULT>(private val backgroundOperationFunc: (INPUT) -> RESULT,
                                        private val dbOperationSuccessfulListener: WeakReference<(RESULT) -> Unit> = WeakReference { _ -> },
-                                       private val dbOperationFailedListener: WeakReference<(String) -> Unit> = WeakReference { _ ->}) :
+                                       private val dbOperationFailedListener: WeakReference<(String) -> Unit> = WeakReference { _ -> }) :
     AsyncTask<INPUT, String, Optional<RESULT>>() {
 
     private lateinit var databaseOperationException: DatabaseOperationException
@@ -18,7 +18,7 @@ class DatabaseAsyncTask<INPUT, RESULT>(private val backgroundOperationFunc: (INP
         } catch (e: DatabaseOperationException) {
             this.databaseOperationException = e
             cancel(true)
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             this.databaseOperationException = DatabaseOperationException("This should not happen!")
             cancel(true)
         }
@@ -30,7 +30,7 @@ class DatabaseAsyncTask<INPUT, RESULT>(private val backgroundOperationFunc: (INP
     }
 
     override fun onCancelled() {
-        dbOperationFailedListener.get()?.let { it(databaseOperationException.message?: "Unknown error") }
+        dbOperationFailedListener.get()?.let { it(databaseOperationException.message ?: "Unknown error") }
     }
 
 }

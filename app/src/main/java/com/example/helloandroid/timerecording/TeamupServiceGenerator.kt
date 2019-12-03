@@ -1,6 +1,6 @@
 package com.example.helloandroid.timerecording
 
-import com.example.helloandroid.timerecording.view.TeamUpApi
+import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient

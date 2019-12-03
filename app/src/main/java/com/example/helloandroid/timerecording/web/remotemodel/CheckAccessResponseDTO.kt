@@ -1,4 +1,4 @@
-package com.example.helloandroid.timerecording.web
+package com.example.helloandroid.timerecording.web.remotemodel
 
 class CheckAccessResponseDTO {
 

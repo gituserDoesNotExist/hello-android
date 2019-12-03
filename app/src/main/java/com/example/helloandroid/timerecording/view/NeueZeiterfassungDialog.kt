@@ -13,7 +13,7 @@ import org.threeten.bp.LocalDate
 
 class NeueZeiterfassungDialog : DialogFragment() {
 
-    private lateinit var zeiterfassungViewModel: ZeiterfassungViewModel
+    private lateinit var arbeitsverhaeltnisUebersichtViewModel: ArbeitsverhaeltnisUebersichtViewModel
     val zeiterfassungDTO = ZeiterfassungDTO()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,11 +27,12 @@ class NeueZeiterfassungDialog : DialogFragment() {
     }
 
     private fun initializeViewModel(it: FragmentActivity) {
-        zeiterfassungViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it)).get(ZeiterfassungViewModel::class.java)
+        arbeitsverhaeltnisUebersichtViewModel =
+            ViewModelProviders.of(it, ArbeitsverhaeltnisUebersichtViewModelFactory()).get(ArbeitsverhaeltnisUebersichtViewModel::class.java)
     }
 
     fun saveEintragAndCloseDialog() {
-        zeiterfassungViewModel.addEintrag(zeiterfassungDTO)
+        arbeitsverhaeltnisUebersichtViewModel.addEintrag(zeiterfassungDTO)
         closeDialog()
     }
 
@@ -42,7 +43,7 @@ class NeueZeiterfassungDialog : DialogFragment() {
     fun openDatePickerDialog() {
         val crrntDate = LocalDate.now()
         val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            zeiterfassungDTO.datumZeiterfassung = LocalDate.of(year,month, dayOfMonth)
+            zeiterfassungDTO.datumZeiterfassung = LocalDate.of(year, month, dayOfMonth)
         }
         activity?.let {
             DatePickerDialog(it, onDateSetListener, crrntDate.year, crrntDate.monthValue, crrntDate.dayOfMonth).show()

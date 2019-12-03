@@ -7,13 +7,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.helloandroid.finances.persistence.*
+import com.example.helloandroid.timerecording.persistence.PersonDao
+import com.example.helloandroid.timerecording.persistence.PersonEntity
+import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
+import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
 import org.threeten.bp.LocalDateTime
 import java.math.BigDecimal
 import java.util.concurrent.Executors
 
-@Database(entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class], version = 1)
+@Database(entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class, PersonEntity::class,CalendarConfigurationEntity::class], version = 1)
 @TypeConverters(OptionalLocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -24,6 +28,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun ausgabeDao(): AusgabeDao
 
     abstract fun postenWithAusgabeDao(): PostenWithAusgabenDao
+
+    abstract fun personDao(): PersonDao
+
+    abstract fun calendarConfigurationDao(): CalendarConfigurationDao
 
     companion object {
         private const val DATABASE_NAME = "APP_DATABASE"

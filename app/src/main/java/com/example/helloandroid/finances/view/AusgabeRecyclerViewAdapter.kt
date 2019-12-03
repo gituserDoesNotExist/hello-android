@@ -12,6 +12,7 @@ import com.example.helloandroid.R.id
 import com.example.helloandroid.R.layout
 import com.example.helloandroid.finances.Ausgabe
 import com.example.helloandroid.view.BigDecimalConverter
+import com.example.helloandroid.view.HelloSpinnerAdapter
 import com.example.helloandroid.view.LocalDateConverter
 import com.example.helloandroid.view.SortDirection
 import org.threeten.bp.LocalDate
@@ -64,7 +65,7 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
         val headerView = inflate(layout.ausgabe_header_row, parent)
         headerView.findViewById<Spinner>(id.spinner_ausgabe).also {
             it.onItemSelectedListener = onItemSelectListener()
-            it.adapter = AusgabeSpinnerAdapter(parent.context, DROPDOWN_ENTRIES)
+            it.adapter = HelloSpinnerAdapter(parent.context, DROPDOWN_ENTRIES)
         }
         val headerViewHolder = HeaderViewHolder(headerView)
         headerViewHolder.btnStartDateAusgaben.setOnClickListener { openDatePickerDialogForStartDate() }

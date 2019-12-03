@@ -16,14 +16,14 @@ class TeamUpDateConverterTest {
 
     @Test
     fun asString() {
-        val result = TeamUpDateConverter.asString(ZDT)
+        val result = TeamUpDateConverter.asZonedDateTimeString(ZDT)
 
         assertThat(result).isEqualTo(ZDT_STRING)
     }
 
     @Test
     fun asDate() {
-        val result = TeamUpDateConverter.asDate(ZDT_STRING)
+        val result = TeamUpDateConverter.asZonedDateTime(ZDT_STRING)
 
         assertThat(result.toString()).isEqualTo(ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
     }

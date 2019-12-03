@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.helloandroid.count.CountActivity
 import com.example.helloandroid.databinding.DatabindingActivity
 import com.example.helloandroid.finances.view.FinancesActivity
@@ -18,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidThreeTen.init(this)
         setContentView(R.layout.activity_main)
+        val toolbar = findViewById<Toolbar>(R.id.my_toolbar).apply { this.title = "Dashboard" }
+        setSupportActionBar(toolbar)
     }
 
     fun startVerzicht(currentView: View) {
