@@ -4,7 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:orientation="vertical"
         tools:context=".finances.view.PostenDetailsFragment">
 
@@ -12,7 +11,6 @@
             android:id="@+id/title_posten_details_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
             android:layout_marginStart="10dip"
             android:layout_marginEnd="10dip"
             android:text="@string/title_posten_details_fragment"
@@ -27,7 +25,7 @@
             android:layout_height="0dip"
             android:layout_marginStart="10dip"
             android:layout_marginEnd="10dip"
-            android:background="@color/colorYellowLight"
+            android:background="@color/white"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="@id/guideline_bottom_of_table"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +50,7 @@
             android:id="@+id/btn_new_ausgabe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/neue_ausgabe_button"
+            android:drawableStart="@drawable/ic_add_black_36dp"
             android:text="@string/label_btn_neue_ausgabe"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -14,7 +14,6 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
             tools:context=".verzicht.view.VerzichtDetailsFragment">
 
         <TextView
@@ -32,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{verzichtDetailsFragment.verzichtDTO.days}"
-                android:textColor="#FF9800"
+                android:textColor="@color/black"
                 android:textSize="@dimen/edit_verzicht_verzicht_info_size"
                 app:layout_constraintBottom_toTopOf="@id/txt_edit_verzicht_tage_auf"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{verzichtDetailsFragment.verzichtDTO.name}"
-                android:textColor="#FF9800"
+                android:textColor="@color/black"
                 android:textSize="@dimen/edit_verzicht_verzicht_info_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +73,8 @@
         <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="#FF9800"
+                android:background="@color/white"
+                android:layout_margin="10dip"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_edit_verzicht_verzichtet" />
@@ -83,10 +83,10 @@
                 android:id="@+id/btn_plus_one_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/increase_icon"
                 android:onClick="@{() -> verzichtDetailsFragment.increaseVerzichtDurationByOneDay()}"
                 android:enabled="@{!verzichtDetailsFragment.verzichtDTO.daysIncreasedToday}"
                 android:text="Add 1 day"
+                android:padding="5dip"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

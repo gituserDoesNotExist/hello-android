@@ -5,7 +5,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:orientation="vertical"
         tools:context=".finances.view.PostenUebersichtFragment">
 
@@ -14,29 +13,24 @@
             android:id="@+id/btn_open_new_posten_dialog"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginBottom="20dip"
-            android:background="@color/lightOrange"
+            android:layout_margin="10dip"
+            android:backgroundTint="@color/colorSecondary"
             android:text="@string/label_btn_neuer_posten"
             android:textAllCaps="false"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/testit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
             android:id="@+id/testit"
-            android:layout_width="0dip"
+            android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginStart="10dip"
-            android:layout_marginTop="20dip"
-            android:layout_marginEnd="10dip"
-            android:background="@color/colorYellowLight"
+            android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@id/guideline_lower_bound_posten_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn_open_new_posten_dialog" />
+            app:layout_constraintTop_toBottomOf="@id/guideline_top" />
 
     <LinearLayout
             android:id="@+id/layout_gesamtausgaben"
@@ -81,5 +75,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

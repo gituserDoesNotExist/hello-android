@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,50 +12,50 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
             android:orientation="vertical"
             tools:context=".verzicht.view.VerzichtUebersichtActivity">
 
-        <EditText
-                android:id="@+id/input_new_verzicht_name"
+        <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="50dip"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="15dip"
-                android:hint="@string/hint_input_text_new_verzicht"
-                android:inputType="textPersonName"
-                android:text="@={fragmentVerzichtUebersicht.verzichtDTO.name}"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/verzicht_list_guideline_top"
-                app:layout_constraintEnd_toStartOf="@id/btn_new_verzicht"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-                android:id="@+id/btn_new_verzicht"
-                android:layout_width="wrap_content"
-                android:layout_height="50dip"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="15dip"
-                android:background="@color/background"
-                android:imeOptions="actionDone"
-                android:onClick="@{(view) -> fragmentVerzichtUebersicht.saveVerzichtAndResetInputField(view)}"
-                android:src="@drawable/add_button_24x24"
-                app:layout_constraintBottom_toTopOf="@id/verzicht_list_guideline_top"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/guideline_middle"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/content_description_btn_add_new_verzicht" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                    android:id="@+id/input_new_verzicht_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_input_text_new_verzicht"
+                    android:inputType="textPersonName"
+                    android:text="@={fragmentVerzichtUebersicht.verzichtDTO.name}"
+                    android:textSize="15sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_new_verzicht"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorSecondary"
+                    android:layout_marginLeft="10dip"
+                    android:contentDescription="@string/content_description_btn_add_new_verzicht"
+                    android:imeOptions="actionDone"
+                    app:borderWidth="0dip"
+                    android:onClick="@{(view) -> fragmentVerzichtUebersicht.saveVerzichtAndResetInputField(view)}"
+                    android:src="@drawable/ic_add_black_48dp"
+                    app:fabSize="mini" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verzicht_list_guideline_top"
+                android:id="@+id/guideline_middle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="75dp" />
+                app:layout_constraintGuide_percent="0.2" />
 
         <ListView
                 android:id="@android:id/list"
@@ -61,11 +63,11 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="10dip"
                 android:layout_marginEnd="10dip"
-                android:background="@color/colorYellowLight"
+                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/verzicht_list_guideline_top" />
+                app:layout_constraintTop_toBottomOf="@+id/guideline_middle" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
