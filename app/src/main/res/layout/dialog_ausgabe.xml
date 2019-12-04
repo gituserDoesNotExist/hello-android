@@ -28,7 +28,7 @@
                     android:textSize="20sp" />
 
             <EditText
-                    android:id="@+id/input_add_ausgabe_datum"
+                    android:id="@+id/input_add_arbeitsverhaeltnis_datum"
                     android:gravity="bottom"
                     android:text="@={LocalDateConverter.dateToString(ausgabeDialog.ausgabeDTO.datum)}" />
 
@@ -45,7 +45,7 @@
                     android:textSize="20sp" />
 
             <EditText
-                    android:id="@+id/input_add_ausgabe_time"
+                    android:id="@+id/input_add_arbeitsverhaeltnis_time"
                     android:gravity="bottom"
                     android:text="@={LocalTimeConverter.timeToString(ausgabeDialog.ausgabeDTO.uhrzeit)}" />
 
@@ -76,7 +76,7 @@
                     android:textSize="20sp" />
 
             <EditText
-                    android:id="@+id/input_add_ausgabe_description"
+                    android:id="@+id/input_add_arbeitsverhaeltnis_kommentar"
                     android:gravity="bottom"
                     android:text="@={ausgabeDialog.ausgabeDTO.beschreibung}" />
         </TableRow>

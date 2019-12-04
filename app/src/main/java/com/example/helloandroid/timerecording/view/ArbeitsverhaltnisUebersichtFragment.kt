@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,6 @@ import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
 import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ArbeitsverhaltnisUebersichtFragment : Fragment() {
 
@@ -24,34 +24,32 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         val binding = FragmentArbeitsverhaeltnisUebersichtBinding.inflate(inflater, container, false)
         val rootView = binding.root
         binding.arbeitsverhaltnisUebersichtFragment = this
-        initializeViewModel()
 
-        activity?.let {
-            arbeitsverhaeltnisUebersichtViewModel.findAllArbeitsverhaeltnisse()//
-                .observeOn(AndroidSchedulers.mainThread())//
-                .subscribe { arbeitsverhaeltnisse ->
-                    connectRecyclerViewAdapterWithView(rootView, arbeitsverhaeltnisse, it)
-                }
+        activity?.let { fragmentActivity ->
+            initializeViewModel(fragmentActivity)
+            arbeitsverhaeltnisUebersichtViewModel.arbeitsverhaeltnisse.observe(this, Observer {
+                connectRecyclerViewAdapterWithView(rootView, fragmentActivity, it)
+            })
         }
         return rootView
     }
 
-    private fun connectRecyclerViewAdapterWithView(rootView: View, arbeitsverhaeltnisse: List<Arbeitsverhaeltnis>,
-                                                   fragmentActivity: FragmentActivity) {
+    private fun connectRecyclerViewAdapterWithView(rootView: View, fragmentActivity: FragmentActivity,
+                                                   arbeitsverhaeltnisse: List<Arbeitsverhaeltnis>) {
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler_view_arbeitsverhaeltnisse)
         recyclerView.adapter = ArbeitsverhaeltnisRecyclerViewAdapter(arbeitsverhaeltnisse)
         recyclerView.layoutManager = LinearLayoutManager(fragmentActivity)
     }
 
-    private fun initializeViewModel() {
+    private fun initializeViewModel(fragmentActivity: FragmentActivity) {
         arbeitsverhaeltnisUebersichtViewModel =
-            ViewModelProviders.of(this, ArbeitsverhaeltnisUebersichtViewModelFactory())
+            ViewModelProviders.of(this, ArbeitsverhaeltnisUebersichtViewModelFactory(fragmentActivity.application))
                 .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)
     }
 
-    fun newZeiterfassungsEntry() {
+    fun addArbeitsverhaeltnis() {
         activity?.let {
-            DialogOpener.openDialog(it, NeueZeiterfassungDialog(), "dialog_neue_zeiterfassung")
+            DialogOpener.openDialog(it, AddArbeitsverhaeltnisDialog(), "dialog_add_arbeitsverhaeltnis")
         }
     }
 

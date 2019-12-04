@@ -12,6 +12,10 @@
                 name="fragmentInteractionListener"
                 type="com.example.helloandroid.timerecording.view.AppConfigurationFragment.OnFragmentInteractionListener" />
 
+        <variable
+                name="appConfigurationFragment"
+                type="com.example.helloandroid.timerecording.view.AppConfigurationFragment" />
+
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -38,17 +42,35 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/guideline_top" />
 
-            <Spinner
-                    android:id="@+id/spinner_app_user"
+            <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_margin="10dip"
-                    android:background="@null"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_question_who_is_app_user" />
+                    android:gravity="center"
+                    android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
+                    app:layout_constraintTop_toBottomOf="@id/txt_question_who_is_app_user">
 
+                <EditText
+                        android:id="@+id/txt_selected_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dip"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/app_configuration_hint_edit_text_select_user"
+                        android:minWidth="150dip"
+                        android:textAlignment="textEnd"
+                        android:text="@{configDto.savedAppUser}"
+                        android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="15sp" />
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/sort_icon_24x24" />
+            </LinearLayout>
 
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_top"
@@ -61,7 +83,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:background="@color/white">
 
             <View
                     android:layout_width="wrap_content"
@@ -86,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dip"
-                    android:text="@{configDto.appUser}"
+                    android:text="@{configDto.savedAppUser}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -103,6 +126,7 @@
                 android:contentDescription="@string/zeiterfassung_config_confirm_content_description"
                 android:onClick="@{() -> fragmentInteractionListener.exitAppConfigFragment()}"
                 android:src="@drawable/btn_confirm"
+                app:borderWidth="0dip"
                 app:fabSize="normal" />
 
 

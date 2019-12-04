@@ -2,10 +2,7 @@ package com.example.helloandroid.timerecording.web
 
 import com.example.helloandroid.timerecording.web.remotemodel.*
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface TeamUpApi {
 
@@ -15,7 +12,7 @@ interface TeamUpApi {
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @POST("${TeamupCalenderConfig.CALENDAR_KEY}/events")
-    fun postEvent(request: TeamupCreateEventRequestDTO): Single<TeamupPostEventResponseDTO>
+    fun postEvent(@Body request: TeamupCreateEventRequest): Single<TeamupPostEventResponseDTO>
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @GET("${TeamupCalenderConfig.CALENDAR_KEY}/events")

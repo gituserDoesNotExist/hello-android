@@ -1,7 +1,10 @@
 package com.example.helloandroid.timerecording.web
 
 import com.example.helloandroid.DateConverter
+import com.example.helloandroid.ZoneIds
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -15,12 +18,24 @@ object TeamUpDateConverter {
         return DateConverter.asString(value, FORMATTER_OFFSET_DATE_TIME)
     }
 
+    fun asEuropeBerlinZonedDateTimeString(value: LocalDate): String {
+        val zdt = value.atStartOfDay().atZone(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId))
+        return DateConverter.asString(zdt, FORMATTER_OFFSET_DATE_TIME)
+    }
+
+    fun asEuropeBerlinZonedDateTimeString(value: LocalDateTime): String {
+        val zdt = value.atZone(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId))
+        return DateConverter.asString(zdt, FORMATTER_OFFSET_DATE_TIME)
+    }
+
     fun asZonedDateTime(value: String): ZonedDateTime {
         return DateConverter.asDate(value, FORMATTER_OFFSET_DATE_TIME)
     }
 
     fun asIsoLocalDateTime(value: String) : LocalDateTime {
-        return LocalDateTime.parse(value, FORMATTER_LOCAL_DATE_TIME)
+        return DateConverter.asDate(value, FORMATTER_LOCAL_DATE_TIME).toLocalDateTime()
     }
+
+
 
 }

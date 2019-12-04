@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Spinner
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -14,7 +15,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.DatabaseAsyncTask
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentAppConfigurationBinding
-import com.example.helloandroid.view.HelloSpinnerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 
@@ -22,53 +22,58 @@ class AppConfigurationFragment : Fragment() {
 
     private lateinit var appConfigurationViewModel: AppConfigurationViewModel
     private var fragmentInterfactionListener: OnFragmentInteractionListener? = null
-    val configDto = ConfigDTO()
+    private val configDto = ConfigDTO()
+    private lateinit var participantsListPopupWindow: ListPopupWindow
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentAppConfigurationBinding.inflate(inflater, container, false)
         binding.configDto = configDto
         binding.fragmentInteractionListener = fragmentInterfactionListener
+        binding.appConfigurationFragment = this
         fragmentInterfactionListener?.setFragmentTitle("Konfiguration")
         initializeViewModel()
 
-        val spinner = binding.root.findViewById<Spinner>(R.id.spinner_app_user)
-        activity?.let { fragmentActivity ->
+        activity?.let { frgmntActivity ->
             appConfigurationViewModel.downloadRemoteConfig()//
                 .observeOn(AndroidSchedulers.mainThread())//
                 .subscribe { config ->
-                    createSpinnerAdapter(spinner, fragmentActivity, config)
+                    participantsListPopupWindow = createParticipantsListPopUpWindow(frgmntActivity, config.participants)
+                    configDto.savedAppUser = config.participants[0]
                 }
             appConfigurationViewModel.calendarConfig.observe(this, Observer { config ->
-                configDto.appUser = config.appUser
+                configDto.savedAppUser = config.appUser
             })
         }
 
         return binding.root
     }
 
-    private fun createSpinnerAdapter(spinner: Spinner, fragmentActivity: FragmentActivity,
-                                     config: CalendarConfiguration) {
-        spinner.adapter = HelloSpinnerAdapter(fragmentActivity, config.participants)
-        spinner.onItemSelectedListener = itemSelectedListener()
-    }
+    private fun createParticipantsListPopUpWindow(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+        val listener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            configDto.selectedAppUser = entries[position]
+            DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(configDto.selectedAppUser)
+            participantsListPopupWindow.dismiss()
+        }
 
-    private fun itemSelectedListener(): AdapterView.OnItemSelectedListener {
-        return object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val participant = appConfigurationViewModel.findParticipantByPosition(position)
-                DatabaseAsyncTask(backgroundOperationFunc = appConfigurationViewModel::saveAppUser).execute(participant)
-            }
-
+        return ListPopupWindow(it).apply {
+            this.setAdapter(ArrayAdapter(it, R.layout.item_list_popup_window, entries))
+            this.width = 400
+            this.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            this.isModal = true
+            this.setOnItemClickListener(listener)
         }
     }
+
 
     private fun initializeViewModel() {
         activity?.let {
             appConfigurationViewModel = ViewModelProviders.of(it, ConfigViewModelFactory(it.application))
                 .get(AppConfigurationViewModel::class.java)
         }
+    }
+
+    fun openParticipantsListPopupWindow(editTextView: View) {
+        participantsListPopupWindow.apply { this.anchorView = editTextView}.show()
     }
 
     interface OnFragmentInteractionListener {

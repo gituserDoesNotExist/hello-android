@@ -6,12 +6,22 @@ import androidx.databinding.library.baseAdapters.BR
 
 class ConfigDTO : BaseObservable() {
 
-     var appUser: String = ""
+    var selectedAppUser: String = ""
+        @Bindable get() = field
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyPropertyChanged(BR.selectedAppUser)
+            }
+        }
+
+
+    var savedAppUser: String = ""
         @Bindable get() = field
          set(value) {
              if (field != value) {
                  field = value
-                 notifyPropertyChanged(BR.appUser)
+                 notifyPropertyChanged(BR.savedAppUser)
              }
          }
 

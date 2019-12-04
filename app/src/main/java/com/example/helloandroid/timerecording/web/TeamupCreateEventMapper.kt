@@ -2,12 +2,12 @@ package com.example.helloandroid.timerecording.web
 
 import com.example.helloandroid.DateConverter
 import com.example.helloandroid.timerecording.Zeiterfassung
-import com.example.helloandroid.timerecording.web.remotemodel.TeamupCreateEventRequestDTO
+import com.example.helloandroid.timerecording.web.remotemodel.TeamupCreateEventRequest
 
 class TeamupCreateEventMapper {
 
-    fun asCreateEvent(zeiterfassung: Zeiterfassung, subcalendarId: Long): TeamupCreateEventRequestDTO {
-        val request = TeamupCreateEventRequestDTO()
+    fun asCreateEvent(zeiterfassung: Zeiterfassung, subcalendarId: Long): TeamupCreateEventRequest {
+        val request = TeamupCreateEventRequest()
 
         request.subcalendarId = subcalendarId
         request.startDt = TeamUpDateConverter.asZonedDateTimeString(DateConverter.localDateToZonedDateTime(zeiterfassung.datum))

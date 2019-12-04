@@ -22,6 +22,7 @@
     <string name="content_description_edit_verzicht_image">edit verzicht image</string>
     <string name="hint_input_text_new_verzicht">Name des neuen Verzichts</string>
     <string name="content_description_btn_add_new_verzicht">neuer Verzicht</string>
+    <string name="app_configuration_hint_edit_text_select_user">select user</string>
 
     <!--    count-->
     <string name="label_btn_start_count_activity">Count it!</string>
@@ -31,11 +32,14 @@
     <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
     <string name="content_description_timerecording_image">timerecording image</string>
     <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
-    <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Stunden</string>
+    <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Dauer</string>
+    <string name="label_edit_text_neue_zeiterfassung_leistungserbringer">Leistungserbringer</string>
     <string name="label_edit_text_neue_zeiterfassung_datum">Datum</string>
     <string name="title_configure_app_user_fragment">Konfiguration</string>
     <string name="label_who_is_app_user">Wer benutzt die App?</string>
     <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
+    <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
+    <string name="label_edit_text_neue_zeiterfassung_kategorie">Kategorie</string>
 
 
     <!--    fragment-sht-->

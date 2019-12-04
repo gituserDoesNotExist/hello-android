@@ -17,7 +17,7 @@ class Event {
     var remoteId: Any? = null
     @SerializedName("subcalendar_id")
     @Expose
-    var subcalendarId: Int? = null
+    var subcalendarId: Long? = null
     @SerializedName("subcalendar_ids")
     @Expose
     var subcalendarIds: List<Int>? = null

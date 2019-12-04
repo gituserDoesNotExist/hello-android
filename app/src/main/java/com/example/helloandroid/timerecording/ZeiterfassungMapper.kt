@@ -1,11 +1,11 @@
 package com.example.helloandroid.timerecording
 
-import com.example.helloandroid.timerecording.view.ZeiterfassungDTO
+import com.example.helloandroid.timerecording.view.ArbeitsverhaeltnisErstellenDTO
 
 class ZeiterfassungMapper {
 
-    fun asZeiterfassung(dto: ZeiterfassungDTO): Zeiterfassung {
-        return Zeiterfassung(dto.datumZeiterfassung,dto.stunden,dto.kommentar)
+    fun asZeiterfassung(erstellenDto: ArbeitsverhaeltnisErstellenDTO): Zeiterfassung {
+        return Zeiterfassung(erstellenDto.datumZeiterfassung,erstellenDto.dauer,erstellenDto.kommentar)
     }
 
 }

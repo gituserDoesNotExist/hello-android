@@ -1,19 +1,22 @@
 package com.example.helloandroid.timerecording
 
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
-import java.math.BigDecimal
 
 class Arbeitsverhaeltnis {
 
-    lateinit var startDateTime: LocalDateTime
-    lateinit var endDateTime: LocalDateTime
+    lateinit var kategorie: String
+    lateinit var datum: LocalDate
+    lateinit var dauer: Arbeitszeit
     lateinit var leistungserbringer: Person
     lateinit var leistungsnehmer: Person
-    lateinit var title: String
-    lateinit var comment: String
+    lateinit var kommentar: String
 
-    fun computeDuration(): BigDecimal {
-        return BigDecimal.TEN
+    fun calculateEndDatum() : LocalDateTime {
+        return datum.atStartOfDay().plusMinutes(dauer.minutes)
     }
 
+    fun createTitleForArbeitsverhaeltnis(): String {
+        return "${leistungserbringer.name} hilft ${leistungsnehmer.name} bei $kategorie"
+    }
 }

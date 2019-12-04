@@ -22,8 +22,6 @@
                 android:id="@+id/recycler_view_arbeitsverhaeltnisse"
                 android:layout_width="0dip"
                 android:layout_height="0dip"
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip"
                 android:background="@color/white"
                 android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
@@ -38,7 +36,7 @@
                 android:layout_margin="16dip"
                 android:layout_marginEnd="10dip"
                 android:layout_marginBottom="10dip"
-                android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.newZeiterfassungsEntry()}"
+                android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.addArbeitsverhaeltnis()}"
                 android:src="@drawable/ic_add_black_48dp"
                 app:backgroundTint="@color/colorSecondary"
                 app:fabSize="normal"
@@ -50,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.2" />
+                app:layout_constraintGuide_percent="0.07" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_bottom"

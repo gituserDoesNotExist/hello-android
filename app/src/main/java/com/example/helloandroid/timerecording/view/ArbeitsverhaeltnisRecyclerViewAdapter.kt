@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
-import org.threeten.bp.format.DateTimeFormatter
 
 class ArbeitsverhaeltnisRecyclerViewAdapter(private val arbeitsverhaeltnisse: List<Arbeitsverhaeltnis>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,9 +22,9 @@ class ArbeitsverhaeltnisRecyclerViewAdapter(private val arbeitsverhaeltnisse: Li
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val arbeitsverhaeltnis = arbeitsverhaeltnisse[position]
         if (holder is ItemViewHolder) {
-            holder.dateTextView.text = arbeitsverhaeltnis.startDateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            holder.durationTextView.text = String.format("%.2f", arbeitsverhaeltnis.computeDuration())
-            holder.commentTextView.text = arbeitsverhaeltnis.comment
+//            holder.dateTextView.text = arbeitsverhaeltnis.startDateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+//            holder.durationTextView.text = String.format("%.2f", arbeitsverhaeltnis.computeDuration())
+            holder.commentTextView.text = arbeitsverhaeltnis.kommentar
         }
 
     }

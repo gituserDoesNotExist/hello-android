@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class TeamupCreateEventRequestDTO {
+class TeamupCreateEventRequest {
 
     @SerializedName("subcalendar_id")
     @Expose
