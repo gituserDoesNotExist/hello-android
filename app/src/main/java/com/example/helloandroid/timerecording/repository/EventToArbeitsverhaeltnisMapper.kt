@@ -2,6 +2,7 @@ package com.example.helloandroid.timerecording.repository
 
 import com.example.helloandroid.HelloJson
 import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
+import com.example.helloandroid.timerecording.Arbeitsverhaeltnisse
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
 import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
 import com.example.helloandroid.timerecording.web.remotemodel.Event
@@ -12,15 +13,18 @@ import java.util.stream.Collectors
 class EventToArbeitsverhaeltnisMapper {
 
     private fun fromEventToArbeitsverhaeltnis(event: Event): Arbeitsverhaeltnis {
-        return HelloJson.jsonToObject(removeHtmlParagraphs(event),Arbeitsverhaeltnis::class.java)
+        return HelloJson.jsonToObject(removeHtmlParagraphs(event.notes),Arbeitsverhaeltnis::class.java).apply {
+            this.remoteId = event.id
+        }
     }
 
-    private fun removeHtmlParagraphs(event: Event): String {
-        return event.notes.replace("<p>","").replace("</p>","")
+    private fun removeHtmlParagraphs(notes: String): String {
+        return notes.replace("<p>","").replace("</p>","")
     }
 
-    fun fromEventsToArbeitsverhaeltnisse(events: Events): List<Arbeitsverhaeltnis> {
-        return events.events.stream().map(this::fromEventToArbeitsverhaeltnis).collect(Collectors.toList())
+    fun fromEventsToArbeitsverhaeltnisse(events: Events): Arbeitsverhaeltnisse {
+        val verhaeltnisse = events.events.stream().map(this::fromEventToArbeitsverhaeltnis).collect(Collectors.toList())
+        return Arbeitsverhaeltnisse(verhaeltnisse)
     }
 
     fun fromArbeitsverhaeltnisToEvent(arbeitsverhaeltnis: Arbeitsverhaeltnis): TeamupCreateEventRequest {

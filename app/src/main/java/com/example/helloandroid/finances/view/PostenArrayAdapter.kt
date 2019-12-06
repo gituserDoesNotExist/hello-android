@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.helloandroid.R
-import com.example.helloandroid.finances.Posten
 import com.example.helloandroid.finances.PostenStub
 import java.math.BigDecimal
 import java.util.function.Consumer
@@ -29,7 +28,7 @@ class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>,
     }
 
     private fun inflateRow(parent: ViewGroup): View {
-        return LayoutInflater.from(context).inflate(R.layout.posten_item, parent, false)
+        return LayoutInflater.from(context).inflate(R.layout.item_posten, parent, false)
     }
 
     private fun findPostenItemNameView(listItemView: View) =

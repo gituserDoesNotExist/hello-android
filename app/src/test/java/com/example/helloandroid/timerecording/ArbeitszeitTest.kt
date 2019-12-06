@@ -8,10 +8,9 @@ class ArbeitszeitTest {
 
     @Test
     fun testGetMinutes() {
-        assertThat(Arbeitszeit(BigDecimal(2.5)).minutes).isEqualTo(150)
-        assertThat(Arbeitszeit(BigDecimal(1)).minutes).isEqualTo(60)
-        assertThat(Arbeitszeit(BigDecimal(0.2)).minutes).isEqualTo(12)
-        assertThat(Arbeitszeit(BigDecimal(0.33333)).minutes).isEqualTo(18)
-
+        assertThat(Arbeitszeit(BigDecimal(2.5)).toString()).isEqualTo("2,5")
+        assertThat(Arbeitszeit(BigDecimal(1)).toString()).isEqualTo("1,0")
+        assertThat(Arbeitszeit(BigDecimal(0.22)).toString()).isEqualTo("0,2")
+        assertThat(Arbeitszeit(BigDecimal(0.33333)).toString()).isEqualTo("0,3")
     }
 }

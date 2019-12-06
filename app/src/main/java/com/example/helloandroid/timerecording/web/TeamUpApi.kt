@@ -15,6 +15,10 @@ interface TeamUpApi {
     fun postEvent(@Body request: TeamupCreateEventRequest): Single<TeamupPostEventResponseDTO>
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
+    @DELETE("${TeamupCalenderConfig.CALENDAR_KEY}/events/{event_id}")
+    fun deleteEvent(@Path("event_id") eventId: String): Single<Event>
+
+    @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @GET("${TeamupCalenderConfig.CALENDAR_KEY}/events")
     fun getEvents(@Query("startDate") startDate: String, @Query("endDate") endDate: String): Single<Events>
 

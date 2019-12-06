@@ -38,6 +38,7 @@
     <string name="title_configure_app_user_fragment">Konfiguration</string>
     <string name="label_who_is_app_user">Wer benutzt die App?</string>
     <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
+    <string name="add_arbeitsverhaeltnis_date_von_bis">bis</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
     <string name="label_edit_text_neue_zeiterfassung_kategorie">Kategorie</string>
 

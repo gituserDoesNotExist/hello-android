@@ -36,6 +36,10 @@ object TeamUpDateConverter {
         return DateConverter.asDate(value, FORMATTER_LOCAL_DATE_TIME).toLocalDateTime()
     }
 
+    fun fromDateToFetchEventsQueryString(date: LocalDate): String {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
+
 
 
 }

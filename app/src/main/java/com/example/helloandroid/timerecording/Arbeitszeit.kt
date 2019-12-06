@@ -5,12 +5,13 @@ import java.math.RoundingMode
 
 class Arbeitszeit(decimalHours: BigDecimal) {
 
-    var minutes = 0L
-        private set
+    private var dauer: BigDecimal = decimalHours.setScale(1, RoundingMode.DOWN)
 
-
-    init {
-        minutes = decimalHours.setScale(1,RoundingMode.DOWN).times(BigDecimal(60)).longValueExact()
+    fun getTimeInMinutes(): Long {
+        return dauer.times(BigDecimal(60)).longValueExact()
     }
 
+    override fun toString(): String {
+        return String.format("%.1f Stunden",dauer)
+    }
 }

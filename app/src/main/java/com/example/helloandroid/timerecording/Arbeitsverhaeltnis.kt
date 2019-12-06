@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDateTime
 
 class Arbeitsverhaeltnis {
 
+    lateinit var remoteId: String
     lateinit var kategorie: String
     lateinit var datum: LocalDate
     lateinit var dauer: Arbeitszeit
@@ -13,7 +14,7 @@ class Arbeitsverhaeltnis {
     lateinit var kommentar: String
 
     fun calculateEndDatum() : LocalDateTime {
-        return datum.atStartOfDay().plusMinutes(dauer.minutes)
+        return datum.atStartOfDay().plusMinutes(dauer.getTimeInMinutes())
     }
 
     fun createTitleForArbeitsverhaeltnis(): String {

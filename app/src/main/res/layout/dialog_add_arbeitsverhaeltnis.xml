@@ -90,6 +90,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:maxLength="8"
                         android:gravity="bottom"
                         android:inputType="numberDecimal"
                         android:text="@={BigDecimalConverter.bigDecimalToString(arbeitsverhaeltnisErstellenDto.dauer)}" />

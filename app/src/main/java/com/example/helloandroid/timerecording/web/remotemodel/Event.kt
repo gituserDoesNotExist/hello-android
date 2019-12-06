@@ -8,7 +8,7 @@ class Event {
 
     @SerializedName("id")
     @Expose
-    var id: String? = null
+    lateinit var id: String
     @SerializedName("series_id")
     @Expose
     var seriesId: Any? = null

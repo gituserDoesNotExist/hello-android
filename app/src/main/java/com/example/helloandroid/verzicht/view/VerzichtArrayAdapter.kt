@@ -40,7 +40,7 @@ class VerzichtArrayAdapter constructor(
     }
 
     private fun inflateRow(parent: ViewGroup): View {
-        return LayoutInflater.from(context).inflate(R.layout.verzicht_item, parent, false)
+        return LayoutInflater.from(context).inflate(R.layout.item_verzicht, parent, false)
     }
 
 

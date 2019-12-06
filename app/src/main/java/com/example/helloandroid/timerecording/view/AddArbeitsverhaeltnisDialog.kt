@@ -14,16 +14,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.DialogAddArbeitsverhaeltnisBinding
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import org.threeten.bp.LocalDate
 
-class AddArbeitsverhaeltnisDialog : DialogFragment() {
+class AddArbeitsverhaeltnisDialog(
+    private val onUpdateArbeitsverhaeltnisseListener: OnUpdateArbeitsverhaeltnisseListener) : DialogFragment() {
 
-    private lateinit var arbeitsverhaeltnisViewModel: ArbeitsverhaeltnisUebersichtViewModel
-
+    private lateinit var addArbeitsverhaeltnisViewModel: AddArbeitsverhaeltnisViewModel
     private val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisErstellenDTO()
     private lateinit var leistungserbringerlistPopupWindow: ListPopupWindow
     private lateinit var leistungsnehmerlistPopupWindow: ListPopupWindow
     private lateinit var kategorieListPopupWindow: ListPopupWindow
+    private var addArbeitsverhaeltnisDisposable: Disposable? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DialogAddArbeitsverhaeltnisBinding.inflate(inflater, container, false)
@@ -33,7 +38,7 @@ class AddArbeitsverhaeltnisDialog : DialogFragment() {
 
         activity?.let { fragment ->
             initializeViewModel(fragment)
-            arbeitsverhaeltnisViewModel.config.observe(this, Observer {
+            addArbeitsverhaeltnisViewModel.config.observe(this, Observer {
                 leistungserbringerlistPopupWindow = createListPopupWindowLeistungserbringer(fragment, it.participants)
                 leistungsnehmerlistPopupWindow = createListPopupWindowLeistungsnehmer(fragment, it.participants)
                 kategorieListPopupWindow = createListPopupWindowKategorie(fragment, it.categories)
@@ -46,8 +51,9 @@ class AddArbeitsverhaeltnisDialog : DialogFragment() {
     }
 
     private fun initializeViewModel(it: FragmentActivity) {
-        arbeitsverhaeltnisViewModel = ViewModelProviders.of(it, ArbeitsverhaeltnisUebersichtViewModelFactory(it.application))
-            .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)
+        addArbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(it, AddArbeitsverhaeltnisViewModelFactory(it.application))
+                .get(AddArbeitsverhaeltnisViewModel::class.java)
     }
 
     private fun createListPopupWindowLeistungserbringer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
@@ -86,7 +92,9 @@ class AddArbeitsverhaeltnisDialog : DialogFragment() {
     }
 
     fun addArbeitsverhaeltnisAndCloseDialog() {
-        arbeitsverhaeltnisViewModel.addArbeitsverhaeltnis(arbeitsverhaeltnisDTO)
+        addArbeitsverhaeltnisDisposable = addArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis(arbeitsverhaeltnisDTO)//
+            .subscribeOn(AndroidSchedulers.mainThread())//
+            .subscribe(Consumer<Long> { onUpdateArbeitsverhaeltnisseListener.onArbeitsverhaeltnisseUpdated() })
         closeDialog()
     }
 
