@@ -67,7 +67,7 @@ class AppConfigurationFragment : Fragment() {
 
     private fun initializeViewModel() {
         activity?.let {
-            appConfigurationViewModel = ViewModelProviders.of(it, ConfigViewModelFactory(it.application))
+            appConfigurationViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
                 .get(AppConfigurationViewModel::class.java)
         }
     }

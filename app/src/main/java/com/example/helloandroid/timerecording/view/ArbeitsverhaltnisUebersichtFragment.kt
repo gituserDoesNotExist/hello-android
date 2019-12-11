@@ -18,8 +18,8 @@ import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
 import com.example.helloandroid.endOfMonth
 import com.example.helloandroid.startOfMonth
-import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
-import com.example.helloandroid.timerecording.Arbeitsverhaeltnisse
+import com.example.helloandroid.timerecording.TeamupEvent
+import com.example.helloandroid.timerecording.TeamupEvents
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 
@@ -49,7 +49,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
 
         activity?.let { fragmentActivity ->
             initializeViewModel(fragmentActivity)
-            arbeitsverhaeltnisUebersichtViewModel.arbeitsverhaeltnisse.observe(this, Observer {
+            arbeitsverhaeltnisUebersichtViewModel.teamupEvents.observe(this, Observer {
                 addRecyclerView(rootView, fragmentActivity, it)
             })
 
@@ -57,13 +57,13 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
         return rootView
     }
 
-    private fun addRecyclerView(root: View, activity: FragmentActivity, arbeitsverhaeltnisse: Arbeitsverhaeltnisse) {
+    private fun addRecyclerView(root: View, activity: FragmentActivity, events: TeamupEvents) {
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_arbeitsverhaeltnisse)
-        recyclerView.adapter = ArbeitsverhaeltnisRecyclerViewAdapter(arbeitsverhaeltnisse).apply {
+        recyclerView.adapter = ArbeitsverhaeltnisRecyclerViewAdapter(events).apply {
             this.onItemClickListener = View.OnClickListener { v ->
                 val viewHolder = v.tag as ArbeitsverhaeltnisRecyclerViewAdapter.ItemViewHolder
-                arbeitsverhaeltnisse.findById(viewHolder.arbeitsverhaeltnisRemoteId)?.let {
-                    onFragmentInteractionListener?.openArbeitsverhaeltnisDetails(it)
+                events.findById(viewHolder.arbeitsverhaeltnisRemoteId)?.let {
+                    onFragmentInteractionListener?.openArbeitsverhaeltnisDetailsFragment(it)
                 }
             }
         }
@@ -72,7 +72,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
 
     private fun initializeViewModel(fragmentActivity: FragmentActivity) {
         arbeitsverhaeltnisUebersichtViewModel =
-            ViewModelProviders.of(this, ArbeitsverhaeltnisViewModelFactory())
+            ViewModelProviders.of(this, ZeiterfassungViewModelFactory(fragmentActivity.application))
                 .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
                 .apply {
                     this.loadArbeitsverhaeltnisse(arbeitsverhaeltnisDTO)
@@ -108,7 +108,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     }
 
     interface OnFragmentInteractionListener {
-        fun openArbeitsverhaeltnisDetails(arbeitsverhaeltnis: Arbeitsverhaeltnis)
+        fun openArbeitsverhaeltnisDetailsFragment(teamupEvent: TeamupEvent)
     }
 
 }

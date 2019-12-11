@@ -2,14 +2,14 @@ package com.example.helloandroid.timerecording.view
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloandroid.timerecording.Arbeitsverhaeltnisse
-import com.example.helloandroid.timerecording.repository.ArbeitsverhaeltnisRepository
+import com.example.helloandroid.timerecording.TeamupEvents
+import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.disposables.Disposable
 
-class ArbeitsverhaeltnisUebersichtViewModel(private val arbeitsverhaeltnisRepository: ArbeitsverhaeltnisRepository)//
+class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository: ZeiterfassungRepository)//
     : ViewModel() {
 
-    val arbeitsverhaeltnisse = MutableLiveData<Arbeitsverhaeltnisse>()
+    val teamupEvents = MutableLiveData<TeamupEvents>()
     private var fetchArbeitsverhaeltnisseDisposable: Disposable? = null
 
 
@@ -17,8 +17,8 @@ class ArbeitsverhaeltnisUebersichtViewModel(private val arbeitsverhaeltnisReposi
         val startDate = arbeitsverhaeltnisDto.startDate
         val endDate = arbeitsverhaeltnisDto.endDate
         fetchArbeitsverhaeltnisseDisposable =
-            arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(startDate, endDate)//
-                .subscribe { verhaeltnisse -> arbeitsverhaeltnisse.postValue(verhaeltnisse) }
+            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(startDate, endDate)//
+                .subscribe { verhaeltnisse -> teamupEvents.postValue(verhaeltnisse) }
     }
 
 

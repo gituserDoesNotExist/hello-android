@@ -3,16 +3,16 @@ package com.example.helloandroid.timerecording.view
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.helloandroid.ConsumingDatabaseAsyncTask
-import com.example.helloandroid.timerecording.repository.AppConfigurationRepository
+import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import java.lang.ref.WeakReference
 
-class StartZeiterfassungViewModel(appConfigurationRepository: AppConfigurationRepository) : ViewModel() {
+class StartZeiterfassungViewModel(zeiterfassungRepository: ZeiterfassungRepository) : ViewModel() {
 
     var existsConfiguration: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         ConsumingDatabaseAsyncTask(//
-            backgroundOperationConsumer = appConfigurationRepository::existsConfiguration,
+            backgroundOperationConsumer = zeiterfassungRepository::existsConfiguration,
             dbOperationSuccessfulListener = WeakReference { configured -> existsConfiguration.postValue(configured) }//
         ).execute()
     }

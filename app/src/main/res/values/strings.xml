@@ -41,6 +41,7 @@
     <string name="add_arbeitsverhaeltnis_date_von_bis">bis</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
     <string name="label_edit_text_neue_zeiterfassung_kategorie">Kategorie</string>
+    <string name="fragment_arbeitsverhaeltnis_details_datum_des_arbeitseinsatzes">Datum des Arbeitseinsatzes</string>
 
 
     <!--    fragment-sht-->
@@ -52,6 +53,9 @@
 
     <!--    main-activity-->
     <string name="title_main_activity">Dashboard</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -5,7 +5,7 @@ import java.math.RoundingMode
 
 class Arbeitszeit(decimalHours: BigDecimal) {
 
-    private var dauer: BigDecimal = decimalHours.setScale(1, RoundingMode.DOWN)
+    var dauer: BigDecimal = decimalHours.setScale(1, RoundingMode.DOWN)
 
     fun getTimeInMinutes(): Long {
         return dauer.times(BigDecimal(60)).longValueExact()

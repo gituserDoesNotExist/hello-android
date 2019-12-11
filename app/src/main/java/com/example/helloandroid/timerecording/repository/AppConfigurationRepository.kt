@@ -29,6 +29,10 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
         }
     }
 
+    fun getAppUser(): Single<String> {
+        return calendarConfigurationDao.getAppUser()
+    }
+
     fun downloadRemoteConfiguration(): Single<CalendarConfiguration> {
         return teamUpApi.getConfiguration()//
             .subscribeOn(Schedulers.io()).map {

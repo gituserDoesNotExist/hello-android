@@ -41,8 +41,8 @@
                 android:id="@+id/item_arbeitsverhaeltnis_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="32131" />
+                android:layout_weight="0.25"
+                android:text="43.2 Stunden" />
 
         <TextView
                 android:id="@+id/item_arbeitsverhaeltnis_comment"

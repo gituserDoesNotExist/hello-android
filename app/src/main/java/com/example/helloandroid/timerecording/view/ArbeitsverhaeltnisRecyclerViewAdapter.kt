@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
-import com.example.helloandroid.timerecording.Arbeitsverhaeltnisse
+import com.example.helloandroid.timerecording.TeamupEvents
 import org.threeten.bp.format.DateTimeFormatter
 
-class ArbeitsverhaeltnisRecyclerViewAdapter(private val arbeitsverhaeltnisse: Arbeitsverhaeltnisse) :
+class ArbeitsverhaeltnisRecyclerViewAdapter(private val teamupEvents: TeamupEvents) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var onItemClickListener: View.OnClickListener
@@ -25,19 +25,20 @@ class ArbeitsverhaeltnisRecyclerViewAdapter(private val arbeitsverhaeltnisse: Ar
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val arbeitsverhaeltnis = arbeitsverhaeltnisse.verhaeltnisse[position]
+        val teamupEvent = teamupEvents.events[position]
+        val arbeitsverhaeltnis = teamupEvent.arbeitsverhaeltnis
         if (holder is ItemViewHolder) {
-            holder.arbeitsverhaeltnisRemoteId = arbeitsverhaeltnis.remoteId
+            holder.arbeitsverhaeltnisRemoteId = teamupEvent.remoteCalenderId
             holder.titleTextView.text = arbeitsverhaeltnis.createTitleForArbeitsverhaeltnis()
             holder.dateTextView.text = arbeitsverhaeltnis.datum.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            holder.durationTextView.text = arbeitsverhaeltnis.dauer.toString()
+            holder.durationTextView.text = arbeitsverhaeltnis.arbeitszeit.toString()
             holder.commentTextView.text = arbeitsverhaeltnis.kommentar
         }
 
     }
 
     override fun getItemCount(): Int {
-        return arbeitsverhaeltnisse.verhaeltnisse.size
+        return teamupEvents.events.size
     }
 
 

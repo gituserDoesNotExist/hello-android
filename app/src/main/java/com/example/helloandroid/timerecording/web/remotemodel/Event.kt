@@ -41,7 +41,7 @@ class Event {
     lateinit var notes: String
     @SerializedName("version")
     @Expose
-    var version: String? = null
+    lateinit var version: String
     @SerializedName("readonly")
     @Expose
     var readonly: Boolean? = null
@@ -62,7 +62,7 @@ class Event {
     var rsstartDt: Any? = null
     @SerializedName("creation_dt")
     @Expose
-    var creationDt: String? = null
+    lateinit var creationDt: String
     @SerializedName("update_dt")
     @Expose
     var updateDt: Any? = null

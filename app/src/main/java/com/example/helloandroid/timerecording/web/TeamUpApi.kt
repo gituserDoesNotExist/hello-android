@@ -8,7 +8,7 @@ interface TeamUpApi {
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @GET("check-access")
-    fun checkAccess() : Single<CheckAccessResponseDTO>
+    fun checkAccess(): Single<CheckAccessResponseDTO>
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @POST("${TeamupCalenderConfig.CALENDAR_KEY}/events")
@@ -16,7 +16,9 @@ interface TeamUpApi {
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @DELETE("${TeamupCalenderConfig.CALENDAR_KEY}/events/{event_id}")
-    fun deleteEvent(@Path("event_id") eventId: String): Single<Event>
+    fun deleteEvent(//
+        @Path("event_id") eventId: String,//
+        @Query("version") version: String): Single<TeamupDeleteEventResponseDTO>
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @GET("${TeamupCalenderConfig.CALENDAR_KEY}/events")

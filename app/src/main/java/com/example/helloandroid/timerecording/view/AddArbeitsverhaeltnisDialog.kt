@@ -52,7 +52,7 @@ class AddArbeitsverhaeltnisDialog(
 
     private fun initializeViewModel(it: FragmentActivity) {
         addArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(it, AddArbeitsverhaeltnisViewModelFactory(it.application))
+            ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
                 .get(AddArbeitsverhaeltnisViewModel::class.java)
     }
 

@@ -2,19 +2,17 @@ package com.example.helloandroid.timerecording.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloandroid.timerecording.repository.AppConfigurationRepository
-import com.example.helloandroid.timerecording.repository.ArbeitsverhaeltnisRepository
+import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.Single
 
-class AddArbeitsverhaeltnisViewModel(private val arbeitsverhaeltnisRepository: ArbeitsverhaeltnisRepository,
-                                     appConfigurationRepository: AppConfigurationRepository) : ViewModel() {
+class AddArbeitsverhaeltnisViewModel(private val zeiterfassungRepository: ZeiterfassungRepository) : ViewModel() {
 
-    val config: LiveData<CalendarConfiguration> = appConfigurationRepository.getConfiguration()
-    private val arbeitsverhaeltnisMapper = ArbeitsverhaeltnisMapper()
+    val config: LiveData<CalendarConfiguration> = zeiterfassungRepository.getConfiguration()
+    private val arbeitsverhaeltnisMapper = ArbeitsverhaeltnisToDTOMapper()
 
     fun addArbeitsverhaeltnis(arbeitsverhaeltnisDTO: ArbeitsverhaeltnisErstellenDTO): Single<Long> {
-        val arbeitsverhaeltnis = arbeitsverhaeltnisMapper.fromDto(arbeitsverhaeltnisDTO)
-        return arbeitsverhaeltnisRepository.addArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis)//
+        val arbeitsverhaeltnis = arbeitsverhaeltnisMapper.fromErstellenDtoToArbeitsverhaeltnis(arbeitsverhaeltnisDTO)
+        return zeiterfassungRepository.addArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis)//
     }
 
 }

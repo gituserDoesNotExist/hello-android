@@ -12,7 +12,7 @@ class ArbeitsverhaeltnisTest {
     fun calculateEndDatum() {
         val arbeitsverhaeltnis = Arbeitsverhaeltnis().apply {
             this.datum = LocalDate.of(2000, 10, 5)
-            this.dauer = Arbeitszeit(BigDecimal.TEN)
+            this.arbeitszeit = Arbeitszeit(BigDecimal.TEN)
         }
 
         val result = arbeitsverhaeltnis.calculateEndDatum()
