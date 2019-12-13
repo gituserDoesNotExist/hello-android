@@ -12,7 +12,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.Zeiterfassung"
+            android:theme="@style/Theme.HelloAndroid"
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".timerecording.view.ZeiterfassungActivity" />
         <activity android:name=".databinding.DatabindingActivity" />

@@ -1,6 +1,17 @@
 <resources>
 
-    <style name="Theme.Zeiterfassung" parent="Theme.AppCompat.Light">
+    <style name="Theme.HelloAndroid" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="buttonStyle">@style/CKButton</item>
+        <item name="imageButtonStyle">@style/CKButton</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="Theme.Zeiterfassung" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorBackground">@color/colorBackground</item>

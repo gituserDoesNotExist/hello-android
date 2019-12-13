@@ -1,17 +1,15 @@
 package com.example.helloandroid.timerecording.repository
 
 import com.example.helloandroid.HelloJson
-import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
 import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
 import com.example.helloandroid.timerecording.web.remotemodel.Event
 import com.example.helloandroid.timerecording.web.remotemodel.Events
-import com.example.helloandroid.timerecording.web.remotemodel.TeamupCreateEventRequest
 import java.util.stream.Collectors
 
-class TeamupEventMapper {
+class TeamupEventToRemoteEventMapper {
 
     private val arbeitsverhaeltnisMapper = ArbeitsverhaeltnisMapper()
 
@@ -29,15 +27,20 @@ class TeamupEventMapper {
         }
     }
 
-    fun fromArbeitsverhaeltnisToEvent(arbeitsverhaeltnis: Arbeitsverhaeltnis, ersteller: String): TeamupCreateEventRequest {
-        return TeamupCreateEventRequest().apply {
+
+    fun fromTeamupEventToRemoteEvent(teamupEvent: TeamupEvent): Event {
+        val arbeitsverhaeltnis = teamupEvent.arbeitsverhaeltnis
+        return Event().apply {
+            this.id = teamupEvent.remoteCalenderId
+            this.version = teamupEvent.version
             this.title = arbeitsverhaeltnis.createTitleForArbeitsverhaeltnis()
             this.subcalendarId = TeamupCalenderConfig.SUBCALENDAR_ID_NACHBARSCHAFTSHILFE
             this.startDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.datum)
             this.endDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.calculateEndDatum())
             this.notes = HelloJson.objectToJson(arbeitsverhaeltnis)
-            this.who = ersteller
+            this.who = teamupEvent.erstelltVon
         }
     }
+
 
 }

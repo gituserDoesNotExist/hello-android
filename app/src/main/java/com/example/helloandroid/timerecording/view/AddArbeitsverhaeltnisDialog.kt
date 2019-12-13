@@ -23,7 +23,7 @@ class AddArbeitsverhaeltnisDialog(
     private val onUpdateArbeitsverhaeltnisseListener: OnUpdateArbeitsverhaeltnisseListener) : DialogFragment() {
 
     private lateinit var addArbeitsverhaeltnisViewModel: AddArbeitsverhaeltnisViewModel
-    private val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisErstellenDTO()
+    private val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisDTO()
     private lateinit var leistungserbringerlistPopupWindow: ListPopupWindow
     private lateinit var leistungsnehmerlistPopupWindow: ListPopupWindow
     private lateinit var kategorieListPopupWindow: ListPopupWindow
@@ -33,7 +33,7 @@ class AddArbeitsverhaeltnisDialog(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DialogAddArbeitsverhaeltnisBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        binding.arbeitsverhaeltnisErstellenDto = arbeitsverhaeltnisDTO
+        binding.arbeitsverhaeltnisDto = arbeitsverhaeltnisDTO
         binding.addArbeitsverhaeltnisDialog = this
 
         activity?.let { fragment ->

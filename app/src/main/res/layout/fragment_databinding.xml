@@ -37,5 +37,17 @@
                 android:layout_height="wrap_content"
                 android:text="@{BigDecimalConverter.bigDecimalToString(dataBindingViewModel.bigDecimalLiveData)}" />
 
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={dataBindingViewModel.nameLiveData}" />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> dataBindingViewModel.someFun()}"
+                android:text="submit" />
+
+
     </LinearLayout>
 </layout>

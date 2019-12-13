@@ -4,22 +4,39 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.TeamupEvent
 
 class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFragmentInteractionListener,
-    ArbeitsverhaltnisUebersichtFragment.OnFragmentInteractionListener {
+    ArbeitsverhaltnisUebersichtFragment.OnFragmentInteractionListener,
+    EditArbeitsverhaeltnisDetailsFragment.FragmentInteractionListener {
 
     private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
     private var arbeitsverhaeltnisDetails: Boolean = false
+    private lateinit var currentFragmentTag: String
+
+    companion object {
+        private const val CURRENT_FRAGMENT = "KEY_CURRENT_FRAGMENT"
+        private const val ARBEITSVERHAELTNIS_UEBERSICHT = "ARBEITSVERHAELTNIS_UEBERSICHT"
+        private const val APP_CONFIGURATION = "APP_CONFIGURATION"
+        private const val EDIT_ARBEITSVERHAELTNIS_DETAILS = "EDIT_ARBEITSVERHAELTNIS_DETAILS"
+        private const val ARBEITSVERHAELTNIS_DETAILS = "ARBEITSVERHAELTNIS_DETAILS"
+    }
+
+    override fun onUpdateArbeitsverhaeltnis() {
+        openArbeitsverhaeltnisUebersichtFragment()
+    }
 
     override fun openArbeitsverhaeltnisDetailsFragment(teamupEvent: TeamupEvent) {
         sharedTeamupEventViewModel.currentEvent = teamupEvent
-        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(false))
-        supportActionBar?.title = teamupEvent.arbeitsverhaeltnis.kategorie
+        openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel()
+    }
+
+    private fun openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel() {
+        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(false), ARBEITSVERHAELTNIS_DETAILS)
         arbeitsverhaeltnisDetails = true
         invalidateOptionsMenu()
     }
@@ -29,30 +46,52 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
     }
 
     private fun openArbeitsverhaeltnisUebersichtFragment() {
-        replaceFragment(ArbeitsverhaltnisUebersichtFragment())
-        supportActionBar?.title = "Zeiterfassung"
-
+        replaceFragment(ArbeitsverhaltnisUebersichtFragment(), ARBEITSVERHAELTNIS_UEBERSICHT)
     }
 
-    override fun setFragmentTitle(value: String) {
-        supportActionBar?.title = value
-    }
 
     private lateinit var startZeiterfassungViewModel: StartZeiterfassungViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zeiterfassung)
-        supportActionBar?.title = "Zeiterfassung"
-        initializeViewModel()
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_zeiterfassung).apply { this.title = activityTitle() })
+//        initializeViewModel()
+//
+//        startZeiterfassungViewModel.existsConfiguration.observe(this, Observer { appConfigured ->
+//            if (savedInstanceState == null) {
+//                chooseFragment(appConfigured)
+//            } else {
+//                val currentFragment = savedInstanceState.getString(CURRENT_FRAGMENT)
+//                currentFragment?.let {
+//                    when (it) {
+//                        ARBEITSVERHAELTNIS_UEBERSICHT -> openArbeitsverhaeltnisUebersichtFragment()
+//                        EDIT_ARBEITSVERHAELTNIS_DETAILS -> openEditArbeitsverhaeltnisDetailsFragment()
+//                        ARBEITSVERHAELTNIS_DETAILS -> openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel()
+//                        APP_CONFIGURATION -> openAppConfigurationFragment()
+//                    }
+//                }
+//            }
+//        })
+    }
 
-        startZeiterfassungViewModel.existsConfiguration.observe(this, Observer { appConfigured ->
-            if (appConfigured) {
-                showFragment(AppConfigurationFragment())
-            } else {
-                showFragment(AppConfigurationFragment())
-            }
-        })
+    private fun activityTitle() = resources.getString(R.string.title_activity_zeiterfassung)
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(CURRENT_FRAGMENT, currentFragmentTag)
+    }
+
+    private fun chooseFragment(appConfigured: Boolean) {
+        if (appConfigured) {
+            openArbeitsverhaeltnisUebersichtFragment()
+        } else {
+            openAppConfigurationFragment()
+        }
+    }
+
+    private fun openAppConfigurationFragment() {
+        replaceFragment(AppConfigurationFragment(), APP_CONFIGURATION)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -74,7 +113,7 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
     }
 
     private fun openEditArbeitsverhaeltnisDetailsFragment() {
-        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(true))
+        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(true), EDIT_ARBEITSVERHAELTNIS_DETAILS)
         arbeitsverhaeltnisDetails = true
         invalidateOptionsMenu()
     }
@@ -87,16 +126,11 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
             .get(SharedTeamupEventViewModel::class.java)
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()//
-            .add(R.id.fragment_container_zeiterfassung, fragment)//
-            .commit()
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()//
-            .replace(R.id.fragment_container_zeiterfassung, fragment)//
-            .addToBackStack(null)//
-            .commit()
+    private fun replaceFragment(fragment: Fragment, tag: String) {
+        currentFragmentTag = tag
+//        supportFragmentManager.beginTransaction()//
+//            .replace(R.id.fragment_container_zeiterfassung, fragment, tag)//
+//            .addToBackStack(null)//
+//            .commit()
     }
 }

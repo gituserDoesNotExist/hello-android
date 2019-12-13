@@ -9,14 +9,14 @@ import org.threeten.bp.LocalDate.now
 import org.threeten.bp.ZoneId
 import java.math.BigDecimal
 
-class ArbeitsverhaeltnisErstellenDTO : BaseObservable() {
+class ArbeitsverhaeltnisDTO : BaseObservable() {
 
     var datumZeiterfassung: LocalDate = now(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId))
         @Bindable get() = field
         set(value) {
             if (field != value) {
                 field = value
-                notifyPropertyChanged(BR.datum)
+                notifyPropertyChanged(BR.datumZeiterfassung)
             }
         }
 

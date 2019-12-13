@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.helloandroid.view.LocalDateConverter" />
+
+        <import type="com.example.helloandroid.view.LocalDateTimeConverter" />
+
+        <import type="com.example.helloandroid.view.BigDecimalConverter" />
+
+        <variable
+                name="dto"
+                type="com.example.helloandroid.timerecording.view.ArbeitsverhaeltnisDetailsDTO" />
+
+        <variable
+                name="editArbeitsverhaeltnisDetailsFragment"
+                type="com.example.helloandroid.timerecording.view.EditArbeitsverhaeltnisDetailsFragment" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout3"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="Erstellt am" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:hint="debug text"
+                    android:text="@{LocalDateTimeConverter.dateToString(dto.erstelltAm)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/separator"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="Erstellt von" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:hint="debug text"
+                    android:text="@{dto.erstelltVon}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+        <View
+                android:id="@+id/separator"
+                android:layout_width="0dip"
+                android:layout_height="2dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:background="@color/black"
+                app:layout_constraintBottom_toTopOf="@id/arbeitsverhaeltnis_details_guideline_top"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left" />
+
+        <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout44"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/arbeitsverhaeltnis_details_guideline_top">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/fragment_arbeitsverhaeltnis_details_datum_des_arbeitseinsatzes" />
+
+            <EditText
+                    android:layout_width="154dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                    android:focusable="false"
+                    android:hint="debug text"
+                    android:onClick="@{() -> editArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
+                    android:text="@{LocalDateConverter.dateToString(dto.arbeitsverhaeltnisDto.datumZeiterfassung)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/linearLayout44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout8"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="Dauer des Arbeitseinsatzes" />
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                    android:hint="debug text"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
+                    android:text="@={BigDecimalConverter.bigDecimalToString(dto.arbeitsverhaeltnisDto.dauer)}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout44">
+
+            <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leistungsnehmer" />
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="debug text"
+                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
+                        android:text="@{dto.arbeitsverhaeltnisDto.leistungsnehmer}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Leistungserbringer" />
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="debug text"
+                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
+                        android:text="@{dto.arbeitsverhaeltnisDto.leistungserbringer}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout10"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kategorie" />
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                    android:focusableInTouchMode="false"
+                    android:hint="debug text"
+                    android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openKategorieListPopUp(v)}"
+                    android:text="@{dto.arbeitsverhaeltnisDto.kategorie}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout9">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kommentar" />
+
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                    android:hint="debug text"
+                    android:text="@={dto.arbeitsverhaeltnisDto.kommentar}"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dip"
+                android:src="@drawable/btn_confirm"
+                app:fabSize="normal"
+                android:onClick="@{()-> editArbeitsverhaeltnisDetailsFragment.saveChanges()}"
+                android:visibility="@{editArbeitsverhaeltnisDetailsFragment.getConfirmButtonVisibility()}"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/arbeitsverhaeltnis_details_guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.23" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.94" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

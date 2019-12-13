@@ -7,14 +7,50 @@
 
         android:theme="@style/Theme.Zeiterfassung">
 
-    <FrameLayout
-            android:id="@+id/fragment_container_zeiterfassung"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_zeiterfassung"
+            android:layout_width="0dip"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/Theme.Zeiterfassung"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+    <fragment
+            android:id="@+id/my_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dip"
+            android:layout_height="0dip"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation_zeiterfassung"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_zeiterfassung"
+            app:navGraph="@navigation/navigation_zeiterfassung" />
+    <!--    <FrameLayout-->
+    <!--            android:id="@+id/fragment_container_zeiterfassung"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dip"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_zeiterfassung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_menu_zeiterfassung" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

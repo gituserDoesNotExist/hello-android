@@ -16,12 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
-import com.example.helloandroid.endOfMonth
-import com.example.helloandroid.startOfMonth
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
 
 
 class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltnisseListener {
@@ -34,26 +31,26 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     }
 
     override fun onArbeitsverhaeltnisseUpdated() {
-        arbeitsverhaeltnisUebersichtViewModel.loadArbeitsverhaeltnisse(arbeitsverhaeltnisDTO)
+        arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
     }
 
 
-    private val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisUebersichtDTO(now().startOfMonth(), now().endOfMonth())
-    private lateinit var arbeitsverhaeltnisUebersichtViewModel: ArbeitsverhaeltnisUebersichtViewModel
+    private lateinit var arbeitsverhaeltnisViewModel: ArbeitsverhaeltnisUebersichtViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentArbeitsverhaeltnisUebersichtBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        binding.arbeitsverhaltnisUebersichtFragment = this
-        binding.arbeitsverhaeltnisDTO = arbeitsverhaeltnisDTO
 
         activity?.let { fragmentActivity ->
+            fragmentActivity?.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
             initializeViewModel(fragmentActivity)
-            arbeitsverhaeltnisUebersichtViewModel.teamupEvents.observe(this, Observer {
+            arbeitsverhaeltnisViewModel.teamupEvents.observe(this, Observer {
                 addRecyclerView(rootView, fragmentActivity, it)
             })
 
         }
+        binding.arbeitsverhaltnisUebersichtFragment = this
+        binding.arbeitsverhaeltnisDTO = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO
         return rootView
     }
 
@@ -71,11 +68,11 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     }
 
     private fun initializeViewModel(fragmentActivity: FragmentActivity) {
-        arbeitsverhaeltnisUebersichtViewModel =
+        arbeitsverhaeltnisViewModel =
             ViewModelProviders.of(this, ZeiterfassungViewModelFactory(fragmentActivity.application))
                 .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
                 .apply {
-                    this.loadArbeitsverhaeltnisse(arbeitsverhaeltnisDTO)
+                    this.loadArbeitsverhaeltnisse()
                 }
     }
 
@@ -88,10 +85,10 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     fun openDatePickerStartDate() {
         activity?.let {
             val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                arbeitsverhaeltnisDTO.startDate = LocalDate.of(year, month + 1, dayOfMonth)
-                arbeitsverhaeltnisUebersichtViewModel.loadArbeitsverhaeltnisse(arbeitsverhaeltnisDTO)
+                arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.startDate = LocalDate.of(year, month + 1, dayOfMonth)
+                arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
             }
-            val startDate = arbeitsverhaeltnisDTO.startDate
+            val startDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.startDate
             DatePickerDialog(it, onDateSetListener, startDate.year, startDate.monthValue, startDate.dayOfMonth).show()
         }
     }
@@ -99,10 +96,10 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     fun openDatePickerEndDate() {
         activity?.let {
             val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                arbeitsverhaeltnisDTO.endDate = LocalDate.of(year, month + 1, dayOfMonth)
-                arbeitsverhaeltnisUebersichtViewModel.loadArbeitsverhaeltnisse(arbeitsverhaeltnisDTO)
+                arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.endDate = LocalDate.of(year, month + 1, dayOfMonth)
+                arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
             }
-            val endDate = arbeitsverhaeltnisDTO.endDate
+            val endDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.endDate
             DatePickerDialog(it, onDateSetListener, endDate.year, endDate.monthValue, endDate.dayOfMonth).show()
         }
     }

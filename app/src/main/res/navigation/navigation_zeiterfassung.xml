@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_zeiterfassung"
+        app:startDestination="@id/welcomeZeiterfassungFragment">
+
+    <fragment
+            android:id="@+id/appConfigurationFragment"
+            android:name="com.example.helloandroid.timerecording.view.AppConfigurationFragment"
+            android:label="AppConfigurationFragment" />
+    <fragment
+            android:id="@+id/welcomeZeiterfassungFragment"
+            android:name="com.example.helloandroid.WelcomeZeiterfassungFragment"
+            android:label="fragment_welcome_zeiterfassung"
+            tools:layout="@layout/fragment_welcome_zeiterfassung" >
+        <action
+                android:id="@+id/action_welcomeZeiterfassungFragment_to_appConfigurationFragment"
+                app:destination="@id/appConfigurationFragment" />
+    </fragment>
+</navigation>
