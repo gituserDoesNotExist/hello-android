@@ -29,5 +29,11 @@ class WelcomeZeiterfassungFragment : Fragment() {
         view.findNavController().navigate(action)
     }
 
+    fun openUebersicht(view: View) {
+        val action =
+            WelcomeZeiterfassungFragmentDirections.actionWelcomeZeiterfassungFragmentToArbeitsverhaltnisUebersichtFragment()
+        view.findNavController().navigate(action)
+    }
+
 
 }

@@ -1,18 +1,15 @@
 package com.example.helloandroid.timerecording.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
-import com.example.helloandroid.timerecording.TeamupEvent
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFragmentInteractionListener,
-    ArbeitsverhaltnisUebersichtFragment.OnFragmentInteractionListener,
-    EditArbeitsverhaeltnisDetailsFragment.FragmentInteractionListener {
+class ZeiterfassungActivity : AppCompatActivity(), EditArbeitsverhaeltnisDetailsFragment.FragmentInteractionListener {
 
     private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
     private var arbeitsverhaeltnisDetails: Boolean = false
@@ -30,20 +27,6 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
         openArbeitsverhaeltnisUebersichtFragment()
     }
 
-    override fun openArbeitsverhaeltnisDetailsFragment(teamupEvent: TeamupEvent) {
-        sharedTeamupEventViewModel.currentEvent = teamupEvent
-        openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel()
-    }
-
-    private fun openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel() {
-        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(false), ARBEITSVERHAELTNIS_DETAILS)
-        arbeitsverhaeltnisDetails = true
-        invalidateOptionsMenu()
-    }
-
-    override fun exitAppConfigFragment() {
-        openArbeitsverhaeltnisUebersichtFragment()
-    }
 
     private fun openArbeitsverhaeltnisUebersichtFragment() {
         replaceFragment(ArbeitsverhaltnisUebersichtFragment(), ARBEITSVERHAELTNIS_UEBERSICHT)
@@ -56,31 +39,26 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zeiterfassung)
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_zeiterfassung).apply { this.title = activityTitle() })
-//        initializeViewModel()
-//
-//        startZeiterfassungViewModel.existsConfiguration.observe(this, Observer { appConfigured ->
-//            if (savedInstanceState == null) {
-//                chooseFragment(appConfigured)
-//            } else {
-//                val currentFragment = savedInstanceState.getString(CURRENT_FRAGMENT)
-//                currentFragment?.let {
-//                    when (it) {
-//                        ARBEITSVERHAELTNIS_UEBERSICHT -> openArbeitsverhaeltnisUebersichtFragment()
-//                        EDIT_ARBEITSVERHAELTNIS_DETAILS -> openEditArbeitsverhaeltnisDetailsFragment()
-//                        ARBEITSVERHAELTNIS_DETAILS -> openArbeitsverhaeltnisDetailsFragmentWithEventFromSharedViewModel()
-//                        APP_CONFIGURATION -> openAppConfigurationFragment()
-//                    }
-//                }
-//            }
-//        })
+
+
+        findViewById<BottomNavigationView>(
+            R.id.bottom_navigation_zeiterfassung).setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_home -> {
+                    goToHome()
+                }
+            }
+            true
+        }
+    }
+
+
+    private fun goToHome() {
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun activityTitle() = resources.getString(R.string.title_activity_zeiterfassung)
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(CURRENT_FRAGMENT, currentFragmentTag)
-    }
 
     private fun chooseFragment(appConfigured: Boolean) {
         if (appConfigured) {
@@ -94,43 +72,7 @@ class ZeiterfassungActivity : AppCompatActivity(), AppConfigurationFragment.OnFr
         replaceFragment(AppConfigurationFragment(), APP_CONFIGURATION)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (arbeitsverhaeltnisDetails) {
-            menuInflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
-        }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_edit_arbeitsverhaeltnis -> openEditArbeitsverhaeltnisDetailsFragment()
-            R.id.action_delete_arbeitsverhaeltnis -> {
-                sharedTeamupEventViewModel.deleteArbeitsverhaeltnis()
-                openArbeitsverhaeltnisUebersichtFragment()
-            }
-        }
-        return true
-    }
-
-    private fun openEditArbeitsverhaeltnisDetailsFragment() {
-        replaceFragment(EditArbeitsverhaeltnisDetailsFragment.newInstance(true), EDIT_ARBEITSVERHAELTNIS_DETAILS)
-        arbeitsverhaeltnisDetails = true
-        invalidateOptionsMenu()
-    }
-
-
-    private fun initializeViewModel() {
-        startZeiterfassungViewModel = ViewModelProviders.of(this, ZeiterfassungViewModelFactory(this.application))
-            .get(StartZeiterfassungViewModel::class.java)
-        sharedTeamupEventViewModel = ViewModelProviders.of(this, ZeiterfassungViewModelFactory(this.application))
-            .get(SharedTeamupEventViewModel::class.java)
-    }
-
     private fun replaceFragment(fragment: Fragment, tag: String) {
         currentFragmentTag = tag
-//        supportFragmentManager.beginTransaction()//
-//            .replace(R.id.fragment_container_zeiterfassung, fragment, tag)//
-//            .addToBackStack(null)//
-//            .commit()
     }
 }

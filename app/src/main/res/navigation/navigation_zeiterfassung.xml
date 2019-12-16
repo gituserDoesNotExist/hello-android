@@ -8,7 +8,11 @@
     <fragment
             android:id="@+id/appConfigurationFragment"
             android:name="com.example.helloandroid.timerecording.view.AppConfigurationFragment"
-            android:label="AppConfigurationFragment" />
+            android:label="AppConfigurationFragment" >
+        <action
+                android:id="@+id/action_appConfigurationFragment_to_arbeitsverhaltnisUebersichtFragment"
+                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
+    </fragment>
     <fragment
             android:id="@+id/welcomeZeiterfassungFragment"
             android:name="com.example.helloandroid.WelcomeZeiterfassungFragment"
@@ -17,5 +21,31 @@
         <action
                 android:id="@+id/action_welcomeZeiterfassungFragment_to_appConfigurationFragment"
                 app:destination="@id/appConfigurationFragment" />
+        <action
+                android:id="@+id/action_welcomeZeiterfassungFragment_to_arbeitsverhaltnisUebersichtFragment"
+                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/arbeitsverhaltnisUebersichtFragment"
+            android:name="com.example.helloandroid.timerecording.view.ArbeitsverhaltnisUebersichtFragment"
+            android:label="ArbeitsverhaltnisUebersichtFragment" >
+        <action
+                android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_editArbeitsverhaeltnisDetailsFragment"
+                app:destination="@id/editArbeitsverhaeltnisDetailsFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/editArbeitsverhaeltnisDetailsFragment"
+            android:name="com.example.helloandroid.timerecording.view.EditArbeitsverhaeltnisDetailsFragment"
+            android:label="EditArbeitsverhaeltnisDetailsFragment" >
+        <argument
+                android:name="editable"
+                app:argType="boolean"
+                android:defaultValue="false" />
+        <action
+                android:id="@+id/action_editArbeitsverhaeltnisDetailsFragment_to_arbeitsverhaltnisUebersichtFragment"
+                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
+        <action
+                android:id="@+id/action_editArbeitsverhaeltnisDetailsFragment_self"
+                app:destination="@id/editArbeitsverhaeltnisDetailsFragment" />
     </fragment>
 </navigation>

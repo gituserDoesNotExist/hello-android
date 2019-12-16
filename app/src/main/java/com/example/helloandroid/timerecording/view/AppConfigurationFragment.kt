@@ -1,6 +1,5 @@
 package com.example.helloandroid.timerecording.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.DatabaseAsyncTask
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentAppConfigurationBinding
@@ -21,7 +21,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class AppConfigurationFragment : Fragment() {
 
     private lateinit var appConfigurationViewModel: AppConfigurationViewModel
-    private var fragmentInteractionListener: OnFragmentInteractionListener? = null
     private lateinit var participantsListPopupWindow: ListPopupWindow
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,7 +41,6 @@ class AppConfigurationFragment : Fragment() {
         }
 
         binding.configDto = appConfigurationViewModel.configDto
-        binding.fragmentInteractionListener = fragmentInteractionListener
         binding.appConfigurationFragment = this
 
         return binding.root
@@ -51,7 +49,8 @@ class AppConfigurationFragment : Fragment() {
     private fun createParticipantsListPopUpWindow(it: FragmentActivity, entries: List<String>): ListPopupWindow {
         val listener = AdapterView.OnItemClickListener { _, _, position, _ ->
             appConfigurationViewModel.configDto.selectedAppUser = entries[position]
-            DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(appConfigurationViewModel.configDto.selectedAppUser)
+            DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(
+                appConfigurationViewModel.configDto.selectedAppUser)
             participantsListPopupWindow.dismiss()
         }
 
@@ -73,25 +72,13 @@ class AppConfigurationFragment : Fragment() {
     }
 
     fun openParticipantsListPopupWindow(editTextView: View) {
-        participantsListPopupWindow.apply { this.anchorView = editTextView}.show()
+        participantsListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
-    interface OnFragmentInteractionListener {
-        fun exitAppConfigFragment()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            fragmentInteractionListener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        fragmentInteractionListener = null
+    fun exitAppConfigFragment() {
+        val action =
+            AppConfigurationFragmentDirections.actionAppConfigurationFragmentToArbeitsverhaltnisUebersichtFragment()
+        findNavController().navigate(action)
     }
 
 }

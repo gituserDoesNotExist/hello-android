@@ -9,10 +9,6 @@
                 type="com.example.helloandroid.timerecording.view.ConfigDTO" />
 
         <variable
-                name="fragmentInteractionListener"
-                type="com.example.helloandroid.timerecording.view.AppConfigurationFragment.OnFragmentInteractionListener" />
-
-        <variable
                 name="appConfigurationFragment"
                 type="com.example.helloandroid.timerecording.view.AppConfigurationFragment" />
 
@@ -124,7 +120,7 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/colorSecondary"
                 android:contentDescription="@string/zeiterfassung_config_confirm_content_description"
-                android:onClick="@{() -> fragmentInteractionListener.exitAppConfigFragment()}"
+                android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
                 android:src="@drawable/btn_confirm"
                 app:borderWidth="0dip"
                 app:fabSize="normal" />

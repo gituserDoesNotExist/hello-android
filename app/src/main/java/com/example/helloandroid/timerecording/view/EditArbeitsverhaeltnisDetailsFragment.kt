@@ -4,16 +4,18 @@ package com.example.helloandroid.timerecording.view
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentEditArbeitsverhaeltnisDetailsBinding
 import com.example.helloandroid.timerecording.TeamupEvent
@@ -25,13 +27,6 @@ import org.threeten.bp.LocalDate
 
 class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
 
-
-    companion object {
-        @JvmStatic
-        fun newInstance(editable: Boolean) = EditArbeitsverhaeltnisDetailsFragment().apply {
-            this.editable = editable
-        }
-    }
 
     interface FragmentInteractionListener {
         fun onUpdateArbeitsverhaeltnis()
@@ -49,12 +44,17 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
     private lateinit var leistungsnehmerlistPopupWindow: ListPopupWindow
     private lateinit var kategorieListPopupWindow: ListPopupWindow
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
-    var editable: Boolean = false
+    var editable: ObservableBoolean = ObservableBoolean(false)
     private var fragmentInteractionListener: FragmentInteractionListener? = null
+    private val args: EditArbeitsverhaeltnisDetailsFragmentArgs by navArgs()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.let { activity ->
+        editable.set(args.editable)
+        setHasOptionsMenu(true)
+        (activity as? AppCompatActivity)?.let { activity ->
+            activity.supportActionBar?.title = "Details"
+            activity.supportActionBar?.invalidateOptionsMenu()
             initializeViewModel(activity)
             activity.title = editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.kategorie
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
@@ -72,12 +72,44 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         return rootView
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete_arbeitsverhaeltnis -> {
+                sharedTeamupEventViewModel.deleteArbeitsverhaeltnis()
+                goToUebersicht()
+            }
+            R.id.action_edit_arbeitsverhaeltnis -> {
+                editable.set(true)
+            }
+        }
+        return true
+    }
+
+
+    private fun goToUebersicht() {
+        val action = EditArbeitsverhaeltnisDetailsFragmentDirections.actionEditArbeitsverhaeltnisDetailsFragmentToArbeitsverhaltnisUebersichtFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun goToEditableDetails() {
+
+//        val action =
+//            EditArbeitsverhaeltnisDetailsFragmentDirections.action
+//                true)
+//        findNavController().navigate(action)
+    }
+
     override fun onStop() {
         super.onStop()
         updateArbeitsverhaeltnisDisposable?.dispose()
     }
 
-    private fun initializeViewModel(it: FragmentActivity) {
+    private fun initializeViewModel(it: AppCompatActivity) {
         sharedTeamupEventViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
             .get(SharedTeamupEventViewModel::class.java)
         appConfigurationViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
@@ -87,7 +119,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
             .apply { this.initialize(sharedTeamupEventViewModel.currentEvent) }
     }
 
-    private fun createListPopupWindowLeistungserbringer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+    private fun createListPopupWindowLeistungserbringer(it: AppCompatActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.leistungserbringer =
                 entries[position]
@@ -96,7 +128,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         return createListPopupWindow(it, entries, onItemClickListener)
     }
 
-    private fun createListPopupWindowLeistungsnehmer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+    private fun createListPopupWindowLeistungsnehmer(it: AppCompatActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.leistungsnehmer =
                 entries[position]
@@ -105,7 +137,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         return createListPopupWindow(it, entries, onItemClickListener)
     }
 
-    private fun createListPopupWindowKategorie(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+    private fun createListPopupWindowKategorie(it: AppCompatActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.kategorie = entries[position]
             kategorieListPopupWindow.dismiss()
@@ -154,7 +186,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
     }
 
     fun getConfirmButtonVisibility(): Int {
-        return if (editable) View.VISIBLE else View.INVISIBLE
+        return if (editable.get()) View.VISIBLE else View.INVISIBLE
     }
 
     fun saveChanges() {

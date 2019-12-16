@@ -4,10 +4,10 @@
 
     <!-- Settings, should always be in the overflow -->
     <item
-            android:id="@+id/action_edit_arbeitsverhaeltnis"
+            android:id="@+id/action_home"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_home_black_48dp"
-            android:title="edit" />
+            android:title="Home" />
 
 
 
