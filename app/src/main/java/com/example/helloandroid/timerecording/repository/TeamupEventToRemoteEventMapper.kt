@@ -1,6 +1,7 @@
 package com.example.helloandroid.timerecording.repository
 
 import com.example.helloandroid.HelloJson
+import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
@@ -28,17 +29,24 @@ class TeamupEventToRemoteEventMapper {
     }
 
 
-    fun fromTeamupEventToRemoteEvent(teamupEvent: TeamupEvent): Event {
-        val arbeitsverhaeltnis = teamupEvent.arbeitsverhaeltnis
+    /** Sollte beim Anlegen verwendet werden */
+    fun fromArbeitsverhaeltnisToRemoteEvent(arbeitsverhaeltnis: Arbeitsverhaeltnis, erstelltVon: String): Event {
         return Event().apply {
-            this.id = teamupEvent.remoteCalenderId
-            this.version = teamupEvent.version
             this.title = arbeitsverhaeltnis.createTitleForArbeitsverhaeltnis()
             this.subcalendarId = TeamupCalenderConfig.SUBCALENDAR_ID_NACHBARSCHAFTSHILFE
             this.startDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.datum)
             this.endDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.calculateEndDatum())
             this.notes = HelloJson.objectToJson(arbeitsverhaeltnis)
-            this.who = teamupEvent.erstelltVon
+            this.who = erstelltVon
+        }
+    }
+
+    /** Sollte beim Updaten verwendet werden */
+    fun fromTeamupEventToRemoteEvent(teamupEvent: TeamupEvent): Event {
+        val arbeitsverhaeltnis = teamupEvent.arbeitsverhaeltnis
+        return fromArbeitsverhaeltnisToRemoteEvent(arbeitsverhaeltnis, teamupEvent.erstelltVon).apply {
+            this.id = teamupEvent.remoteCalenderId
+            this.version = teamupEvent.version
         }
     }
 

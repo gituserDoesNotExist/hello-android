@@ -20,188 +20,126 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:minWidth="400dip"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dip"
             android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_add_arbeitsverhaeltnis_datum"
+                        style="@style/styleTextInputLayout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_datum"
-                        android:textSize="20sp" />
+                        app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_time"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        >
-
-                    <EditText
-                            android:id="@+id/input_add_arbeitsverhaeltnis_datum"
-                            android:layout_width="0dip"
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="bottom"
-                            android:layout_weight="1"
-                            android:text="@={LocalDateConverter.dateToString(arbeitsverhaeltnisDto.datumZeiterfassung)}" />
-
-                    <ImageButton
-                            android:id="@+id/btn_add_ausgabe_dialog_select_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_margin="5dip"
+                            android:backgroundTint="@color/black"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/label_edit_text_neue_zeiterfassung_datum"
                             android:onClick="@{() -> addArbeitsverhaeltnisDialog.openDatePickerDialog()}"
-                            android:src="@drawable/date_picker_icon" />
-                </LinearLayout>
-            </LinearLayout>
+                            android:text="@={LocalDateConverter.dateToString(arbeitsverhaeltnisDto.datumZeiterfassung)}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                    android:id="@+id/linearLayout"
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_time"
+                    style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_kategorie"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_datum">
 
-                <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_anzahl_stunden"
-                        android:textSize="20sp" />
-
-                <EditText
-                        android:id="@+id/input_add_arbeitsverhaeltnis_time"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:maxLength="8"
-                        android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_anzahl_stunden"
                         android:inputType="numberDecimal"
+                        android:maxLength="8"
                         android:text="@={BigDecimalConverter.bigDecimalToString(arbeitsverhaeltnisDto.dauer)}" />
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                    android:id="@+id/linearLayout3"
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_kategorie"
+                    style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_leistungserbringer"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_time">
 
-                <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_kategorie"
-                        android:textSize="20sp" />
-
-                <EditText
-                        android:id="@+id/input_add_arbeitsverhaeltnis_kategorie"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:focusableInTouchMode="false"
-                        android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_kategorie"
                         android:onClick="@{(view) -> addArbeitsverhaeltnisDialog.openKategoriePopUp(view)}"
                         android:text="@={arbeitsverhaeltnisDto.kategorie}" />
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                    android:id="@+id/linearLayout4"
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_leistungserbringer"
+                    style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_leistungsnehmer"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_kategorie">
 
-                <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
-                        android:textSize="20sp" />
-
-                <EditText
-                        android:id="@+id/input_add_arbeitsverhaeltnis_leistungserbringer"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:focusableInTouchMode="false"
                         android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
                         android:onClick="@{(view) -> addArbeitsverhaeltnisDialog.openLeistungserbringerPopUp(view)}"
                         android:text="@={arbeitsverhaeltnisDto.leistungserbringer}" />
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                    android:id="@+id/linearLayout5"
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_leistungsnehmer"
+                    style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_kommentar"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_leistungserbringer">
 
-                <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
-                        android:textSize="20sp" />
-
-                <EditText
-                        android:id="@+id/input_add_arbeitsverhaeltnis_leistungsnehmer"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:focusableInTouchMode="false"
                         android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
                         android:onClick="@{(view) -> addArbeitsverhaeltnisDialog.openLeistungsnehmerPopUp(view)}"
                         android:text="@={arbeitsverhaeltnisDto.leistungsnehmer}" />
-            </LinearLayout>
 
-            <LinearLayout
-                    android:id="@+id/linearLayout6"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_kommentar"
+                    style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_leistungsnehmer">
 
-
-                <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="0dip"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.55"
-                        android:text="@string/label_edit_text_neue_zeiterfassung_kommentar"
-                        android:textSize="20sp" />
-
-                <EditText
-                        android:id="@+id/input_add_arbeitsverhaeltnis_kommentar"
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_kommentar"
                         android:text="@={arbeitsverhaeltnisDto.kommentar}" />
-            </LinearLayout>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

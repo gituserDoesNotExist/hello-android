@@ -2,45 +2,56 @@ package com.example.helloandroid.timerecording.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
+import com.example.helloandroid.R.navigation.navigation_zeiterfassung
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ZeiterfassungActivity : AppCompatActivity(), EditArbeitsverhaeltnisDetailsFragment.FragmentInteractionListener {
-
-    private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
-    private var arbeitsverhaeltnisDetails: Boolean = false
-    private lateinit var currentFragmentTag: String
-
-    companion object {
-        private const val CURRENT_FRAGMENT = "KEY_CURRENT_FRAGMENT"
-        private const val ARBEITSVERHAELTNIS_UEBERSICHT = "ARBEITSVERHAELTNIS_UEBERSICHT"
-        private const val APP_CONFIGURATION = "APP_CONFIGURATION"
-        private const val EDIT_ARBEITSVERHAELTNIS_DETAILS = "EDIT_ARBEITSVERHAELTNIS_DETAILS"
-        private const val ARBEITSVERHAELTNIS_DETAILS = "ARBEITSVERHAELTNIS_DETAILS"
-    }
-
-    override fun onUpdateArbeitsverhaeltnis() {
-        openArbeitsverhaeltnisUebersichtFragment()
-    }
-
-
-    private fun openArbeitsverhaeltnisUebersichtFragment() {
-        replaceFragment(ArbeitsverhaltnisUebersichtFragment(), ARBEITSVERHAELTNIS_UEBERSICHT)
-    }
-
+class ZeiterfassungActivity : AppCompatActivity() {
 
     private lateinit var startZeiterfassungViewModel: StartZeiterfassungViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        initViewModel()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zeiterfassung)
+        startZeiterfassungViewModel.existsConfiguration.observe(this, Observer {
+            configureToolbar()
+            configureNavHostFragment(it)
+            configureBottomNavigationView()
+        })
+    }
+
+    private fun initViewModel() {
+        startZeiterfassungViewModel = ViewModelProviders.of(this, ZeiterfassungViewModelFactory(this.application))
+            .get(StartZeiterfassungViewModel::class.java)
+    }
+
+    private fun configureToolbar() {
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_zeiterfassung).apply { this.title = activityTitle() })
+    }
 
 
+    private fun configureNavHostFragment(existsConfiguration: Boolean) {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navInflater = navHostFragment.navController.navInflater
+        val navGraph = navInflater.inflate(navigation_zeiterfassung)
+        if (existsConfiguration) {
+            navGraph.startDestination = R.id.arbeitsverhaltnisUebersichtFragment
+        } else {
+            navGraph.startDestination = R.id.appConfigurationFragment
+        }
+        navHostFragment.navController.graph = navGraph
+    }
+
+    private fun configureBottomNavigationView() {
         findViewById<BottomNavigationView>(
             R.id.bottom_navigation_zeiterfassung).setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -60,19 +71,16 @@ class ZeiterfassungActivity : AppCompatActivity(), EditArbeitsverhaeltnisDetails
     private fun activityTitle() = resources.getString(R.string.title_activity_zeiterfassung)
 
 
-    private fun chooseFragment(appConfigured: Boolean) {
-        if (appConfigured) {
-            openArbeitsverhaeltnisUebersichtFragment()
-        } else {
-            openAppConfigurationFragment()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_zeiterfassung, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        when (item.itemId) {
+            R.id.action_open_settings -> ZeiterfassungNavigation.getNavigation(navHostFragment.navController).toConfig()
         }
-    }
-
-    private fun openAppConfigurationFragment() {
-        replaceFragment(AppConfigurationFragment(), APP_CONFIGURATION)
-    }
-
-    private fun replaceFragment(fragment: Fragment, tag: String) {
-        currentFragmentTag = tag
+        return true
     }
 }

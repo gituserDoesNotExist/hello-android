@@ -42,10 +42,12 @@
     <string name="add_arbeitsverhaeltnis_date_von_bis">bis</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
     <string name="label_edit_text_neue_zeiterfassung_kategorie">Kategorie</string>
-    <string name="fragment_arbeitsverhaeltnis_details_datum_des_arbeitseinsatzes">Datum des Arbeitseinsatzes</string>
     <string name="title_fragment_configuration">Konfiguration</string>
     <string name="title_fragment_arbeitsvheraeltnis_ubersicht">Übersicht</string>
-    <string name="text_fragment_welcome_zeiterfassung">Was wollen Sie tun?</string>
+    <string name="text_fragment_welcome_zeiterfassung">Willkommen zur Zeiterfassungsapp. Was wollen Sie tun?</string>
+    <string name="erstellt_von">Erstellt von:</string>
+    <string name="erstellt_am">Erstellt am</string>
+    <string name="settings">Settings</string>
 
 
     <!--    fragment-sht-->
@@ -57,7 +59,6 @@
 
     <!--    main-activity-->
     <string name="title_main_activity">Dashboard</string>
-
 
 
 </resources>

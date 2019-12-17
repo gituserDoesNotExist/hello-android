@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.databinding.FragmentWelcomeZeiterfassungBinding
+import com.example.helloandroid.timerecording.view.ZeiterfassungNavigation
 
 class WelcomeZeiterfassungFragment : Fragment() {
 
@@ -23,16 +24,12 @@ class WelcomeZeiterfassungFragment : Fragment() {
         return binding.root
     }
 
-    fun openConfiguration(view: View) {
-        val action =
-            WelcomeZeiterfassungFragmentDirections.actionWelcomeZeiterfassungFragmentToAppConfigurationFragment()
-        view.findNavController().navigate(action)
+    fun openConfiguration() {
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromWelcomeToConfig()
     }
 
-    fun openUebersicht(view: View) {
-        val action =
-            WelcomeZeiterfassungFragmentDirections.actionWelcomeZeiterfassungFragmentToArbeitsverhaltnisUebersichtFragment()
-        view.findNavController().navigate(action)
+    fun openUebersicht() {
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromWelcomeToUebersicht()
     }
 
 

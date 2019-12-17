@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.ListPopupWindow
@@ -50,10 +51,14 @@ class AddArbeitsverhaeltnisDialog(
         return rootView
     }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+    }
+
     private fun initializeViewModel(it: FragmentActivity) {
-        addArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
-                .get(AddArbeitsverhaeltnisViewModel::class.java)
+        addArbeitsverhaeltnisViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
+            .get(AddArbeitsverhaeltnisViewModel::class.java)
     }
 
     private fun createListPopupWindowLeistungserbringer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
@@ -103,12 +108,12 @@ class AddArbeitsverhaeltnisDialog(
     }
 
     fun openDatePickerDialog() {
-        val crrntDate = LocalDate.now()
+        val date = LocalDate.now()
         val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             arbeitsverhaeltnisDTO.datumZeiterfassung = LocalDate.of(year, month + 1, dayOfMonth)
         }
         activity?.let {
-            DatePickerDialog(it, onDateSetListener, crrntDate.year, crrntDate.monthValue, crrntDate.dayOfMonth).show()
+            DatePickerDialog(it, onDateSetListener, date.year, date.monthValue - 1, date.dayOfMonth).show()
         }
     }
 

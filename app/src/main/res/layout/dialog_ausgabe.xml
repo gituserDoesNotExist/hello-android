@@ -45,7 +45,6 @@
                     android:textSize="20sp" />
 
             <EditText
-                    android:id="@+id/input_add_arbeitsverhaeltnis_time"
                     android:gravity="bottom"
                     android:text="@={LocalTimeConverter.timeToString(ausgabeDialog.ausgabeDTO.uhrzeit)}" />
 

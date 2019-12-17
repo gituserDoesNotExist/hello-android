@@ -3,12 +3,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation_zeiterfassung"
-        app:startDestination="@id/welcomeZeiterfassungFragment">
-
+        app:startDestination="@id/blankFragment">
     <fragment
             android:id="@+id/appConfigurationFragment"
             android:name="com.example.helloandroid.timerecording.view.AppConfigurationFragment"
-            android:label="AppConfigurationFragment" >
+            android:label="AppConfigurationFragment">
         <action
                 android:id="@+id/action_appConfigurationFragment_to_arbeitsverhaltnisUebersichtFragment"
                 app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
@@ -17,7 +16,7 @@
             android:id="@+id/welcomeZeiterfassungFragment"
             android:name="com.example.helloandroid.WelcomeZeiterfassungFragment"
             android:label="fragment_welcome_zeiterfassung"
-            tools:layout="@layout/fragment_welcome_zeiterfassung" >
+            tools:layout="@layout/fragment_welcome_zeiterfassung">
         <action
                 android:id="@+id/action_welcomeZeiterfassungFragment_to_appConfigurationFragment"
                 app:destination="@id/appConfigurationFragment" />
@@ -28,7 +27,7 @@
     <fragment
             android:id="@+id/arbeitsverhaltnisUebersichtFragment"
             android:name="com.example.helloandroid.timerecording.view.ArbeitsverhaltnisUebersichtFragment"
-            android:label="ArbeitsverhaltnisUebersichtFragment" >
+            android:label="ArbeitsverhaltnisUebersichtFragment">
         <action
                 android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_editArbeitsverhaeltnisDetailsFragment"
                 app:destination="@id/editArbeitsverhaeltnisDetailsFragment" />
@@ -36,16 +35,17 @@
     <fragment
             android:id="@+id/editArbeitsverhaeltnisDetailsFragment"
             android:name="com.example.helloandroid.timerecording.view.EditArbeitsverhaeltnisDetailsFragment"
-            android:label="EditArbeitsverhaeltnisDetailsFragment" >
-        <argument
-                android:name="editable"
-                app:argType="boolean"
-                android:defaultValue="false" />
+            android:label="EditArbeitsverhaeltnisDetailsFragment">
         <action
                 android:id="@+id/action_editArbeitsverhaeltnisDetailsFragment_to_arbeitsverhaltnisUebersichtFragment"
                 app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
-        <action
-                android:id="@+id/action_editArbeitsverhaeltnisDetailsFragment_self"
-                app:destination="@id/editArbeitsverhaeltnisDetailsFragment" />
     </fragment>
+    <fragment
+            android:id="@+id/blankFragment"
+            android:name="com.example.helloandroid.timerecording.view.BlankFragment"
+            android:label="fragment_blank"
+            tools:layout="@layout/fragment_blank" />
+    <action
+            android:id="@+id/action_global_appConfigurationFragment"
+            app:destination="@id/appConfigurationFragment" />
 </navigation>

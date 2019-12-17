@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class UpdateEventResponseDTO {
+class EventResponseDTO {
 
     @SerializedName("event")
     @Expose

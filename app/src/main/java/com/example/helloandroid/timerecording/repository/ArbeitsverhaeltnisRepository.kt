@@ -24,8 +24,9 @@ class ArbeitsverhaeltnisRepository {
     }
 
     fun addTeamupEventToRemoteCalendar(event: TeamupEvent): Single<Long> {
-        return teamUpApi.postEvent(teamupEventMapper.fromTeamupEventToRemoteEvent(event))//
-            .subscribeOn(Schedulers.io()).map { it.id.toLong() }
+        val event = teamupEventMapper.fromArbeitsverhaeltnisToRemoteEvent(event.arbeitsverhaeltnis, event.erstelltVon)
+        return teamUpApi.postEvent(event)//
+            .subscribeOn(Schedulers.io()).map { it.event.id.toLong() }
     }
 
     fun updateArbeitsverhaeltnisInRemoteCalender(teamupEvent: TeamupEvent): Single<TeamupEvent> {

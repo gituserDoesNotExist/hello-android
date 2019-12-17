@@ -12,14 +12,14 @@ interface TeamUpApi {
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @POST("${TeamupCalenderConfig.CALENDAR_KEY}/events")
-    fun postEvent(@Body request: Event): Single<Event>
+    fun postEvent(@Body request: Event): Single<EventResponseDTO>
 
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")
     @PUT("${TeamupCalenderConfig.CALENDAR_KEY}/events/{event_id}")
     fun updateEvent(//
         @Path("event_id") eventId: String,//
-        @Body request: Event): Single<UpdateEventResponseDTO>
+        @Body request: Event): Single<EventResponseDTO>
 
 
     @Headers("Teamup-Token: ${TeamupCalenderConfig.API_KEY}")

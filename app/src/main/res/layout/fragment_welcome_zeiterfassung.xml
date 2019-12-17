@@ -21,19 +21,20 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_fragment_welcome_zeiterfassung" />
+                android:text="@string/text_fragment_welcome_zeiterfassung"
+                android:textSize="20sp" />
 
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{(v) -> welcomeZeiterfassungFragment.openConfiguration(v)}"
+                android:onClick="@{() -> welcomeZeiterfassungFragment.openConfiguration()}"
                 android:text="Configure" />
 
 
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{(v) -> welcomeZeiterfassungFragment.openUebersicht(v)}"
+                android:onClick="@{() -> welcomeZeiterfassungFragment.openUebersicht()}"
                 android:text="Übersicht" />
 
 

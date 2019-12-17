@@ -2,7 +2,6 @@ package com.example.helloandroid.timerecording.view
 
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
@@ -10,12 +9,12 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentEditArbeitsverhaeltnisDetailsBinding
 import com.example.helloandroid.timerecording.TeamupEvent
@@ -28,14 +27,6 @@ import org.threeten.bp.LocalDate
 class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
 
 
-    interface FragmentInteractionListener {
-        fun onUpdateArbeitsverhaeltnis()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        this.fragmentInteractionListener = context as? FragmentInteractionListener
-    }
 
     private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
     private lateinit var editArbeitsverhaeltnisViewModel: EditArbeitsverhaeltnisViewModel
@@ -45,12 +36,10 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
     private lateinit var kategorieListPopupWindow: ListPopupWindow
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
     var editable: ObservableBoolean = ObservableBoolean(false)
-    private var fragmentInteractionListener: FragmentInteractionListener? = null
-    private val args: EditArbeitsverhaeltnisDetailsFragmentArgs by navArgs()
+    var confirmButtonVisibility = ObservableInt(View.INVISIBLE)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        editable.set(args.editable)
         setHasOptionsMenu(true)
         (activity as? AppCompatActivity)?.let { activity ->
             activity.supportActionBar?.title = "Details"
@@ -72,42 +61,6 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         return rootView
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_delete_arbeitsverhaeltnis -> {
-                sharedTeamupEventViewModel.deleteArbeitsverhaeltnis()
-                goToUebersicht()
-            }
-            R.id.action_edit_arbeitsverhaeltnis -> {
-                editable.set(true)
-            }
-        }
-        return true
-    }
-
-
-    private fun goToUebersicht() {
-        val action = EditArbeitsverhaeltnisDetailsFragmentDirections.actionEditArbeitsverhaeltnisDetailsFragmentToArbeitsverhaltnisUebersichtFragment()
-        findNavController().navigate(action)
-    }
-
-    private fun goToEditableDetails() {
-
-//        val action =
-//            EditArbeitsverhaeltnisDetailsFragmentDirections.action
-//                true)
-//        findNavController().navigate(action)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        updateArbeitsverhaeltnisDisposable?.dispose()
-    }
 
     private fun initializeViewModel(it: AppCompatActivity) {
         sharedTeamupEventViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
@@ -158,6 +111,34 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete_arbeitsverhaeltnis -> {
+                sharedTeamupEventViewModel.deleteArbeitsverhaeltnis()
+                ZeiterfassungNavigation.getNavigation(findNavController()).fromDetailsTouebersicht()
+            }
+            R.id.action_edit_arbeitsverhaeltnis -> {
+                editable.set(true)
+                confirmButtonVisibility.set(View.VISIBLE)
+            }
+        }
+        return true
+    }
+
+
+
+    override fun onStop() {
+        super.onStop()
+        updateArbeitsverhaeltnisDisposable?.dispose()
+    }
+
+
+
+
     fun openDatePickerDialog() {
         val crrntDate =
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.datumZeiterfassung
@@ -185,15 +166,11 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         kategorieListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
-    fun getConfirmButtonVisibility(): Int {
-        return if (editable.get()) View.VISIBLE else View.INVISIBLE
-    }
-
     fun saveChanges() {
         updateArbeitsverhaeltnisDisposable = editArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<TeamupEvent> {
-                fragmentInteractionListener?.onUpdateArbeitsverhaeltnis()
+                ZeiterfassungNavigation.getNavigation(findNavController()).fromDetailsTouebersicht()
             })
     }
 

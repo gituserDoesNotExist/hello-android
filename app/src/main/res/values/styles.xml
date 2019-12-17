@@ -17,10 +17,16 @@
         <item name="android:background">@color/colorSecondary</item>
     </style>
 
-    <style name="editTextStyle" >
+    <style name="editTextStyle">
         <item name="android:textColor">@color/edit_text_color</item>
     </style>
 
+    <style name="styleTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">@color/edit_text_color</item>
+        <item name="android:paddingStart">10dip</item>
+        <item name="android:paddingEnd">10dip</item>
+        <item name="boxStrokeColor">@color/edit_text_box_border</item>
+    </style>
 
 
 </resources>

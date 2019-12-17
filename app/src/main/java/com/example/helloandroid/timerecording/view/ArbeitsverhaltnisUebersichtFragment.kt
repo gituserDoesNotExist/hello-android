@@ -55,10 +55,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
                 val viewHolder = v.tag as ArbeitsverhaeltnisRecyclerViewAdapter.ItemViewHolder
                 events.findById(viewHolder.arbeitsverhaeltnisRemoteId)?.let {
                     sharedTeamupEventViewModel.currentEvent = it
-                    val action =
-                        ArbeitsverhaltnisUebersichtFragmentDirections.actionArbeitsverhaltnisUebersichtFragmentToEditArbeitsverhaeltnisDetailsFragment(
-                            false)
-                    findNavController().navigate(action)
+                    ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToDetails()
                 }
             }
         }
@@ -90,7 +87,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
                 arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
             }
             val startDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.startDate
-            DatePickerDialog(it, onDateSetListener, startDate.year, startDate.monthValue, startDate.dayOfMonth).show()
+            DatePickerDialog(it, onDateSetListener, startDate.year, startDate.monthValue - 1, startDate.dayOfMonth).show()
         }
     }
 
@@ -101,7 +98,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
                 arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
             }
             val endDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.endDate
-            DatePickerDialog(it, onDateSetListener, endDate.year, endDate.monthValue, endDate.dayOfMonth).show()
+            DatePickerDialog(it, onDateSetListener, endDate.year, endDate.monthValue - 1, endDate.dayOfMonth).show()
         }
     }
 
