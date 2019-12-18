@@ -23,9 +23,14 @@
 
     <style name="styleTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColor">@color/edit_text_color</item>
-        <item name="android:paddingStart">10dip</item>
-        <item name="android:paddingEnd">10dip</item>
+        <item name="android:paddingStart">5dip</item>
+        <item name="android:paddingEnd">5dip</item>
         <item name="boxStrokeColor">@color/edit_text_box_border</item>
+    </style>
+
+    <style name="styleEditTextSmall">
+        <item name="android:paddingTop">8dip</item>
+        <item name="android:paddingBottom">8dip</item>
     </style>
 
 

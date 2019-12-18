@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -36,7 +35,8 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
     private lateinit var kategorieListPopupWindow: ListPopupWindow
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
     var editable: ObservableBoolean = ObservableBoolean(false)
-    var confirmButtonVisibility = ObservableInt(View.INVISIBLE)
+    var showConfirmButton = ObservableBoolean(false)
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -113,6 +113,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -123,7 +124,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
             }
             R.id.action_edit_arbeitsverhaeltnis -> {
                 editable.set(true)
-                confirmButtonVisibility.set(View.VISIBLE)
+                showConfirmButton.set(true)
             }
         }
         return true

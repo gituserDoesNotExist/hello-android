@@ -35,7 +35,7 @@
     <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
     <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Dauer</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungserbringer">Leistungserbringer</string>
-    <string name="label_edit_text_neue_zeiterfassung_datum">Datum</string>
+    <string name="label_edit_text_datum">Datum</string>
     <string name="title_configure_app_user_fragment">Konfiguration</string>
     <string name="label_who_is_app_user">Wer benutzt die App?</string>
     <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
@@ -48,6 +48,9 @@
     <string name="erstellt_von">Erstellt von:</string>
     <string name="erstellt_am">Erstellt am</string>
     <string name="settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="ende">Ende</string>
+    <string name="zeitraum">Zeitraum:</string>
 
 
     <!--    fragment-sht-->

@@ -1,7 +1,6 @@
 package com.example.helloandroid.timerecording.view
 
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.DialogOpener
+import com.example.helloandroid.HelloDatePickerDialog
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
 import com.example.helloandroid.timerecording.TeamupEvents
@@ -44,8 +44,18 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
 
         }
         binding.arbeitsverhaltnisUebersichtFragment = this
-        binding.arbeitsverhaeltnisDTO = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO
+        binding.viewModel = arbeitsverhaeltnisViewModel
         return rootView
+    }
+
+    private fun initializeViewModel(activity: AppCompatActivity) {
+        arbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
+                .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
+                .apply { this.loadArbeitsverhaeltnisse() }
+        sharedTeamupEventViewModel =
+            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
+                .get(SharedTeamupEventViewModel::class.java)
     }
 
     private fun addRecyclerView(root: View, activity: AppCompatActivity, events: TeamupEvents) {
@@ -62,17 +72,6 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
         recyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun initializeViewModel(activity: AppCompatActivity) {
-        arbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
-                .apply {
-                    this.loadArbeitsverhaeltnisse()
-                }
-        sharedTeamupEventViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(SharedTeamupEventViewModel::class.java)
-    }
 
     fun openAddArbeitsverhaeltnisDialog() {
         activity?.let {
@@ -81,24 +80,19 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     }
 
     fun openDatePickerStartDate() {
-        activity?.let {
-            val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.startDate = LocalDate.of(year, month + 1, dayOfMonth)
-                arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
-            }
-            val startDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.startDate
-            DatePickerDialog(it, onDateSetListener, startDate.year, startDate.monthValue - 1, startDate.dayOfMonth).show()
-        }
+        val onDateSet = onDateSet { arbeitsverhaeltnisViewModel.startDate.set(it) }
+        activity?.let { HelloDatePickerDialog(it, onDateSet, arbeitsverhaeltnisViewModel.startDate.get()).show() }
     }
 
     fun openDatePickerEndDate() {
-        activity?.let {
-            val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.endDate = LocalDate.of(year, month + 1, dayOfMonth)
-                arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
-            }
-            val endDate = arbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.endDate
-            DatePickerDialog(it, onDateSetListener, endDate.year, endDate.monthValue - 1, endDate.dayOfMonth).show()
+        val dateSetListener = onDateSet { arbeitsverhaeltnisViewModel.endDate.set(it) }
+        activity?.let { HelloDatePickerDialog(it, dateSetListener, arbeitsverhaeltnisViewModel.endDate.get()).show() }
+    }
+
+    private fun onDateSet(updateModelListener: (date: LocalDate) -> Unit): (LocalDate) -> Unit {
+        return { date ->
+            updateModelListener(date)
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse()
         }
     }
 

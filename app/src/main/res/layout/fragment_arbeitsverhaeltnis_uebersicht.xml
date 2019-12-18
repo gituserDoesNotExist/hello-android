@@ -8,8 +8,8 @@
         <import type="com.example.helloandroid.view.LocalDateConverter" />
 
         <variable
-                name="arbeitsverhaeltnisDTO"
-                type="com.example.helloandroid.timerecording.view.ArbeitsverhaeltnisUebersichtDTO" />
+                name="viewModel"
+                type="com.example.helloandroid.timerecording.view.ArbeitsverhaeltnisUebersichtViewModel" />
 
         <variable
                 name="arbeitsverhaltnisUebersichtFragment"
@@ -17,66 +17,86 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
+                android:id="@+id/linear_layout_date_range"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="0.1">
+                android:layout_marginTop="10dip"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                    android:id="@+id/fragment_arbeitsverhaeltnis_start_date"
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:hint="20.04.2019"
-                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openDatePickerStartDate()}"
-                    android:text="@{LocalDateConverter.dateToString(arbeitsverhaeltnisDTO.startDate)}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView7"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/zeitraum" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_arbeitsverhaeltnis_start_date"
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4">
+
+                <EditText
+                        style="@style/styleEditTextSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openDatePickerStartDate()}"
+                        android:text="@{LocalDateConverter.dateToString(viewModel.startDate)}"
+                        tools:text="20.02.2019" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_arbeitsverhaeltnis_date_von_bis"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_arbeitsverhaeltnis_end_date"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_arbeitsverhaeltnis_start_date"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_gravity="center"
+                    android:layout_weight="0.1"
+                    android:text="@string/add_arbeitsverhaeltnis_date_von_bis" />
 
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_arbeitsverhaeltnis_end_date"
-                    android:layout_width="wrap_content"
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="false"
-                    android:hint="21.04.2019"
-                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openDatePickerEndDate()}"
-                    android:text="@{LocalDateConverter.dateToString(arbeitsverhaeltnisDTO.endDate)}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/textView7"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_weight="0.4">
 
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="bottom"
+                        android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openDatePickerEndDate()}"
+                        android:text="@{LocalDateConverter.dateToString(viewModel.endDate)}"
+                        tools:text="20.05.2019" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_arbeitsverhaeltnisse"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="0.9"
-                android:background="@color/colorBackground"
+                android:layout_marginTop="16dip"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_date_range"
                 tools:context=".timerecording.view.ArbeitsverhaltnisUebersichtFragment">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -88,7 +108,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/guideline_top" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -104,16 +124,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.07" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -8,20 +8,21 @@ import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.disposables.Disposable
 import org.threeten.bp.LocalDate.now
+import ru.gildor.databinding.observables.NonNullObservable
 
 class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository: ZeiterfassungRepository)//
     : ViewModel() {
 
     val teamupEvents = MutableLiveData<TeamupEvents>()
     private var fetchArbeitsverhaeltnisseDisposable: Disposable? = null
-    val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisUebersichtDTO(now().startOfMonth(), now().endOfMonth())
+
+    val startDate = NonNullObservable(now().startOfMonth())
+    val endDate = NonNullObservable(now().endOfMonth())
 
 
     fun loadArbeitsverhaeltnisse() {
-        val startDate = arbeitsverhaeltnisDTO.startDate
-        val endDate = arbeitsverhaeltnisDTO.endDate
         fetchArbeitsverhaeltnisseDisposable =
-            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(startDate, endDate)//
+            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(startDate.get(), endDate.get())//
                 .subscribe { verhaeltnisse -> teamupEvents.postValue(verhaeltnisse) }
     }
 

@@ -19,8 +19,8 @@ class ZeiterfassungActivity : AppCompatActivity() {
     private lateinit var startZeiterfassungViewModel: StartZeiterfassungViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initViewModel()
         super.onCreate(savedInstanceState)
+        initViewModel()
         setContentView(R.layout.activity_zeiterfassung)
         startZeiterfassungViewModel.existsConfiguration.observe(this, Observer {
             configureToolbar()
@@ -81,6 +81,6 @@ class ZeiterfassungActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_open_settings -> ZeiterfassungNavigation.getNavigation(navHostFragment.navController).toConfig()
         }
-        return true
+        return false
     }
 }

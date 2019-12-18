@@ -1,6 +1,5 @@
 package com.example.helloandroid.timerecording.view
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.helloandroid.HelloDatePickerDialog
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.DialogAddArbeitsverhaeltnisBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -108,13 +108,8 @@ class AddArbeitsverhaeltnisDialog(
     }
 
     fun openDatePickerDialog() {
-        val date = LocalDate.now()
-        val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            arbeitsverhaeltnisDTO.datumZeiterfassung = LocalDate.of(year, month + 1, dayOfMonth)
-        }
-        activity?.let {
-            DatePickerDialog(it, onDateSetListener, date.year, date.monthValue - 1, date.dayOfMonth).show()
-        }
+        val onDateSet: (LocalDate) -> Unit = { date -> arbeitsverhaeltnisDTO.datumZeiterfassung = date }
+        activity?.let { HelloDatePickerDialog(it, onDateSet, LocalDate.now()).show() }
     }
 
     fun openLeistungserbringerPopUp(editTextView: View) {
