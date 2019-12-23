@@ -149,7 +149,7 @@
                 android:padding="10dip">
 
             <ImageButton
-                    android:id="@+id/btn_eintrag_hinzufuegen"
+                    android:id="@+id/btn_cancel_select_leistungsnehmer"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> addArbeitsverhaeltnisDialog.addArbeitsverhaeltnisAndCloseDialog()}"
@@ -188,7 +188,7 @@
                     app:layout_constraintGuide_percent="0.9" />
 
             <ImageButton
-                    android:id="@+id/btn_ausgabe_hinzufuegen_abbrechen"
+                    android:id="@+id/btn_save_selected_leistungsnehmer"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> addArbeitsverhaeltnisDialog.closeDialog()}"
