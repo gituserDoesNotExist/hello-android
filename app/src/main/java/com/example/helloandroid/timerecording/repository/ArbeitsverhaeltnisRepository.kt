@@ -3,24 +3,35 @@ package com.example.helloandroid.timerecording.repository
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.TeamupServiceGenerator
+import com.example.helloandroid.timerecording.view.Suchkriterien
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.threeten.bp.LocalDate
 
 class ArbeitsverhaeltnisRepository {
 
     private val teamUpApi = TeamupServiceGenerator.createService()
     private val teamupEventMapper = TeamupEventToRemoteEventMapper()
 
-    fun fetchArbeitsverhaeltnisseFromRemote(startDate: LocalDate, endDate: LocalDate): Single<TeamupEvents> {
-        val start = TeamUpDateConverter.fromDateToFetchEventsQueryString(startDate)
-        val end = TeamUpDateConverter.fromDateToFetchEventsQueryString(endDate)
+    fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien): Single<TeamupEvents> {
+        val start = TeamUpDateConverter.fromDateToFetchEventsQueryString(suchkriterien.startDate.getSuchkriterium())
+        val end = TeamUpDateConverter.fromDateToFetchEventsQueryString(suchkriterien.endDate.getSuchkriterium())
         return teamUpApi.getEvents(start, end)//
             .subscribeOn(Schedulers.io())//
+            .map { events -> events.events.map { teamupEventMapper.fromRemoteToTeamupEvent(it) } }//
             .map {
-                teamupEventMapper.fromRemoteEventsToTeamupEvents(it)
+                val filteredEvents = it.filter { event -> matchesSuchkriterien(suchkriterien, event) }
+                TeamupEvents(filteredEvents)
             }
+    }
+
+    private fun matchesSuchkriterien(suchkriterien: Suchkriterien, event: TeamupEvent): Boolean {
+        val verhaeltnis = event.arbeitsverhaeltnis
+        val containsLeistungsnehmer = suchkriterien.shouldSearchForLeistungsnehmer(verhaeltnis.leistungsnehmer.name)
+        val containsLeistungserbringer =
+            suchkriterien.shouldSearchForLeistungserbringer(verhaeltnis.leistungserbringer.name)
+        val containsKategorie = suchkriterien.shouldSearchForKategorie(verhaeltnis.kategorie)
+        return containsLeistungsnehmer && containsLeistungserbringer && containsKategorie
     }
 
     fun addTeamupEventToRemoteCalendar(event: TeamupEvent): Single<Long> {

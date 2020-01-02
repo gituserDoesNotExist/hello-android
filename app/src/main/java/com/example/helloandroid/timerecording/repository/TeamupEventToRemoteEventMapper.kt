@@ -3,20 +3,13 @@ package com.example.helloandroid.timerecording.repository
 import com.example.helloandroid.HelloJson
 import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
 import com.example.helloandroid.timerecording.TeamupEvent
-import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
 import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
 import com.example.helloandroid.timerecording.web.remotemodel.Event
-import com.example.helloandroid.timerecording.web.remotemodel.Events
-import java.util.stream.Collectors
 
 class TeamupEventToRemoteEventMapper {
 
     private val arbeitsverhaeltnisMapper = ArbeitsverhaeltnisMapper()
-
-    fun fromRemoteEventsToTeamupEvents(events: Events): TeamupEvents {
-        return TeamupEvents(events.events.stream().map(this::fromRemoteToTeamupEvent).collect(Collectors.toList()))
-    }
 
     fun fromRemoteToTeamupEvent(remoteEvent: Event): TeamupEvent {
         return TeamupEvent().apply {

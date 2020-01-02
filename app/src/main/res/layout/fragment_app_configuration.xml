@@ -5,8 +5,8 @@
     <data>
 
         <variable
-                name="configDto"
-                type="com.example.helloandroid.timerecording.view.ConfigDTO" />
+                name="configViewModel"
+                type="com.example.helloandroid.timerecording.view.AppConfigurationViewModel" />
 
         <variable
                 name="appConfigurationFragment"
@@ -56,7 +56,7 @@
                         android:hint="@string/app_configuration_hint_edit_text_select_user"
                         android:minWidth="150dip"
                         android:textAlignment="textEnd"
-                        android:text="@{configDto.savedAppUser}"
+                        android:text="@{configViewModel.savedAppUser}"
                         android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="15sp" />
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dip"
-                    android:text="@{configDto.savedAppUser}"
+                    android:text="@{configViewModel.savedAppUser}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

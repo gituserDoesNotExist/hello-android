@@ -35,9 +35,16 @@ class ZeiterfassungActivity : AppCompatActivity() {
     }
 
     private fun configureToolbar() {
-        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_zeiterfassung).apply { this.title = activityTitle() })
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_zeiterfassung).apply {
+            this.title = activityTitle()
+        })
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     private fun configureNavHostFragment(existsConfiguration: Boolean) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment

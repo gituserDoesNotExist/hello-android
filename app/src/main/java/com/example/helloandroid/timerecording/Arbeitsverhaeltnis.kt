@@ -17,6 +17,6 @@ class Arbeitsverhaeltnis {
     }
 
     fun createTitleForArbeitsverhaeltnis(): String {
-        return "${leistungserbringer.name} hilft ${leistungsnehmer.name} bei $kategorie"
+        return "${leistungserbringer.name} hilft ${leistungsnehmer.name} beim $kategorie"
     }
 }

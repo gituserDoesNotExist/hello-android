@@ -15,7 +15,7 @@ class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository:
 
     fun loadArbeitsverhaeltnisse(suchkriterien: Suchkriterien) {
         fetchArbeitsverhaeltnisseDisposable =
-            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien.startDate,suchkriterien.endDate)//
+            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien)//
                 .subscribe { verhaeltnisse -> teamupEvents.postValue(verhaeltnisse) }
     }
 

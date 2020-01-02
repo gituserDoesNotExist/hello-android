@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -27,20 +28,19 @@ class AppConfigurationFragment : Fragment() {
         val binding = FragmentAppConfigurationBinding.inflate(inflater, container, false)
         initializeViewModel()
 
-        activity?.let { frgmntActivity ->
-            frgmntActivity.title = resources.getString(R.string.title_fragment_configuration)
+        (activity as? AppCompatActivity)?.let { activity ->
+            activity.supportActionBar?.title = resources.getString(R.string.title_fragment_configuration)
             appConfigurationViewModel.downloadRemoteConfig()//
                 .observeOn(AndroidSchedulers.mainThread())//
                 .subscribe { config ->
-                    participantsListPopupWindow = createParticipantsListPopUpWindow(frgmntActivity, config.participants)
-                    appConfigurationViewModel.configDto.savedAppUser = config.participants[0]
+                    participantsListPopupWindow = createParticipantsListPopUpWindow(activity, config.participants)
                 }
             appConfigurationViewModel.calendarConfig.observe(this, Observer { config ->
-                appConfigurationViewModel.configDto.savedAppUser = config.appUser
+                appConfigurationViewModel.savedAppUser.set(config.appUser)
             })
         }
 
-        binding.configDto = appConfigurationViewModel.configDto
+        binding.configViewModel = appConfigurationViewModel
         binding.appConfigurationFragment = this
 
         return binding.root
@@ -48,9 +48,9 @@ class AppConfigurationFragment : Fragment() {
 
     private fun createParticipantsListPopUpWindow(it: FragmentActivity, entries: List<String>): ListPopupWindow {
         val listener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            appConfigurationViewModel.configDto.selectedAppUser = entries[position]
+            appConfigurationViewModel.selectedAppUser.set(entries[position])
             DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(
-                appConfigurationViewModel.configDto.selectedAppUser)
+                appConfigurationViewModel.selectedAppUser.get())
             participantsListPopupWindow.dismiss()
         }
 

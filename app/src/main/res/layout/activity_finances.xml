@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".finances.view.FinancesActivity">
+        android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_zeiterfassung_activity_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_finances"
+            android:layout_width="0dip"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-            android:id="@+id/fragment_container_ausgaben"
-            android:layout_width="match_parent"
+
+    <fragment
+            android:id="@+id/nav_host_fragment_finances"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dip"
             android:layout_height="0dip"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation_finances"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_finances"
+            app:navGraph="@navigation/navigation_finances" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_finances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline_zeiterfassung_activity_top" />
+            app:menu="@menu/bottom_menu_zeiterfassung" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

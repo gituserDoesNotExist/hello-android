@@ -1,21 +1,24 @@
 package com.example.helloandroid.finances.view
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.helloandroid.finances.Posten
 import com.example.helloandroid.finances.PostenStub
 import com.example.helloandroid.finances.persistence.FinancesRepository
 import java.math.BigDecimal
-import java.util.*
 
 class PostenUebersichtViewModel(private val financesRepository: FinancesRepository) : ViewModel() {
 
     val postenStubs: LiveData<List<PostenStub>> = financesRepository.findPostenStubs()
 
-    fun calculateGesamtausgaben(): BigDecimal {
-        val stubs = postenStubs.value ?: Collections.emptyList()
-        return stubs.stream().map(PostenStub::gesamtausgabenForPosten).reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
+    val gesamtausgaben: LiveData<BigDecimal>? = Transformations.switchMap(postenStubs) {
+        val total = it.stream().map(PostenStub::gesamtausgabenForPosten).reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
+        MutableLiveData<BigDecimal>().apply { this.value = total }
     }
+        get() = field?: MutableLiveData<BigDecimal>().apply { this.value = BigDecimal.ZERO }
+
 
     fun deletePosten(posten: PostenStub) {
         financesRepository.deletePosten(posten.postenId)

@@ -3,6 +3,7 @@
     <style name="Theme.HelloAndroid" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorSecondary">@color/colorSecondary</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="buttonStyle">@style/CKButton</item>
         <item name="imageButtonStyle">@style/CKButton</item>
@@ -13,6 +14,7 @@
 
     <style name="CKButton" parent="android:style/Widget.Button">
         <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:layout_margin">0dip</item>
         <item name="android:background">@color/colorSecondary</item>
     </style>

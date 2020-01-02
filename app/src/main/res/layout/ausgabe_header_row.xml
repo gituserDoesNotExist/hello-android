@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -10,52 +10,64 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/styleTextInputLayout"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/btn_ausgabe_date_range_start"
+                    style="@style/styleEditTextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/von"
+                    tools:text="20.02.2019" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/styleTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/btn_ausgabe_date_range_end"
+                    style="@style/styleEditTextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/bis"
+                    tools:text="20.02.2019" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Von: " />
+                android:gravity="end">
 
-        <Button
-                android:id="@+id/btn_ausgabe_date_range_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true" />
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bis: " />
 
-        <Button
-                android:id="@+id/btn_ausgabe_date_range_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dip"
-                android:layout_marginEnd="10dip"
-                android:src="@drawable/ic_account_balance_blue_24dp" />
-
-        <TextView
-                android:id="@+id/txt_gesamtausgaben_for_date_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="3000.54"
-                android:textAlignment="center" />
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text=" €"
-                android:textAlignment="center" />
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_gesamtausgaben_for_date_range"
+                        style="@style/styleEditTextSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/gesamtausgaben"
+                        tools:text="200.56 €" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -63,14 +75,14 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Sort by:"
+                android:text="@string/sortieren"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <Spinner
@@ -87,7 +99,7 @@
             android:layout_height="2dip"
             android:background="@color/background" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -100,7 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.35"
-                android:text="Datum"
+                android:text="@string/datum"
                 android:textStyle="bold" />
 
         <TextView
@@ -108,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="Wert (€)"
+                android:text="@string/wert_euro"
                 android:textStyle="bold" />
 
         <TextView
@@ -116,7 +128,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="Beschreibung"
+                android:text="@string/beschreibung"
                 android:textStyle="bold" />
 
     </LinearLayout>

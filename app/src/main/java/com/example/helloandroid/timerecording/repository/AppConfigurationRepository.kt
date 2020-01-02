@@ -47,6 +47,7 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     private fun upsertConfiguration(config: CalendarConfigurationEntity): CalendarConfigurationEntity {
         if (calendarConfigurationDao.existsConfiguration()) {
+            config.appUser = calendarConfigurationDao.getConfigurationSynchronous().appUser
             calendarConfigurationDao.updateConfiguration(config)
         } else {
             calendarConfigurationDao.insertConfiguration(config)

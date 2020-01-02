@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 
@@ -26,15 +27,17 @@
             android:id="@+id/btn_delete_verzicht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:src="@drawable/delete_icon_36x36"
             android:contentDescription="@string/content_description_delete_verzicht_image" />
+
+    <View
+            android:layout_width="4dip"
+            android:layout_height="wrap_content" />
 
     <ImageButton
             android:id="@+id/btn_open_verzicht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:src="@drawable/open_verzicht"
             android:contentDescription="@string/content_description_edit_verzicht_image" />
 </LinearLayout>

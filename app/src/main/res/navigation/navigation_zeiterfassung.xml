@@ -54,5 +54,9 @@
     <fragment
             android:id="@+id/suchfilterFragment"
             android:name="com.example.helloandroid.timerecording.view.SuchfilterFragment"
-            android:label="SuchfilterFragment" />
+            android:label="SuchfilterFragment" >
+        <action
+                android:id="@+id/action_suchfilterFragment_to_arbeitsverhaltnisUebersichtFragment"
+                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
+    </fragment>
 </navigation>

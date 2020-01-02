@@ -35,7 +35,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
         val rootView = binding.root
 
         (activity as? AppCompatActivity)?.let { activity ->
-            activity.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
+            activity.supportActionBar?.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
             initializeViewModel(activity)
             addFiltersRecyclerView(rootView, activity)
             arbeitsverhaeltnisViewModel.teamupEvents.observe(this, Observer {
@@ -83,6 +83,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
 
         recyclerView.adapter = FiltersRecyclerViewAdapter(filtersViewModel.suchkriterien) {
             filtersViewModel.removeFilter(it)
+            onArbeitsverhaeltnisseUpdated()
         }
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }

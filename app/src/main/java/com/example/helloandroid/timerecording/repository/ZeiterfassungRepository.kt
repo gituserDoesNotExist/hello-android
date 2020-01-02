@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
+import com.example.helloandroid.timerecording.view.Suchkriterien
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.threeten.bp.LocalDate
 
 class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigurationRepository,
                               private val arbeitsverhaeltnisRepository: ArbeitsverhaeltnisRepository) {
 
-    fun fetchArbeitsverhaeltnisseFromRemote(startDate: LocalDate, endDate: LocalDate): Single<TeamupEvents> {
-        return arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(startDate, endDate)
+    fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien): Single<TeamupEvents> {
+        return arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien)
     }
 
     fun addArbeitsverhaeltnisToRemoteCalendar(event: TeamupEvent): Single<Long> {

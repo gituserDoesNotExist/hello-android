@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.view.*
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +14,7 @@ import com.example.helloandroid.view.BigDecimalConverter
 import com.example.helloandroid.view.HelloSpinnerAdapter
 import com.example.helloandroid.view.LocalDateConverter
 import com.example.helloandroid.view.SortDirection
+import com.google.android.material.textfield.TextInputEditText
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -160,11 +160,8 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {
-            holder.datumTextView.text = "Datum"
-            holder.wertTextView.text = "Wert"
-            holder.beschreibungTextView.text = "Beschreibung"
-            holder.btnStartDateAusgaben.text = LocalDateConverter.dateToString(startDateAusgabe)
-            holder.btnEndDateAusgaben.text = LocalDateConverter.dateToString(endDateAusgabe)
+            holder.btnStartDateAusgaben.setText(LocalDateConverter.dateToString(startDateAusgabe))
+            holder.btnEndDateAusgaben.setText(LocalDateConverter.dateToString(endDateAusgabe))
             val ausgabenForDateRange = calculateAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
             holder.textViewAusgabenForDateRange.text = BigDecimalConverter.bigDecimalToString(ausgabenForDateRange)
         } else if (holder is ItemViewHolder) {
@@ -230,11 +227,8 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     class HeaderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val datumTextView: TextView = itemView.findViewById(id.ausgabe_header_row_datum)
-        val wertTextView: TextView = itemView.findViewById(id.ausgabe_header_rowdatum_wert)
-        val beschreibungTextView: TextView = itemView.findViewById(id.ausgabe_header_rowdatum_beschreibung)
-        val btnStartDateAusgaben: Button = itemView.findViewById(id.btn_ausgabe_date_range_start)
-        val btnEndDateAusgaben: Button = itemView.findViewById(id.btn_ausgabe_date_range_end)
+        val btnStartDateAusgaben: TextInputEditText = itemView.findViewById(id.btn_ausgabe_date_range_start)
+        val btnEndDateAusgaben: TextInputEditText = itemView.findViewById(id.btn_ausgabe_date_range_end)
         val textViewAusgabenForDateRange: TextView = itemView.findViewById(id.txt_gesamtausgaben_for_date_range)
     }
 

@@ -111,7 +111,7 @@
                         android:layout_gravity="start"
                         android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
                         android:focusable="false"
-                        android:hint="@string/label_edit_text_datum"
+                        android:hint="@string/datum"
                         android:onClick="@{() -> editArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
                         android:text="@{LocalDateConverter.dateToString(dto.arbeitsverhaeltnisDto.datumZeiterfassung)}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />

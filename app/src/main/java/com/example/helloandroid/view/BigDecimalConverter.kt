@@ -8,7 +8,7 @@ object BigDecimalConverter {
 
     @JvmStatic
     @InverseMethod("stringToBigDecimal")
-    fun bigDecimalToString(value: BigDecimal): String {
+    fun bigDecimalToString(value: BigDecimal?): String {
         return if (BigDecimal.ZERO == value) "" else value.toString()
     }
 
