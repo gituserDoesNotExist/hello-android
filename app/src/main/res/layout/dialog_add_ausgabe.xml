@@ -15,6 +15,11 @@
         <variable
                 name="ausgabeDialog"
                 type="com.example.helloandroid.finances.view.AddAusgabeDialog" />
+
+        <variable
+                name="ausgabeDto"
+                type="com.example.helloandroid.finances.view.AusgabeDTO" />
+
     </data>
 
     <LinearLayout
@@ -39,7 +44,7 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/datum"
                     android:onClick="@{() -> ausgabeDialog.openDatePickerDialog()}"
-                    android:text="@={LocalDateConverter.dateToString(ausgabeDialog.ausgabeDTO.datum)}"
+                    android:text="@={LocalDateConverter.dateToString(ausgabeDto.datum)}"
                     tools:text="20.02.2019" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +62,7 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/uhrzeit"
                     android:onClick="@{() -> ausgabeDialog.openTimePickerDialog()}"
-                    android:text="@={LocalTimeConverter.timeToString(ausgabeDialog.ausgabeDTO.uhrzeit)}"
+                    android:text="@={LocalTimeConverter.timeToString(ausgabeDto.uhrzeit)}"
                     tools:text="17:43" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +78,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/wert_euro"
-                    android:text="@={BigDecimalConverter.bigDecimalToString(ausgabeDialog.ausgabeDTO.wert)}"
+                    android:inputType="numberDecimal"
+                    android:maxLength="8"
+                    android:text="@={BigDecimalConverter.bigDecimalToString(ausgabeDto.wert)}"
                     tools:text="20.54" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beschreibung"
-                    android:text="@={ausgabeDialog.ausgabeDTO.beschreibung}"
+                    android:text="@={ausgabeDto.beschreibung}"
                     tools:text="some description" />
         </com.google.android.material.textfield.TextInputLayout>
 

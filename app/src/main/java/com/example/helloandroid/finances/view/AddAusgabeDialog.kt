@@ -15,7 +15,6 @@ import org.threeten.bp.LocalTime
 class AddAusgabeDialog : DialogFragment() {
 
     private lateinit var postenDetailsViewModel: PostenDetailsViewModel
-    val ausgabeDTO: AusgabeDTO = AusgabeDTO()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.let {
@@ -23,13 +22,14 @@ class AddAusgabeDialog : DialogFragment() {
                 .get(PostenDetailsViewModel::class.java)
         }
         val binding = DialogAddAusgabeBinding.inflate(inflater, container, false)
-        binding.ausgabeDialog = this
 
+        binding.ausgabeDialog = this
+        binding.ausgabeDto = postenDetailsViewModel.ausgabeDto
         return binding.root
     }
 
     fun saveAusgabeAndCloseDialog() {
-        postenDetailsViewModel.saveAusgabeForPosten(ausgabeDTO)
+        postenDetailsViewModel.saveAusgabeForPosten()
         closeDialog()
     }
 
@@ -38,14 +38,14 @@ class AddAusgabeDialog : DialogFragment() {
     }
 
     fun openDatePickerDialog() {
-        val onDateSet: (LocalDate) -> Unit = { date -> ausgabeDTO.datum = date }
+        val onDateSet: (LocalDate) -> Unit = { date -> postenDetailsViewModel.ausgabeDto.datum = date }
         activity?.let { HelloDatePickerDialog(it, onDateSet, LocalDate.now()).show() }
     }
 
     fun openTimePickerDialog() {
         val currentTime = LocalTime.now()
         val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            ausgabeDTO.uhrzeit = LocalTime.of(hourOfDay, minute)
+            postenDetailsViewModel.ausgabeDto.uhrzeit = LocalTime.of(hourOfDay, minute)
         }
         activity?.let {
             TimePickerDialog(it, onTimeSetListener, currentTime.hour, currentTime.minute, true).show()

@@ -1,17 +1,15 @@
 package com.example.helloandroid.finances.view
 
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.view.*
-import android.widget.AdapterView
-import android.widget.Spinner
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.helloandroid.R.id
-import com.example.helloandroid.R.layout
+import com.example.helloandroid.HelloDatePickerDialog
+import com.example.helloandroid.R
 import com.example.helloandroid.finances.Ausgabe
+import com.example.helloandroid.finances.AusgabenContainer
 import com.example.helloandroid.view.BigDecimalConverter
-import com.example.helloandroid.view.HelloSpinnerAdapter
 import com.example.helloandroid.view.LocalDateConverter
 import com.example.helloandroid.view.SortDirection
 import com.google.android.material.textfield.TextInputEditText
@@ -20,9 +18,8 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.math.BigDecimal
 import java.util.*
-import java.util.stream.Collectors
 
-class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private val allAusgaben: List<Ausgabe>,
+class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private val ausgabenContainer: AusgabenContainer,
                                  private val deleteAusgabe: (Ausgabe) -> Unit,
                                  private val editAusgabe: (Ausgabe) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,25 +27,20 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     private var startDateAusgabe: LocalDate
     private var endDateAusgabe: LocalDate
     private var ausgabenForDateRange: MutableList<Ausgabe>
+    private var currentSortState: AusgabenSortStates
 
     init {
-        startDateAusgabe = findEarliestAusgabe(allAusgaben)
+        startDateAusgabe = ausgabenContainer.findEarliestAusgabe()
         endDateAusgabe = LocalDate.now()
-        ausgabenForDateRange = findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
+        ausgabenForDateRange = ausgabenContainer.findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
+        currentSortState = AusgabenSortStates.DATUM_AUFSTEIGEND
+        sortAusgaben()
     }
 
-    private fun findEarliestAusgabe(ausgaben: List<Ausgabe>): LocalDate {
-        return ausgaben.stream()//
-            .map(Ausgabe::datum)//
-            .min { o1, o2 -> o1.compareTo(o2) }//
-            .orElse(LocalDateTime.now()).toLocalDate()
-    }
 
     companion object {
         const val VIEW_TYPE_HEADER: Int = 0
         const val VIEW_TYPE_ITEM: Int = 1
-        private val DROPDOWN_ENTRIES =
-            listOf("Datum aufsteigend", "Datum absteigend", "Wert aufsteigend", "Wert absteigend", "Beschreibung")
         const val MENU_ITEM_EDIT_AUSGABE = 1
         const val MENU_ITEM_DELETE_AUSGABE = 2
     }
@@ -57,44 +49,70 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
         return if (viewType == VIEW_TYPE_HEADER) {
             createHeaderViewHolder(parent)
         } else {
-            ItemViewHolder(inflate(layout.ausgabe_item, parent))
+            ItemViewHolder(inflate(R.layout.item_ausgabe, parent))
         }
     }
 
     private fun createHeaderViewHolder(parent: ViewGroup): HeaderViewHolder {
-        val headerView = inflate(layout.ausgabe_header_row, parent)
-        headerView.findViewById<Spinner>(id.spinner_ausgabe).also {
-            it.onItemSelectedListener = onItemSelectListener()
-            it.adapter = HelloSpinnerAdapter(parent.context, DROPDOWN_ENTRIES)
-        }
-        val headerViewHolder = HeaderViewHolder(headerView)
+        val headerViewHolder = HeaderViewHolder(inflate(R.layout.ausgabe_header_row, parent))
         headerViewHolder.btnStartDateAusgaben.setOnClickListener { openDatePickerDialogForStartDate() }
         headerViewHolder.btnEndDateAusgaben.setOnClickListener { openDatePickerDialogForEndDate() }
+        headerViewHolder.setDatumSortIconAscending()
+        headerViewHolder.layoutDatum.setOnClickListener {
+            when (currentSortState) {
+                AusgabenSortStates.DATUM_ABSTEIGEND -> {
+                    currentSortState = AusgabenSortStates.DATUM_AUFSTEIGEND
+                    headerViewHolder.setDatumSortIconAscending()
+                }
+                AusgabenSortStates.DATUM_AUFSTEIGEND -> {
+                    currentSortState = AusgabenSortStates.DATUM_ABSTEIGEND
+                    headerViewHolder.setDatumSortIconDescending()
+                }
+                else -> {
+                    currentSortState = AusgabenSortStates.DATUM_AUFSTEIGEND
+                    headerViewHolder.setDatumSortIconAscending()
+                    headerViewHolder.setWertSortIconNeutral()
+                }
+            }
+            sortAusgaben()
+            notifyDataSetChanged()
+        }
+        headerViewHolder.layoutWert.setOnClickListener {
+            when (currentSortState) {
+                AusgabenSortStates.WERT_ABSTEIGEND -> {
+                    currentSortState = AusgabenSortStates.WERT_AUFSTEIGEND
+                    headerViewHolder.setWertSortIconAscending()
+                }
+                AusgabenSortStates.WERT_AUFSTEIGEND -> {
+                    currentSortState = AusgabenSortStates.WERT_ABSTEIGEND
+                    headerViewHolder.setWertSortIconDescending()
+                }
+                else -> {
+                    currentSortState = AusgabenSortStates.WERT_AUFSTEIGEND
+                    headerViewHolder.setWertSortIconAscending()
+                    headerViewHolder.setDatumSortIconNeutral()
+                }
+            }
+            sortAusgaben()
+            notifyDataSetChanged()
+        }
+
         return headerViewHolder
     }
+
+
 
     private fun inflate(layoutId: Int, parent: ViewGroup): View {
         return LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
     }
 
-    private fun onItemSelectListener(): AdapterView.OnItemSelectedListener {
-        return object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                sortAusgaben(position)
-                notifyDataSetChanged()
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-    }
-
-    private fun sortAusgaben(positionOfSortCriteria: Int) {
-        when (positionOfSortCriteria) {
-            0 -> sortByDatumAufsteigend()
-            1 -> sortByDatumAbsteigend()
-            2 -> sortByWertAufsteigend()
-            3 -> sortByWertAbsteigend()
-            4 -> sortAusgabenByBeschreibung()
+    private fun sortAusgaben() {
+        when (currentSortState) {
+            AusgabenSortStates.DATUM_AUFSTEIGEND -> sortByDatumAufsteigend()
+            AusgabenSortStates.DATUM_ABSTEIGEND -> sortByDatumAbsteigend()
+            AusgabenSortStates.WERT_AUFSTEIGEND -> sortByWertAufsteigend()
+            AusgabenSortStates.WERT_ABSTEIGEND -> sortByWertAbsteigend()
         }
     }
 
@@ -130,31 +148,23 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
         }
     }
 
-    private fun sortAusgabenByBeschreibung() {
-        ausgabenForDateRange.sortWith(Comparator { o1, o2 -> o1.beschreibung.compareTo(o2.beschreibung) })
-    }
-
 
     private fun openDatePickerDialogForStartDate() {
-        val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            startDateAusgabe = LocalDate.of(year, month, dayOfMonth)
-            ausgabenForDateRange = findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
+        val dateSetListener: (LocalDate) -> Unit = {
+            startDateAusgabe = it
+            ausgabenForDateRange = ausgabenContainer.findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
             notifyDataSetChanged()
         }
-        openDatePickerDialogForDate(startDateAusgabe, onDateSetListener)
+        HelloDatePickerDialog(parentActivity, dateSetListener, endDateAusgabe).show()
     }
 
     private fun openDatePickerDialogForEndDate() {
-        val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            endDateAusgabe = LocalDate.of(year, month, dayOfMonth)
-            ausgabenForDateRange = findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
+        val dateSetListener: (LocalDate) -> Unit = {
+            endDateAusgabe = it
+            ausgabenForDateRange = ausgabenContainer.findAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
             notifyDataSetChanged()
         }
-        openDatePickerDialogForDate(endDateAusgabe, onDateSetListener)
-    }
-
-    private fun openDatePickerDialogForDate(date: LocalDate, listener: DatePickerDialog.OnDateSetListener) {
-        DatePickerDialog(parentActivity, listener, date.year, date.monthValue, date.dayOfMonth).show()
+        HelloDatePickerDialog(parentActivity, dateSetListener, endDateAusgabe).show()
     }
 
 
@@ -162,12 +172,10 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
         if (holder is HeaderViewHolder) {
             holder.btnStartDateAusgaben.setText(LocalDateConverter.dateToString(startDateAusgabe))
             holder.btnEndDateAusgaben.setText(LocalDateConverter.dateToString(endDateAusgabe))
-            val ausgabenForDateRange = calculateAusgabenForDateRange(startDateAusgabe, endDateAusgabe)
-            holder.textViewAusgabenForDateRange.text = BigDecimalConverter.bigDecimalToString(ausgabenForDateRange)
         } else if (holder is ItemViewHolder) {
             val currentAusgabe = ausgabenForDateRange[position - 1]
             holder.datumTextView.text = createDateTimeForAnzeige(currentAusgabe.datum)
-            holder.wertTextView.text = currentAusgabe.wert.toString()
+            holder.wertTextView.text = BigDecimalConverter.bigDecimalToString(currentAusgabe.wert)
             holder.beschreibungTextView.text = currentAusgabe.beschreibung
             holder.setOnMenuItemClickListener(MenuItem.OnMenuItemClickListener {
                 when (it.itemId) {
@@ -180,16 +188,10 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     private fun calculateAusgabenForDateRange(startDate: LocalDate, endDate: LocalDate): BigDecimal {
-        return findAusgabenForDateRange(startDate, endDate).stream()//
+        return ausgabenContainer.findAusgabenForDateRange(startDate, endDate).stream()//
             .map(Ausgabe::wert)//
             .reduce(BigDecimal::add)//
             .orElse(BigDecimal.ZERO)
-    }
-
-    private fun findAusgabenForDateRange(startDate: LocalDate, endDate: LocalDate): MutableList<Ausgabe> {
-        return allAusgaben.stream()//
-            .filter { t -> !t.datum.toLocalDate().isBefore(startDate) && !t.datum.toLocalDate().isAfter(endDate) }//
-            .collect(Collectors.toList())
     }
 
 
@@ -206,10 +208,9 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
-
-        val datumTextView: TextView = itemView.findViewById(id.ausgabe_item_datum)
-        val wertTextView: TextView = itemView.findViewById(id.ausgabe_item_wert)
-        val beschreibungTextView: TextView = itemView.findViewById(id.ausgabe_item_beschreibung)
+        val datumTextView: TextView = itemView.findViewById(R.id.ausgabe_item_datum)
+        val wertTextView: TextView = itemView.findViewById(R.id.ausgabe_item_wert)
+        val beschreibungTextView: TextView = itemView.findViewById(R.id.ausgabe_item_beschreibung)
         private lateinit var itemClickListener: MenuItem.OnMenuItemClickListener
 
         init {
@@ -227,9 +228,49 @@ class AusgabeRecyclerViewAdapter(private val parentActivity: Activity, private v
     }
 
     class HeaderViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val btnStartDateAusgaben: TextInputEditText = itemView.findViewById(id.btn_ausgabe_date_range_start)
-        val btnEndDateAusgaben: TextInputEditText = itemView.findViewById(id.btn_ausgabe_date_range_end)
-        val textViewAusgabenForDateRange: TextView = itemView.findViewById(id.txt_gesamtausgaben_for_date_range)
+        val btnStartDateAusgaben: TextInputEditText = itemView.findViewById(R.id.btn_ausgabe_date_range_start)
+        val btnEndDateAusgaben: TextInputEditText = itemView.findViewById(R.id.btn_ausgabe_date_range_end)
+        val layoutDatum: ViewGroup = itemView.findViewById(R.id.ausgabe_header_row_datum)
+        private val sortIconDatum: ImageView = itemView.findViewById(R.id.image_view_ausgabe_header_row_datum)
+        val layoutWert: ViewGroup = itemView.findViewById(R.id.ausgabe_header_rowdatum_wert)
+        private val sortIconWert: ImageView = itemView.findViewById(R.id.image_view_ausgabe_header_rowdatum_wert)
+
+        fun setDatumSortIconAscending() {
+            setAscendingArrow(sortIconDatum)
+        }
+
+        fun setDatumSortIconDescending() {
+            setDescendingArrow(sortIconDatum)
+        }
+
+        fun setDatumSortIconNeutral() {
+            setNeutralArrow(sortIconDatum)
+        }
+
+        fun setWertSortIconAscending() {
+            setAscendingArrow(sortIconWert)
+        }
+
+        fun setWertSortIconDescending() {
+            setDescendingArrow(sortIconWert)
+        }
+
+        fun setWertSortIconNeutral() {
+            setNeutralArrow(sortIconWert)
+        }
+
+        private fun setAscendingArrow(imageView: ImageView) {
+            imageView.setImageResource(R.drawable.ic_arrow_up_down_sort_ascending_24dp)
+        }
+
+        private fun setDescendingArrow(imageView: ImageView) {
+            imageView.setImageResource(R.drawable.ic_arrow_up_down_sort_descending_24dp)
+        }
+
+        private fun setNeutralArrow(imageView: ImageView) {
+            imageView.setImageResource(R.drawable.ic_arrow_up_down_grey_24dp)
+        }
+
     }
 
 

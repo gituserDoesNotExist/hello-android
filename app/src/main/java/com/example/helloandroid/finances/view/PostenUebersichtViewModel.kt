@@ -13,16 +13,17 @@ class PostenUebersichtViewModel(private val financesRepository: FinancesReposito
 
     val postenStubs: LiveData<List<PostenStub>> = financesRepository.findPostenStubs()
 
-    val gesamtausgaben: LiveData<BigDecimal>? = Transformations.switchMap(postenStubs) {
+    var gesamtausgaben: LiveData<BigDecimal>? = Transformations.switchMap(postenStubs) {
         val total = it.stream().map(PostenStub::gesamtausgabenForPosten).reduce(BigDecimal::add).orElse(BigDecimal.ZERO)
         MutableLiveData<BigDecimal>().apply { this.value = total }
     }
-        get() = field?: MutableLiveData<BigDecimal>().apply { this.value = BigDecimal.ZERO }
+        get() {
+            if (field?.value == null) {
+                return MutableLiveData<BigDecimal>().apply { this.value = BigDecimal.ZERO }
+            }
+            return field
+        }
 
-
-    fun deletePosten(posten: PostenStub) {
-        financesRepository.deletePosten(posten.postenId)
-    }
 
     fun savePosten(posten: Posten) {
         financesRepository.savePosten(posten)

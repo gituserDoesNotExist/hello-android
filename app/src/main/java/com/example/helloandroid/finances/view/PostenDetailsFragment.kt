@@ -2,20 +2,20 @@ package com.example.helloandroid.finances.view
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentPostenDetailsBinding
 import com.example.helloandroid.finances.Ausgabe
+import com.example.helloandroid.finances.AusgabenContainer
 
 class PostenDetailsFragment : Fragment() {
 
@@ -23,11 +23,12 @@ class PostenDetailsFragment : Fragment() {
     private lateinit var sharedPostenViewModel: SharedPostenViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         val binding = FragmentPostenDetailsBinding.inflate(inflater, container, false)
 
         (activity as? AppCompatActivity)?.let {
             initializeViewModels(it)
-            postenDetailsViewModel.currentPosten.observe(this, Observer { posten ->
+            postenDetailsViewModel.selectedPosten.observe(this, Observer { posten ->
                 it.supportActionBar?.title = anzeigeTextForPostenname(it, posten.name)
                 createRecyclerViewForAusgaben(binding.root, posten.ausgaben, it)
             })
@@ -48,7 +49,7 @@ class PostenDetailsFragment : Fragment() {
     private fun createRecyclerViewForAusgaben(rootView: View, ausgaben: List<Ausgabe>, activity: FragmentActivity) {
         val ausgabenRecyclerView = rootView.findViewById<RecyclerView>(R.id.ausgaben_recycler_view)
         ausgabenRecyclerView.adapter =
-            AusgabeRecyclerViewAdapter(activity, ausgaben, this::deleteAusgabe, this::editAusgabe)
+            AusgabeRecyclerViewAdapter(activity, AusgabenContainer(ausgaben), this::deleteAusgabe, this::editAusgabe)
         ausgabenRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
@@ -58,11 +59,11 @@ class PostenDetailsFragment : Fragment() {
 
     private fun editAusgabe(ausgabe: Ausgabe) {
         openAusgabeDialog(AddAusgabeDialog().apply {
-            this.ausgabeDTO.beschreibung = ausgabe.beschreibung
-            this.ausgabeDTO.datum = ausgabe.datum.toLocalDate()
-            this.ausgabeDTO.uhrzeit = ausgabe.datum.toLocalTime()
-            this.ausgabeDTO.wert = ausgabe.wert
-            this.ausgabeDTO.id = ausgabe.id
+            postenDetailsViewModel.ausgabeDto.beschreibung = ausgabe.beschreibung
+            postenDetailsViewModel.ausgabeDto.datum = ausgabe.datum.toLocalDate()
+            postenDetailsViewModel.ausgabeDto.uhrzeit = ausgabe.datum.toLocalTime()
+            postenDetailsViewModel.ausgabeDto.wert = ausgabe.wert
+            postenDetailsViewModel.ausgabeDto.id = ausgabe.id
         })
     }
 
@@ -79,5 +80,22 @@ class PostenDetailsFragment : Fragment() {
     private fun anzeigeTextForPostenname(it: FragmentActivity, postenName: String): String {
         return it.resources.getString(R.string.title_posten_details_fragment, postenName)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_posten_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete_posten -> {
+                postenDetailsViewModel.deletePosten(sharedPostenViewModel.currentPostenStub)
+                FinancesNavigation.getNavigation(findNavController()).fromDetailsToUebersicht()
+                sharedPostenViewModel.reset()
+            }
+        }
+        return true
+    }
+
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,97 +48,114 @@
                     tools:text="20.02.2019" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end">
-
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txt_gesamtausgaben_for_date_range"
-                        style="@style/styleEditTextSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/gesamtausgaben"
-                        tools:text="200.56 €" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
     </LinearLayout>
 
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@string/sortieren"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <Spinner
-                android:id="@+id/spinner_ausgabe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginStart="16dp"
-                android:background="@null" />
-    </LinearLayout>
 
     <View
             android:layout_width="match_parent"
             android:layout_height="2dip"
-            android:background="@color/background" />
+            android:layout_margin="5dip"
+            android:background="@color/grey" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/data_table_header_row_height"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="1">
 
 
-        <TextView
+        <LinearLayout
                 android:id="@+id/ausgabe_header_row_datum"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                android:text="@string/datum"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/datum"
+                    android:textStyle="bold" />
+
+            <ImageView
+                    android:id="@+id/image_view_ausgabe_header_row_datum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_arrow_up_down_grey_24dp" />
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+
+
+        <LinearLayout
                 android:id="@+id/ausgabe_header_rowdatum_wert"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="@string/wert_euro"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wert_euro"
+                    android:textStyle="bold" />
+
+            <ImageView
+                    android:id="@+id/image_view_ausgabe_header_rowdatum_wert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_up_down_grey_24dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.64" />
+
+
+        <LinearLayout
                 android:id="@+id/ausgabe_header_rowdatum_beschreibung"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="@string/beschreibung"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline_right"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/beschreibung"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <View
             android:layout_width="match_parent"
             android:layout_height="2dip"
             android:layout_marginTop="5dip"
-            android:background="@color/black" />
-
+            android:background="@color/grey" />
 
 </LinearLayout>
+

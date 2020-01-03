@@ -10,11 +10,6 @@
     <color name="colorSecondaryLight">#ec97f9</color>
     <color name="colorSecondaryDark">#863895</color>
     <color name="colorBackground">#e1e2e1</color>
-
-
-    <color name="colorYellowLight">#FCE3A2</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="buttonBackground">#BBDEFB</color>
-    <color name="lightOrange">#FF9800</color>
-    <color name="background">#6eb6f0</color>
+
 </resources>

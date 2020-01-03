@@ -11,7 +11,8 @@ import com.example.helloandroid.finances.PostenStub
 import java.math.BigDecimal
 import java.util.function.Consumer
 
-class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>, private val editConsumer: Consumer<PostenStub>, private val deleteConsumer: Consumer<PostenStub>) :
+class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>,
+                                     private val editConsumer: Consumer<PostenStub>) :
     ArrayAdapter<PostenStub>(context, 0, posten) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -21,8 +22,7 @@ class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>,
 
         findPostenItemNameView(listItemView).text = currentPostenStub?.postenName
         findAusgabenForPostenView(listItemView).text = createAnzeigeText(currentPostenStub?.gesamtausgabenForPosten)
-        findEditBtn(listItemView).setOnClickListener { currentPostenStub?.let { editConsumer.accept(it) } }
-        findDeleteBtn(listItemView).setOnClickListener { currentPostenStub?.let { deleteConsumer.accept(it) } }
+        findPostenItemLayout(listItemView).setOnClickListener { currentPostenStub?.let { editConsumer.accept(it) } }
 
         return listItemView
     }
@@ -31,8 +31,7 @@ class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>,
         return LayoutInflater.from(context).inflate(R.layout.item_posten, parent, false)
     }
 
-    private fun findPostenItemNameView(listItemView: View) =
-        listItemView.findViewById<TextView>(R.id.posten_item_name)
+    private fun findPostenItemNameView(listItemView: View) = listItemView.findViewById<TextView>(R.id.posten_item_name)
 
     private fun findAusgabenForPostenView(listItemView: View) =
         listItemView.findViewById<TextView>(R.id.ausgaben_for_posten)
@@ -41,9 +40,6 @@ class PostenArrayAdapter constructor(context: Context, posten: List<PostenStub>,
         return context.resources.getString(R.string.ausgaben_posten, ausgaben?.toString() ?: "0.0")
     }
 
-    private fun findEditBtn(listItemView: View) = listItemView.findViewById<View>(R.id.btn_edit_posten)
-
-    private fun findDeleteBtn(listItemView: View) = listItemView.findViewById<View>(R.id.btn_delete_posten)
-
+    private fun findPostenItemLayout(listItemView: View) = listItemView.findViewById<ViewGroup>(R.id.posten_item)
 
 }

@@ -13,6 +13,7 @@
     <string name="beschreibung">Beschreibung</string>
     <string name="sortieren">Sortieren:</string>
     <string name="uhrzeit">Uhrzeit</string>
+    <string name="delete">delete</string>
 
     <!--    finances-->
     <string name="title_activity_finances">Finances</string>

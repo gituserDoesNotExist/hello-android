@@ -25,6 +25,7 @@ class PostenUebersichtFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = inflate(inflater,container,false)
+        binding.lifecycleOwner = this
 
         val listView = binding.root.findViewById<ListView>(R.id.testit)
         (activity as? AppCompatActivity)?.let {
@@ -35,7 +36,6 @@ class PostenUebersichtFragment : Fragment() {
             })
         }
 
-        binding.lifecycleOwner = this
         binding.postenUebersichtViewModel = postenUebersichtViewModel
         binding.postenUebersichtFragment = this
         return binding.root
@@ -54,7 +54,7 @@ class PostenUebersichtFragment : Fragment() {
     }
 
     private fun createPostenArrayAdapter(activity: FragmentActivity, posten: List<PostenStub>): PostenArrayAdapter {
-        return PostenArrayAdapter(activity, posten, editPostenConsumer(), deletePostenConsumer())
+        return PostenArrayAdapter(activity, posten, editPostenConsumer())
     }
 
     private fun editPostenConsumer(): Consumer<PostenStub> {
@@ -63,11 +63,5 @@ class PostenUebersichtFragment : Fragment() {
             FinancesNavigation.getNavigation(findNavController()).fromUebersichtToDetails()
         }
     }
-
-    private fun deletePostenConsumer(): Consumer<PostenStub> {
-        return Consumer { postenUebersichtViewModel.deletePosten(it) }
-    }
-
-
 
 }

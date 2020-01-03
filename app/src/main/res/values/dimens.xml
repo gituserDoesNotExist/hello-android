@@ -6,6 +6,10 @@
     <dimen name="btn_margin_top_bottom">10dip</dimen>
 
 
+    <dimen name="data_table_header_row_height">56dip</dimen>
+    <dimen name="data_table_row_height">52dip</dimen>
+
+
     <dimen name="edit_verzicht_txt_size">30dip</dimen>
     <dimen name="edit_verzicht_verzicht_info_size">60dip</dimen>
     <dimen name="dlg_padding">5dip</dimen>
