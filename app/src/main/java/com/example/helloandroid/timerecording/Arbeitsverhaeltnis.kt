@@ -5,6 +5,8 @@ import org.threeten.bp.LocalDateTime
 
 class Arbeitsverhaeltnis {
 
+    var fahrzeug: String = ""
+    var maschine: String = ""
     lateinit var kategorie: String
     lateinit var datum: LocalDate
     lateinit var arbeitszeit: Arbeitszeit
@@ -12,11 +14,8 @@ class Arbeitsverhaeltnis {
     lateinit var leistungsnehmer: Person
     lateinit var kommentar: String
 
-    fun calculateEndDatum() : LocalDateTime {
+    fun calculateEndDatum(): LocalDateTime {
         return datum.atStartOfDay().plusMinutes(arbeitszeit.getTimeInMinutes())
     }
 
-    fun createTitleForArbeitsverhaeltnis(): String {
-        return "${leistungserbringer.name} hilft ${leistungsnehmer.name} beim $kategorie"
-    }
 }

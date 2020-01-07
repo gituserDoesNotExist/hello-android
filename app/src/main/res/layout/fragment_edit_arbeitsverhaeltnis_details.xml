@@ -43,13 +43,26 @@
                     android:layout_gravity="start"
                     android:text="@string/erstellt_am" />
 
-            <TextView
+            <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@{LocalDateTimeConverter.dateToString(dto.erstelltAm)}"
-                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
-                    tools:text="26.07.2019" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="@{LocalDateTimeConverter.dateToString(dto.erstelltAm)}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                        tools:text="26.07.2019 - 16:50" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dip"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                        android:text="@string/uhr" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                app:layout_constraintBottom_toTopOf="@id/linearLayout9"
+                app:layout_constraintBottom_toTopOf="@id/linear_layout_fahrzeug_maschine"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/linearLayout4">
@@ -188,6 +201,57 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+                android:id="@+id/linear_layout_fahrzeug_maschine"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout9"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_fahrzeug"
+                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
+                        android:text="@{dto.arbeitsverhaeltnisDto.fahrzeug}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_maschine"
+                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
+                        android:text="@{dto.arbeitsverhaeltnisDto.maschine}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
         <LinearLayout
                 android:id="@+id/linearLayout9"
                 android:layout_width="0dip"
@@ -196,7 +260,7 @@
                 app:layout_constraintBottom_toTopOf="@id/linearLayout10"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_fahrzeug_maschine">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -249,9 +313,9 @@
                 android:onClick="@{()-> editArbeitsverhaeltnisDetailsFragment.saveChanges()}"
                 android:src="@drawable/btn_confirm"
                 app:fabSize="normal"
-                app:visible="@{editArbeitsverhaeltnisDetailsFragment.showConfirmButton}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right" />
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:visible="@{editArbeitsverhaeltnisDetailsFragment.showConfirmButton}" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_left"

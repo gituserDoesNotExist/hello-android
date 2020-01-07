@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidThreeTen.init(this)
         setContentView(R.layout.activity_main)
-        supportActionBar?.title = "Dashbaord"
     }
 
     fun startVerzicht(currentView: View) {

@@ -26,30 +26,31 @@ import org.threeten.bp.LocalDate
 class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
 
 
-
     private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
     private lateinit var editArbeitsverhaeltnisViewModel: EditArbeitsverhaeltnisViewModel
     private lateinit var appConfigurationViewModel: AppConfigurationViewModel
-    private lateinit var leistungserbringerlistPopupWindow: ListPopupWindow
-    private lateinit var leistungsnehmerlistPopupWindow: ListPopupWindow
+    private lateinit var leistungserbringerListPopupWindow: ListPopupWindow
+    private lateinit var fahrzeugListPopupWindow: ListPopupWindow
+    private lateinit var maschineListPopupWindow: ListPopupWindow
+    private lateinit var leistungsnehmerListPopupWindow: ListPopupWindow
     private lateinit var kategorieListPopupWindow: ListPopupWindow
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
     var editable: ObservableBoolean = ObservableBoolean(false)
     var showConfirmButton = ObservableBoolean(false)
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         (activity as? AppCompatActivity)?.let { activity ->
             activity.supportActionBar?.title = "Details"
-            activity.supportActionBar?.invalidateOptionsMenu()
             initializeViewModel(activity)
             activity.title = editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.kategorie
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                leistungserbringerlistPopupWindow = createListPopupWindowLeistungserbringer(activity, it.participants)
-                leistungsnehmerlistPopupWindow = createListPopupWindowLeistungsnehmer(activity, it.participants)
-                kategorieListPopupWindow = createListPopupWindowKategorie(activity, it.categories)
+                leistungserbringerListPopupWindow = createListPopupWindowLeistungserbringer(activity, it.teilnehmer)
+                fahrzeugListPopupWindow = createListPopupWindowFahrzeug(activity, it.fahrzeuge)
+                maschineListPopupWindow = createListPopupWindowMaschine(activity, it.maschinen)
+                leistungsnehmerListPopupWindow = createListPopupWindowLeistungsnehmer(activity, it.teilnehmer)
+                kategorieListPopupWindow = createListPopupWindowKategorie(activity, it.kategorien)
 
             })
         }
@@ -76,7 +77,24 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.leistungserbringer =
                 entries[position]
-            leistungserbringerlistPopupWindow.dismiss()
+            leistungserbringerListPopupWindow.dismiss()
+        }
+        return createListPopupWindow(it, entries, onItemClickListener)
+    }
+
+    private fun createListPopupWindowFahrzeug(it: AppCompatActivity, entries: List<String>): ListPopupWindow {
+        val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.fahrzeug = entries[position]
+            fahrzeugListPopupWindow.dismiss()
+        }
+        return createListPopupWindow(it, entries, onItemClickListener)
+    }
+
+
+    private fun createListPopupWindowMaschine(it: AppCompatActivity, entries: List<String>): ListPopupWindow {
+        val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.maschine = entries[position]
+            maschineListPopupWindow.dismiss()
         }
         return createListPopupWindow(it, entries, onItemClickListener)
     }
@@ -85,7 +103,7 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             editArbeitsverhaeltnisViewModel.arbeitsverhaeltnisToEdit.arbeitsverhaeltnisDto.leistungsnehmer =
                 entries[position]
-            leistungsnehmerlistPopupWindow.dismiss()
+            leistungsnehmerListPopupWindow.dismiss()
         }
         return createListPopupWindow(it, entries, onItemClickListener)
     }
@@ -127,17 +145,14 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
                 showConfirmButton.set(true)
             }
         }
-        return true
+        return false
     }
-
 
 
     override fun onStop() {
         super.onStop()
         updateArbeitsverhaeltnisDisposable?.dispose()
     }
-
-
 
 
     fun openDatePickerDialog() {
@@ -154,12 +169,20 @@ class EditArbeitsverhaeltnisDetailsFragment : Fragment() {
 
 
     fun openLeistgunsnehmerListPopUp(editTextView: View) {
-        leistungsnehmerlistPopupWindow.apply { this.anchorView = editTextView }.show()
+        leistungsnehmerListPopupWindow.apply { this.anchorView = editTextView }.show()
+    }
+
+    fun openFahrzeugListPopUp(editTextView: View) {
+        fahrzeugListPopupWindow.apply { this.anchorView = editTextView }.show()
+    }
+
+    fun openMaschineListPopUp(editTextView: View) {
+        maschineListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
 
     fun openLeistgunserbringerListPopUp(editTextView: View) {
-        leistungserbringerlistPopupWindow.apply { this.anchorView = editTextView }.show()
+        leistungserbringerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
 

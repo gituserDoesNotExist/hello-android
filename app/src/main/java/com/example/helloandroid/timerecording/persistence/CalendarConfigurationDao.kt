@@ -19,6 +19,9 @@ interface CalendarConfigurationDao {
     @Query("select * from CALENDER_CONFIGURATION_ENTITY c where c.ID = 1")
     fun getConfiguration() : LiveData<CalendarConfigurationEntity>
 
+    @Query("select * from CALENDER_CONFIGURATION_ENTITY")
+    fun getConfigurationTest() : List<CalendarConfigurationEntity>
+
     @Query("select c.appUser from CALENDER_CONFIGURATION_ENTITY c where c.ID = 1")
     fun getAppUser() : Single<String>
 

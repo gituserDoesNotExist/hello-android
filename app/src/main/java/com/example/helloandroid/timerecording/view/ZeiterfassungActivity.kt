@@ -4,17 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
 import com.example.helloandroid.R.navigation.navigation_zeiterfassung
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ZeiterfassungActivity : AppCompatActivity() {
+
+class ZeiterfassungActivity : BaseActivity() {
 
     private lateinit var startZeiterfassungViewModel: StartZeiterfassungViewModel
 
@@ -22,11 +24,16 @@ class ZeiterfassungActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initViewModel()
         setContentView(R.layout.activity_zeiterfassung)
+
         startZeiterfassungViewModel.existsConfiguration.observe(this, Observer {
             configureToolbar()
             configureNavHostFragment(it)
             configureBottomNavigationView()
         })
+    }
+
+    override fun getParentViewForSnackbar(): View {
+        return findViewById(android.R.id.content)
     }
 
     private fun initViewModel() {

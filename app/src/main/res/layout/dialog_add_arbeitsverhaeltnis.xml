@@ -90,7 +90,7 @@
                     style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_leistungsnehmer"
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_fahrzeug"
                     app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_kategorie">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -104,13 +104,54 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_fahrzeug"
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_maschine"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_leistungserbringer">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_fahrzeug"
+                        android:onClick="@{(view) -> addArbeitsverhaeltnisDialog.openFahrzeugPopUp(view)}"
+                        android:text="@={arbeitsverhaeltnisDto.fahrzeug}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_add_arbeitsverhaeltnis_maschine"
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_leistungsnehmer"
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_fahrzeug">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="false"
+                        android:gravity="bottom"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_maschine"
+                        android:onClick="@{(view) -> addArbeitsverhaeltnisDialog.openMaschinePopUp(view)}"
+                        android:text="@={arbeitsverhaeltnisDto.maschine}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_add_arbeitsverhaeltnis_leistungsnehmer"
                     style="@style/styleTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toTopOf="@id/input_add_arbeitsverhaeltnis_kommentar"
-                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_leistungserbringer">
+                    app:layout_constraintTop_toBottomOf="@id/input_add_arbeitsverhaeltnis_maschine">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

@@ -24,9 +24,10 @@ class AddArbeitsverhaeltnisDialog(
     private val onUpdateArbeitsverhaeltnisseListener: OnUpdateArbeitsverhaeltnisseListener) : DialogFragment() {
 
     private lateinit var addArbeitsverhaeltnisViewModel: AddArbeitsverhaeltnisViewModel
-    private val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisDTO()
-    private lateinit var leistungserbringerlistPopupWindow: ListPopupWindow
-    private lateinit var leistungsnehmerlistPopupWindow: ListPopupWindow
+    private lateinit var leistungserbringerListPopupWindow: ListPopupWindow
+    private lateinit var fahrzeugListPopupWindow: ListPopupWindow
+    private lateinit var maschineListPopupWindow: ListPopupWindow
+    private lateinit var leistungsnehmerListPopupWindow: ListPopupWindow
     private lateinit var kategorieListPopupWindow: ListPopupWindow
     private var addArbeitsverhaeltnisDisposable: Disposable? = null
 
@@ -34,20 +35,22 @@ class AddArbeitsverhaeltnisDialog(
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DialogAddArbeitsverhaeltnisBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        binding.arbeitsverhaeltnisDto = arbeitsverhaeltnisDTO
-        binding.addArbeitsverhaeltnisDialog = this
 
         activity?.let { fragment ->
             initializeViewModel(fragment)
             addArbeitsverhaeltnisViewModel.config.observe(this, Observer {
-                leistungserbringerlistPopupWindow = createListPopupWindowLeistungserbringer(fragment, it.participants)
-                leistungsnehmerlistPopupWindow = createListPopupWindowLeistungsnehmer(fragment, it.participants)
-                kategorieListPopupWindow = createListPopupWindowKategorie(fragment, it.categories)
-                arbeitsverhaeltnisDTO.leistungserbringer = it.appUser
+                leistungserbringerListPopupWindow = createListPopupWindowLeistungserbringer(fragment, it.teilnehmer)
+                fahrzeugListPopupWindow = createListPopupWindowFahrzeug(fragment, it.fahrzeuge)
+                maschineListPopupWindow = createListPopupWindowMaschine(fragment, it.maschinen)
+                leistungsnehmerListPopupWindow = createListPopupWindowLeistungsnehmer(fragment, it.teilnehmer)
+                kategorieListPopupWindow = createListPopupWindowKategorie(fragment, it.kategorien)
+                addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.leistungserbringer = it.appUser
             })
 
         }
 
+        binding.arbeitsverhaeltnisDto = addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO
+        binding.addArbeitsverhaeltnisDialog = this
         return rootView
     }
 
@@ -63,23 +66,41 @@ class AddArbeitsverhaeltnisDialog(
 
     private fun createListPopupWindowLeistungserbringer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            arbeitsverhaeltnisDTO.leistungserbringer = entries[position]
-            leistungserbringerlistPopupWindow.dismiss()
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.leistungserbringer = entries[position]
+            leistungserbringerListPopupWindow.dismiss()
         }
         return createListPopupWindow(it, entries, onItemClickListener)
     }
 
+    private fun createListPopupWindowFahrzeug(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+        val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.fahrzeug = entries[position]
+            fahrzeugListPopupWindow.dismiss()
+        }
+        return createListPopupWindow(it, entries, onItemClickListener)
+    }
+
+
+    private fun createListPopupWindowMaschine(it: FragmentActivity, entries: List<String>): ListPopupWindow {
+        val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.maschine = entries[position]
+            maschineListPopupWindow.dismiss()
+        }
+        return createListPopupWindow(it, entries, onItemClickListener)
+    }
+
+
     private fun createListPopupWindowLeistungsnehmer(it: FragmentActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            arbeitsverhaeltnisDTO.leistungsnehmer = entries[position]
-            leistungsnehmerlistPopupWindow.dismiss()
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.leistungsnehmer = entries[position]
+            leistungsnehmerListPopupWindow.dismiss()
         }
         return createListPopupWindow(it, entries, onItemClickListener)
     }
 
     private fun createListPopupWindowKategorie(it: FragmentActivity, entries: List<String>): ListPopupWindow {
         val onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            arbeitsverhaeltnisDTO.kategorie = entries[position]
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.kategorie = entries[position]
             kategorieListPopupWindow.dismiss()
         }
         return createListPopupWindow(it, entries, onItemClickListener)
@@ -97,7 +118,7 @@ class AddArbeitsverhaeltnisDialog(
     }
 
     fun addArbeitsverhaeltnisAndCloseDialog() {
-        addArbeitsverhaeltnisDisposable = addArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis(arbeitsverhaeltnisDTO)//
+        addArbeitsverhaeltnisDisposable = addArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<Long> { onUpdateArbeitsverhaeltnisseListener.onArbeitsverhaeltnisseUpdated() })
         closeDialog()
@@ -108,16 +129,27 @@ class AddArbeitsverhaeltnisDialog(
     }
 
     fun openDatePickerDialog() {
-        val onDateSet: (LocalDate) -> Unit = { date -> arbeitsverhaeltnisDTO.datumZeiterfassung = date }
+        val onDateSet: (LocalDate) -> Unit = { date ->
+            addArbeitsverhaeltnisViewModel.arbeitsverhaeltnisDTO.datumZeiterfassung = date
+        }
         activity?.let { HelloDatePickerDialog(it, onDateSet, LocalDate.now()).show() }
     }
 
     fun openLeistungserbringerPopUp(editTextView: View) {
-        leistungserbringerlistPopupWindow.apply { this.anchorView = editTextView }.show()
+        leistungserbringerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
+    fun openFahrzeugPopUp(editTextView: View) {
+        fahrzeugListPopupWindow.apply { this.anchorView = editTextView }.show()
+    }
+
+    fun openMaschinePopUp(editTextView: View) {
+        maschineListPopupWindow.apply { this.anchorView = editTextView }.show()
+    }
+
+
     fun openLeistungsnehmerPopUp(editTextView: View) {
-        leistungsnehmerlistPopupWindow.apply { this.anchorView = editTextView }.show()
+        leistungsnehmerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
     fun openKategoriePopUp(editTextView: View) {

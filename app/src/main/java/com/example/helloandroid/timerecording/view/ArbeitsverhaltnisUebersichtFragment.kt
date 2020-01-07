@@ -2,9 +2,7 @@ package com.example.helloandroid.timerecording.view
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
@@ -19,7 +18,6 @@ import com.example.helloandroid.timerecording.TeamupEvents
 
 
 class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltnisseListener {
-
 
     override fun onArbeitsverhaeltnisseUpdated() {
         arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
@@ -30,12 +28,15 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
     private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
     private lateinit var filtersViewModel: FiltersViewModel
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         val binding = FragmentArbeitsverhaeltnisUebersichtBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
-        (activity as? AppCompatActivity)?.let { activity ->
+        (activity as? BaseActivity)?.let { activity ->
             activity.supportActionBar?.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
+            configureNetworkErrorHandling(activity)
             initializeViewModel(activity)
             addFiltersRecyclerView(rootView, activity)
             arbeitsverhaeltnisViewModel.teamupEvents.observe(this, Observer {
@@ -52,13 +53,36 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
         return rootView
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_uebersicht, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_filter_arbeitshverhaeltnisse -> openFilterFragment()
+        }
+        return false
+    }
+
+    private fun configureNetworkErrorHandling(activity: BaseActivity) {
+        activity.hideProgressbarCallback = {
+            arbeitsverhaeltnisViewModel.showProgressbar.set(false)
+        }
+        activity.reloadCallback = {
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
+        }
+    }
+
     private fun initializeViewModel(activity: AppCompatActivity) {
         filtersViewModel = ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
             .get(FiltersViewModel::class.java)
         arbeitsverhaeltnisViewModel =
             ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
                 .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
-                .apply { this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien) }
+                .apply {
+                    this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
+                }
         sharedTeamupEventViewModel =
             ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
                 .get(SharedTeamupEventViewModel::class.java)

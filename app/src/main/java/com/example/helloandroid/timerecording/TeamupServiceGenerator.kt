@@ -1,5 +1,7 @@
 package com.example.helloandroid.timerecording
 
+import android.content.Context
+import com.example.helloandroid.NetworkConnectionInterceptor
 import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -8,25 +10,33 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object TeamupServiceGenerator {
+class TeamupServiceGenerator {
 
-    private const val BASE_URL = TeamupCalenderConfig.BASE_URL
-    private val httpLoggingIntercepter =
-        HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }
 
-    private val okHttpClient = OkHttpClient.Builder().apply {
-        this.addInterceptor(httpLoggingIntercepter)
-    }
+    companion object {
+        private var teamupApi: TeamUpApi? = null
+        private const val BASE_URL = TeamupCalenderConfig.BASE_URL
 
-    private val retrofitBuilder = Retrofit.Builder()//
-        .baseUrl(BASE_URL)//
-        .addConverterFactory(GsonConverterFactory.create())//
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        fun getTeamUpApi(context: Context): TeamUpApi {
+            if (teamupApi == null) {
+                val httpLoggingIntercepter =
+                    HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }
+                val networkConnectionInterceptor = NetworkConnectionInterceptor(context)
+                val okHttpClient = OkHttpClient.Builder().apply {
+                    this.addInterceptor(networkConnectionInterceptor)
+                    this.addInterceptor(httpLoggingIntercepter)
+                }.build()
 
-    private val retrofit = retrofitBuilder.client(okHttpClient.build()).build()
+                val retrofitBuilder = Retrofit.Builder()//
+                    .baseUrl(BASE_URL)//
+                    .addConverterFactory(GsonConverterFactory.create())//
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 
-    fun createService(): TeamUpApi {
-        return retrofit.create(TeamUpApi::class.java)
+                teamupApi =  retrofitBuilder.client(okHttpClient).build().create(TeamUpApi::class.java)
+            }
+            return teamupApi!!
+        }
+
     }
 
 

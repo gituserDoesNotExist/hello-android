@@ -39,6 +39,27 @@ class ArbeitsverhaeltnisDTO : BaseObservable() {
             }
         }
 
+
+    var fahrzeug: String = ""
+        @Bindable get() = field
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyPropertyChanged(BR.fahrzeug)
+            }
+        }
+
+
+    var maschine: String = ""
+        @Bindable get() = field
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyPropertyChanged(BR.maschine)
+            }
+        }
+
+
     var leistungsnehmer: String = ""
         @Bindable get() = field
         set(value) {
@@ -67,5 +88,16 @@ class ArbeitsverhaeltnisDTO : BaseObservable() {
             }
         }
 
+
+    fun reset() {
+        this.maschine = ""
+        this.fahrzeug = ""
+        this.leistungserbringer = ""
+        this.datumZeiterfassung = now(ZoneId.of(ZoneIds.EUROPE_BERLIN.zoneId))
+        this.dauer = BigDecimal.ZERO
+        this.kategorie = ""
+        this.kommentar = ""
+        this.leistungsnehmer = ""
+    }
 
 }

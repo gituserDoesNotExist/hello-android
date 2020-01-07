@@ -25,7 +25,8 @@ class TeamupEventToRemoteEventMapper {
     /** Sollte beim Anlegen verwendet werden */
     fun fromArbeitsverhaeltnisToRemoteEvent(arbeitsverhaeltnis: Arbeitsverhaeltnis, erstelltVon: String): Event {
         return Event().apply {
-            this.title = arbeitsverhaeltnis.createTitleForArbeitsverhaeltnis()
+            this.title =
+                "${arbeitsverhaeltnis.leistungserbringer}_${arbeitsverhaeltnis.leistungsnehmer}_${arbeitsverhaeltnis.kategorie}"
             this.subcalendarId = TeamupCalenderConfig.SUBCALENDAR_ID_NACHBARSCHAFTSHILFE
             this.startDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.datum)
             this.endDt = TeamUpDateConverter.asEuropeBerlinZonedDateTimeString(arbeitsverhaeltnis.calculateEndDatum())

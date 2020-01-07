@@ -2,15 +2,14 @@ package com.example.helloandroid.timerecording.repository
 
 import com.example.helloandroid.timerecording.TeamupEvent
 import com.example.helloandroid.timerecording.TeamupEvents
-import com.example.helloandroid.timerecording.TeamupServiceGenerator
 import com.example.helloandroid.timerecording.view.Suchkriterien
+import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class ArbeitsverhaeltnisRepository {
+class ArbeitsverhaeltnisRepository(private val teamUpApi: TeamUpApi) {
 
-    private val teamUpApi = TeamupServiceGenerator.createService()
     private val teamupEventMapper = TeamupEventToRemoteEventMapper()
 
     fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien): Single<TeamupEvents> {

@@ -9,9 +9,11 @@ class AddArbeitsverhaeltnisViewModel(private val zeiterfassungRepository: Zeiter
 
     val config: LiveData<CalendarConfiguration> = zeiterfassungRepository.getConfiguration()
     private val arbeitsverhaeltnisMapper = TeamupEventToDTOMapper()
+    val arbeitsverhaeltnisDTO = ArbeitsverhaeltnisDTO()
 
-    fun addArbeitsverhaeltnis(arbeitsverhaeltnisDTO: ArbeitsverhaeltnisDTO): Single<Long> {
+    fun addArbeitsverhaeltnis(): Single<Long> {
         val event = arbeitsverhaeltnisMapper.fromDtoToTeamupEvent(arbeitsverhaeltnisDTO)
+        arbeitsverhaeltnisDTO.reset()
         return zeiterfassungRepository.addArbeitsverhaeltnisToRemoteCalendar(event)//
     }
 

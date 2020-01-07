@@ -12,7 +12,7 @@ class RemoteCalendarMetadataSerializationTest {
 
         val metadata = Gson().fromJson(jsonString, RemoteCalendarMetadata::class.java)
 
-        assertThat(metadata.categories).containsExactlyInAnyOrder("a","b")
-        assertThat(metadata.participants[0].name).isEqualTo("max")
+        assertThat(metadata.kategorien).containsExactlyInAnyOrder("a","b")
+        assertThat(metadata.teilnehmer[0].name).isEqualTo("max")
     }
 }

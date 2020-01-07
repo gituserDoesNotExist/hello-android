@@ -15,6 +15,8 @@ class TeamupEventToDTOMapper {
         return Arbeitsverhaeltnis().apply {
             this.leistungsnehmer = Person(dto.leistungsnehmer)
             this.leistungserbringer = Person(dto.leistungserbringer)
+            this.fahrzeug = dto.fahrzeug
+            this.maschine = dto.maschine
             this.kommentar = dto.kommentar
             this.datum = dto.datumZeiterfassung
             this.kategorie = dto.kategorie

@@ -33,11 +33,12 @@ class AppConfigurationFragment : Fragment() {
             appConfigurationViewModel.downloadRemoteConfig()//
                 .observeOn(AndroidSchedulers.mainThread())//
                 .subscribe { config ->
-                    participantsListPopupWindow = createParticipantsListPopUpWindow(activity, config.participants)
+                    participantsListPopupWindow = createParticipantsListPopUpWindow(activity, config.teilnehmer)
+                    appConfigurationViewModel.calendarConfig.observe(this, Observer {
+                        appConfigurationViewModel.savedAppUser.set(it.appUser)
+                    })
                 }
-            appConfigurationViewModel.calendarConfig.observe(this, Observer { config ->
-                appConfigurationViewModel.savedAppUser.set(config.appUser)
-            })
+
         }
 
         binding.configViewModel = appConfigurationViewModel

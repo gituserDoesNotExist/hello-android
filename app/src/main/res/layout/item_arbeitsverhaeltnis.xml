@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:padding="4dip">
 
@@ -54,6 +54,24 @@
                 tools:text="egal" />
 
     </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+        <TextView
+                android:id="@+id/item_arbeitsverhaeltnis_fahrzeug_mit_maschine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="5720 mit Ladewagen" />
+
+    </LinearLayout>
+
 
     <LinearLayout
             android:layout_width="wrap_content"

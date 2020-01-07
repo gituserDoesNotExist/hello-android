@@ -16,10 +16,16 @@ class CalendarConfigurationEntity {
     var appUser: String = ""
 
     @TypeConverters(StringListTypeConverter::class)
-    lateinit var categories: List<String>
+    lateinit var kategorien: List<String>
 
     @TypeConverters(StringListTypeConverter::class)
-    lateinit var participants: List<String>
+    lateinit var teilnehmer: List<String>
+
+    @TypeConverters(StringListTypeConverter::class)
+    lateinit var fahrzeuge: List<String>
+
+    @TypeConverters(StringListTypeConverter::class)
+    lateinit var maschinen: List<String>
 
 
 }

@@ -9,8 +9,10 @@ class CalendarConfigurationMapper {
 
     fun fromRemoteMetadataToCalendarConfigurationEntity(metadata: RemoteCalendarMetadata): CalendarConfigurationEntity {
         return CalendarConfigurationEntity().apply {
-            this.categories = metadata.categories
-            this.participants = metadata.participants.stream().map(Person::name).collect(Collectors.toList())
+            this.kategorien = metadata.kategorien
+            this.teilnehmer = metadata.teilnehmer.stream().map(Person::name).collect(Collectors.toList())
+            this.fahrzeuge = metadata.fahrzeuge
+            this.maschinen = metadata.maschinen
         }
     }
 

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.example.helloandroid.view.BigDecimalConverter" />
 
         <import type="com.example.helloandroid.view.LocalDateConverter" />
 
@@ -15,6 +18,7 @@
                 name="arbeitsverhaltnisUebersichtFragment"
                 type="com.example.helloandroid.timerecording.view.ArbeitsverhaltnisUebersichtFragment" />
 
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,9 +26,39 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+        <LinearLayout
+                android:id="@+id/gesamtstunden"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/geleistete_stunden" />
+
+            <View
+                    android:layout_width="4dip"
+                    android:layout_height="wrap_content" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtstunden)}"
+                    android:textColor="@color/colorPrimaryDark"
+                    tools:text="50.43" />
+
+
+        </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/linear_layout_date_range"
+                android:id="@+id/linear_layout_filters"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_marginTop="10dip"
@@ -33,7 +67,7 @@
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/gesamtstunden">
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_filters"
@@ -53,8 +87,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout_date_range"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_filters"
                 tools:context=".timerecording.view.ArbeitsverhaltnisUebersichtFragment">
+
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_arbeitsverhaeltnisse"
@@ -77,26 +112,23 @@
                     android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddArbeitsverhaeltnisDialog()}"
                     android:src="@drawable/ic_add_black_48dp"
                     app:backgroundTint="@color/colorSecondary"
-                    app:fabSize="normal"
+                    app:fabSize="mini"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dip"
-                    android:layout_marginEnd="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openFilterFragment()}"
-                    android:src="@drawable/ic_filter_list_black_24dp"
-                    app:backgroundTint="@color/colorSecondary"
-                    app:fabSize="normal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+                layout="@layout/hello_progressbar"
+                bind:showProgressbar="@{viewModel.showProgressbar}" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.05" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

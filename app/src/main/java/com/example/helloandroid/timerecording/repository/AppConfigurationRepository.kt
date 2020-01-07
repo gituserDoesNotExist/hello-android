@@ -4,19 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.helloandroid.DatabaseOperationException
 import com.example.helloandroid.timerecording.RemoteCalendarMetadata
-import com.example.helloandroid.timerecording.TeamupServiceGenerator
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
+import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.remotemodel.ConfigurationWrapper
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class AppConfigurationRepository(private val calendarConfigurationDao: CalendarConfigurationDao) {
+class AppConfigurationRepository(private val calendarConfigurationDao: CalendarConfigurationDao,
+                                 private val teamUpApi: TeamUpApi) {
 
     private val calendarConfigMapper = CalendarConfigurationMapper()
-    private val teamUpApi = TeamupServiceGenerator.createService()
 
     fun existsConfiguration(): Boolean {
         return calendarConfigurationDao.existsConfiguration()
@@ -24,8 +24,7 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     fun getConfiguration(): LiveData<CalendarConfiguration> {
         return Transformations.map(calendarConfigurationDao.getConfiguration()) {
-            CalendarConfiguration(it.appUser, it.categories,
-                it.participants)
+            CalendarConfiguration(it.appUser, it.kategorien, it.teilnehmer, it.fahrzeuge, it.maschinen)
         }
     }
 
@@ -40,8 +39,7 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
             }.map {
                 upsertConfiguration(it)
             }.map {
-                CalendarConfiguration(it.appUser, it.categories,
-                    it.participants)
+                CalendarConfiguration(it.appUser, it.kategorien, it.teilnehmer,it.fahrzeuge,it.maschinen)
             }
     }
 
@@ -63,7 +61,7 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     fun saveAppUser(appUser: String) {
         val config = calendarConfigurationDao.getConfigurationSynchronous()
-        if (!config.participants.contains(appUser)) {
+        if (!config.teilnehmer.contains(appUser)) {
             throw DatabaseOperationException("$appUser konnte in der bestehenden Konfiguration nicht gefunden werden")
         }
         calendarConfigurationDao.updateConfiguration(config.apply { this.appUser = appUser })
