@@ -32,24 +32,21 @@
                 android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_suchfilterFragment"
                 app:destination="@id/suchfilterFragment" />
         <action
-                android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_addArbeitsverhaeltnisFragment"
-                app:destination="@id/addArbeitsverhaeltnisFragment" />
-        <action
                 android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_editArbeitsverhaeltnisDetailsFragment"
-                app:destination="@id/editArbeitsverhaeltnisDetailsFragment" />
+                app:destination="@id/editZeitArbeitsverhaeltnisDetailsFragment" />
         <action
                 android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_editStueckArbeitsverhaeltnisFragment"
                 app:destination="@id/editStueckArbeitsverhaeltnisFragment" />
         <action
-                android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_addStueckArbeitsverhaeltnisFragment"
-                app:destination="@id/addStueckArbeitsverhaeltnisFragment" />
+                android:id="@+id/action_arbeitsverhaltnisUebersichtFragment_to_addArbeitsverhaeltnisFragment2"
+                app:destination="@id/addArbeitsverhaeltnisFragment" />
     </fragment>
     <fragment
-            android:id="@+id/editArbeitsverhaeltnisDetailsFragment"
+            android:id="@+id/editZeitArbeitsverhaeltnisDetailsFragment"
             android:name="com.example.helloandroid.timerecording.view.EditZeitArbeitsverhaeltnisFragment"
             android:label="EditArbeitsverhaeltnisDetailsFragment">
         <action
-                android:id="@+id/action_editArbeitsverhaeltnisDetailsFragment_to_arbeitsverhaltnisUebersichtFragment"
+                android:id="@+id/action_editZeitArbeitsverhaeltnisDetailsFragment_to_arbeitsverhaltnisUebersichtFragment"
                 app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
     </fragment>
     <fragment
@@ -69,27 +66,19 @@
                 app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
     </fragment>
     <fragment
-            android:id="@+id/addArbeitsverhaeltnisFragment"
-            android:name="com.example.helloandroid.timerecording.view.AddZeitArbeitsverhaeltnisFragment"
-            android:label="AddArbeitsverhaeltnisFragment" >
-        <action
-                android:id="@+id/action_addArbeitsverhaeltnisFragment_to_arbeitsverhaltnisUebersichtFragment"
-                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
-    </fragment>
-    <fragment
-            android:id="@+id/addStueckArbeitsverhaeltnisFragment"
-            android:name="com.example.helloandroid.timerecording.view.AddStueckArbeitsverhaeltnisFragment"
-            android:label="AddStueckArbeitsverhaeltnisFragment" >
-        <action
-                android:id="@+id/action_addStueckArbeitsverhaeltnisFragment_to_arbeitsverhaltnisUebersichtFragment"
-                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
-    </fragment>
-    <fragment
             android:id="@+id/editStueckArbeitsverhaeltnisFragment"
             android:name="com.example.helloandroid.timerecording.view.EditStueckArbeitsverhaeltnisFragment"
             android:label="EditStueckArbeitsverhaeltnisFragment" >
         <action
                 android:id="@+id/action_editStueckArbeitsverhaeltnisFragment_to_arbeitsverhaltnisUebersichtFragment"
+                app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/addArbeitsverhaeltnisFragment"
+            android:name="com.example.helloandroid.timerecording.view.AddArbeitsverhaeltnisFragment"
+            android:label="AddArbeitsverhaeltnisFragment" >
+        <action
+                android:id="@+id/action_addArbeitsverhaeltnisFragment_to_arbeitsverhaltnisUebersichtFragment"
                 app:destination="@id/arbeitsverhaltnisUebersichtFragment" />
     </fragment>
 </navigation>

@@ -31,10 +31,10 @@
 
         <LinearLayout
                 android:id="@+id/linear_layout_metadata"
+                visibleOrGone="@{viewModel.updateArbeitsverhaeltnis}"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                visibleOrGone="@{viewModel.updateArbeitsverhaeltnis}"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toTopOf="parent">
@@ -130,7 +130,7 @@
                         android:focusable="false"
                         android:hint="@string/datum"
                         android:onClick="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
-                        android:text="@{LocalDateConverter.dateToString(viewModel.arbeitseinsatzForAnzeige.datum)}"
+                        android:text="@{LocalDateConverter.dateToString(viewModel.arbeitsverhaeltnisForAnzeige.datum)}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,7 +149,7 @@
                         android:hint="@string/label_edit_text_neue_zeiterfassung_anzahl_stunden"
                         android:inputType="numberDecimal"
                         android:maxLength="8"
-                        android:text="@={viewModel.arbeitseinsatzForAnzeige.arbeitszeit}"
+                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.arbeitszeit}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,7 +181,7 @@
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
                         android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
-                        android:text="@{viewModel.arbeitseinsatzForAnzeige.leistungsnehmer}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungsnehmer}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +198,7 @@
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
                         android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
-                        android:text="@{viewModel.arbeitseinsatzForAnzeige.leistungserbringer}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungserbringer}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -231,7 +231,7 @@
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_fahrzeug"
                         android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
-                        android:text="@{viewModel.arbeitseinsatzForAnzeige.fahrzeug}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.fahrzeug}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -248,7 +248,7 @@
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_maschine"
                         android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
-                        android:text="@{viewModel.arbeitseinsatzForAnzeige.anbaugeraet}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.anbaugeraet}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -269,6 +269,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                     style="@style/styleTextInputLayout"
+                    erroneous="@{viewModel.taetigkeitMissing}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -279,7 +280,7 @@
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_teatigkeit"
                         android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openTaetigkeitListPopUp(v)}"
-                        android:text="@{viewModel.arbeitseinsatzForAnzeige.taetigkeit}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.taetigkeit}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -305,7 +306,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="@{viewModel.editable}"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_kommentar"
-                        android:text="@={viewModel.arbeitseinsatzForAnzeige.kommentar}"
+                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.kommentar}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -314,7 +315,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dip"
-                android:onClick="@{()-> upsertArbeitsverhaeltnisDetailsFragment.upsert()}"
+                android:onClick="@{()-> upsertArbeitsverhaeltnisDetailsFragment.addOrUpdate()}"
                 android:src="@drawable/btn_confirm"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"

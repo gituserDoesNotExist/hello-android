@@ -77,6 +77,10 @@
     <string name="title_zeit_arbeitsverhaeltnis">%1$s hilft %2$s beim %3$s</string>
     <string name="title_stueck_arbeitsverhaeltnis">%1$s hilft %2$s</string>
     <string name="description_zeit_arbeitsverhaeltnis">%1$s mit %2$s</string>
+    <string name="description_stueck_arbeitsverhaeltnis">Produkt: %1$s. Menge: %2$s</string>
+    <string name="loeschen">Löschen?</string>
+    <string name="fehlende_daten">Bitte Daten vollständig angeben</string>
+    <string name="beteiligte">"Leistungserbringer: %1$s, Leistungsnehmer: %2$s"</string>
     <string name="label_edit_text_app_user">Appuser</string>
     <string name="gesamtkosten">Gesamtkosten:</string>
     <string name="kosten">Kosten:</string>
@@ -99,6 +103,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wert_eingeben">Fehlender Wert</string>
 
 
 </resources>

@@ -11,5 +11,6 @@
     <color name="colorSecondaryDark">#863895</color>
     <color name="colorBackground">#e1e2e1</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="red">#FF0000</color>
 
 </resources>

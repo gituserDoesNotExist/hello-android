@@ -32,14 +32,19 @@ class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitse
 
         if (holder is ItemViewHolder) {
             holder.arbeitsverhaeltnisRemoteId = arbeitseinsatz.eventInfo.remoteCalenderId
-            holder.titleTextView.text = arbeitsverhaeltnis.createTitle(holder.itemView.resources)
-            holder.dateTextView.text = arbeitsverhaeltnis.datum.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            holder.durationTextView.text = arbeitsverhaeltnis.getQuantity()
-            holder.kostenTextView.text = kostenForArbeitsverhaeltnis(holder, arbeitsverhaeltnis)
-            holder.fahrzeugTextView.text = arbeitsverhaeltnis.createDescription(holder.itemView.resources)
+            holder.beteiligte.text = beteiligte(holder, arbeitsverhaeltnis)
+            holder.title.text = arbeitsverhaeltnis.createTitle()
+            holder.date.text = arbeitsverhaeltnis.datum.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            holder.duration.text = arbeitsverhaeltnis.getQuantity()
+            holder.kosten.text = kostenForArbeitsverhaeltnis(holder, arbeitsverhaeltnis)
+            holder.fahrzeug.text = arbeitsverhaeltnis.createDescription(holder.itemView.resources)
         }
 
     }
+
+    private fun beteiligte(holder: RecyclerView.ViewHolder, arbeitsverhaeltnis: Arbeitsverhaeltnis) =
+        holder.itemView.resources.getString(R.string.beteiligte, arbeitsverhaeltnis.leistungserbringer?.name ?: "",
+            arbeitsverhaeltnis.leistungsnehmer.name)
 
     private fun kostenForArbeitsverhaeltnis(holder: RecyclerView.ViewHolder, verhaeltnis: Arbeitsverhaeltnis): String {
         val kosten = BigDecimalConverter.bigDecimalToString(verhaeltnis.calculateKostenForArbeitsverhaeltnis())
@@ -54,11 +59,12 @@ class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitse
 
     class ItemViewHolder(itemView: View, onClickListener: View.OnClickListener) : RecyclerView.ViewHolder(itemView) {
         lateinit var arbeitsverhaeltnisRemoteId: String
-        val titleTextView: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_title)
-        val dateTextView: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_date)
-        val durationTextView: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_quantity)
-        val kostenTextView: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_kosten)
-        val fahrzeugTextView: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_description)
+        val title: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_title)
+        val beteiligte: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_beteiligte)
+        val date: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_date)
+        val duration: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_quantity)
+        val kosten: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_kosten)
+        val fahrzeug: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_description)
 
         init {
             itemView.setOnClickListener(onClickListener)

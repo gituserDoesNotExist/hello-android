@@ -22,10 +22,7 @@ class CalendarConfigurationDaoTest {
 
     @Test
     fun testSaveConfiguration() {
-        val config = CalendarConfigurationEntity().apply {
-            this.taetigkeiten = listOf("a", "b", "c")
-            this.teilnehmer = listOf("d", "e", "f")
-        }
+        val config = CalendarConfigurationEntity()
 
         testCandidate.insertConfiguration(config)
     }

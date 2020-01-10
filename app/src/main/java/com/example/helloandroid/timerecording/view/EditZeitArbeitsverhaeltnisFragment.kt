@@ -4,8 +4,10 @@ package com.example.helloandroid.timerecording.view
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
+import com.example.helloandroid.ConfirmDeleteDialog
 import com.example.helloandroid.R
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -49,9 +51,7 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete_arbeitsverhaeltnis -> {
-                upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()
-                ZeiterfassungNavigation.getNavigation(findNavController())
-                    .fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+                ConfirmDeleteDialog(this.context) { confirmDeleteListener(findNavController()) }.show()
             }
             R.id.action_edit_arbeitsverhaeltnis -> {
                 upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
@@ -60,8 +60,13 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
         return false
     }
 
+    private fun confirmDeleteListener(navController: NavController) {
+        upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()
+        ZeiterfassungNavigation.getNavigation(navController).fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+    }
 
-    override fun upsert() {
+
+    override fun performUpsertOperation() {
         updateArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {

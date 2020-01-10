@@ -126,11 +126,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
 
 
     fun openAddArbeitsverhaeltnisFragment() {
-        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddZeitArbeitseinsatz()
-    }
-
-    fun openAddStueckArbeitsverhaeltnisFragment() {
-        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddStueckArbeitsverhaeltnis()
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddArbeitsverhaeltnis()
     }
 
     private fun openFilterFragment() {
