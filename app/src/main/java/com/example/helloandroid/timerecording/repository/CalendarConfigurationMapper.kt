@@ -1,19 +1,24 @@
 package com.example.helloandroid.timerecording.repository
 
-import com.example.helloandroid.timerecording.Person
-import com.example.helloandroid.timerecording.RemoteCalendarMetadata
+import com.example.helloandroid.timerecording.config.RemoteCalendarMetadata
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
-import java.util.stream.Collectors
+import com.example.helloandroid.timerecording.view.CalendarConfiguration
 
 class CalendarConfigurationMapper {
 
     fun fromRemoteMetadataToCalendarConfigurationEntity(metadata: RemoteCalendarMetadata): CalendarConfigurationEntity {
         return CalendarConfigurationEntity().apply {
-            this.kategorien = metadata.kategorien
-            this.teilnehmer = metadata.teilnehmer.stream().map(Person::name).collect(Collectors.toList())
+            this.taetigkeiten = metadata.taetigkeiten
+            this.teilnehmer = metadata.teilnehmer
             this.fahrzeuge = metadata.fahrzeuge
-            this.maschinen = metadata.maschinen
+            this.anbaugeraete = metadata.anbaugeraete
+            this.produkte = metadata.produkte
         }
     }
 
+
+    fun fromConfigEntityToCalendarConfig(entity: CalendarConfigurationEntity): CalendarConfiguration {
+        return CalendarConfiguration(entity.appUser, entity.taetigkeiten, entity.teilnehmer, entity.fahrzeuge,
+            entity.anbaugeraete, entity.produkte)
+    }
 }

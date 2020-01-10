@@ -1,6 +1,6 @@
 package com.example.helloandroid.timerecording.web
 
-object TeamupCalenderConfig {
+object TeamupCalendarConfig {
 
     const val BASE_URL = "https://api.teamup.com/"
     const val API_KEY = "4f738bf5771d1fb4bd2df8120d3dcc64cf5f64ae81526d55e0b52bea791e28aa"

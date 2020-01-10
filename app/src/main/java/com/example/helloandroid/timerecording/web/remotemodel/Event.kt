@@ -32,7 +32,7 @@ class Event {
     lateinit var title: String
     @SerializedName("who")
     @Expose
-    var who: String? = null
+    lateinit var who: String
     @SerializedName("location")
     @Expose
     var location: String? = null

@@ -3,7 +3,7 @@ package com.example.helloandroid.timerecording
 import android.content.Context
 import com.example.helloandroid.NetworkConnectionInterceptor
 import com.example.helloandroid.timerecording.web.TeamUpApi
-import com.example.helloandroid.timerecording.web.TeamupCalenderConfig
+import com.example.helloandroid.timerecording.web.TeamupCalendarConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,7 +15,7 @@ class TeamupServiceGenerator {
 
     companion object {
         private var teamupApi: TeamUpApi? = null
-        private const val BASE_URL = TeamupCalenderConfig.BASE_URL
+        private const val BASE_URL = TeamupCalendarConfig.BASE_URL
 
         fun getTeamUpApi(context: Context): TeamUpApi {
             if (teamupApi == null) {

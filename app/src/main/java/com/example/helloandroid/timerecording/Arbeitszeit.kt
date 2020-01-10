@@ -1,11 +1,13 @@
 package com.example.helloandroid.timerecording
 
+import com.example.helloandroid.HelloBigDecimalFormat
 import java.math.BigDecimal
-import java.math.RoundingMode
 
 class Arbeitszeit(decimalHours: BigDecimal) {
 
-    var dauer: BigDecimal = decimalHours.setScale(1, RoundingMode.DOWN)
+    constructor(value: String) : this(BigDecimal(value))
+
+    var dauer: BigDecimal = HelloBigDecimalFormat.default(decimalHours)
 
     fun getTimeInMinutes(): Long {
         return dauer.times(BigDecimal(60)).longValueExact()

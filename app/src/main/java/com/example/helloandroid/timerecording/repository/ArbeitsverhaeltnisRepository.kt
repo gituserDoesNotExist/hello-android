@@ -1,7 +1,10 @@
 package com.example.helloandroid.timerecording.repository
 
-import com.example.helloandroid.timerecording.TeamupEvent
-import com.example.helloandroid.timerecording.TeamupEvents
+import com.example.helloandroid.timerecording.Arbeitseinsatz
+import com.example.helloandroid.timerecording.EventInfo
+import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.view.CalendarConfiguration
 import com.example.helloandroid.timerecording.view.Suchkriterien
 import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.TeamUpDateConverter
@@ -10,44 +13,63 @@ import io.reactivex.schedulers.Schedulers
 
 class ArbeitsverhaeltnisRepository(private val teamUpApi: TeamUpApi) {
 
-    private val teamupEventMapper = TeamupEventToRemoteEventMapper()
+    private val arbeitseinsatzMapper = ArbeitseinsatzMapper()
 
-    fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien): Single<TeamupEvents> {
+
+    fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien,
+                                            config: CalendarConfiguration): Single<List<Arbeitseinsatz>> {
         val start = TeamUpDateConverter.fromDateToFetchEventsQueryString(suchkriterien.startDate.getSuchkriterium())
         val end = TeamUpDateConverter.fromDateToFetchEventsQueryString(suchkriterien.endDate.getSuchkriterium())
         return teamUpApi.getEvents(start, end)//
             .subscribeOn(Schedulers.io())//
-            .map { events -> events.events.map { teamupEventMapper.fromRemoteToTeamupEvent(it) } }//
-            .map {
-                val filteredEvents = it.filter { event -> matchesSuchkriterien(suchkriterien, event) }
-                TeamupEvents(filteredEvents)
+            .map { events ->
+                events.events.map {
+                    arbeitseinsatzMapper.fromRemoteEventToArbeitseinsatz(it, config)
+                }
+            }.map { arbeitseinsaetze ->
+                arbeitseinsaetze.filter {
+                    it.arbeitsverhaeltnis.matchesSuchkriterien(suchkriterien)
+                }
             }
     }
 
-    private fun matchesSuchkriterien(suchkriterien: Suchkriterien, event: TeamupEvent): Boolean {
-        val verhaeltnis = event.arbeitsverhaeltnis
-        val containsLeistungsnehmer = suchkriterien.shouldSearchForLeistungsnehmer(verhaeltnis.leistungsnehmer.name)
-        val containsLeistungserbringer =
-            suchkriterien.shouldSearchForLeistungserbringer(verhaeltnis.leistungserbringer.name)
-        val containsKategorie = suchkriterien.shouldSearchForKategorie(verhaeltnis.kategorie)
-        return containsLeistungsnehmer && containsLeistungserbringer && containsKategorie
-    }
-
-    fun addTeamupEventToRemoteCalendar(event: TeamupEvent): Single<Long> {
-        val event = teamupEventMapper.fromArbeitsverhaeltnisToRemoteEvent(event.arbeitsverhaeltnis, event.erstelltVon)
+    fun addZeitArbeitsverhaeltnisToRemoteCalendar(verhaeltnis: ZeitArbeitsverhaeltnis,
+                                                  erstelltVon: String): Single<Long> {
+        val info = EventInfo(erstelltVon = erstelltVon)
+        val event = arbeitseinsatzMapper.fromZeitArbeitsverhaeltnisToRemoteEvent(verhaeltnis, info)
         return teamUpApi.postEvent(event)//
             .subscribeOn(Schedulers.io()).map { it.event.id.toLong() }
     }
 
-    fun updateArbeitsverhaeltnisInRemoteCalender(teamupEvent: TeamupEvent): Single<TeamupEvent> {
-        val remoteEvent = teamupEventMapper.fromTeamupEventToRemoteEvent(teamupEvent)
+    fun updateZeitArbeitsverhaeltnis(arbeitsverhaeltnis: ZeitArbeitsverhaeltnis, info: EventInfo): Single<String> {
+        val remoteEvent = arbeitseinsatzMapper.fromZeitArbeitsverhaeltnisToRemoteEvent(arbeitsverhaeltnis, info)
         return teamUpApi.updateEvent(remoteEvent.id, remoteEvent)//
             .subscribeOn(Schedulers.io())//
-            .map { teamupEventMapper.fromRemoteToTeamupEvent(it.event) }
+            .map {
+                it.event.id
+            }
     }
 
-    fun deleteTeamupEvent(teamupEvent: TeamupEvent) {
-        teamUpApi.deleteEvent(teamupEvent.remoteCalenderId, teamupEvent.version)//
+
+    fun addStueckArbeitsverhaeltnisToRemoteCalendar(verhaeltnis: StueckArbeitsverhaeltnis, who: String): Single<Long> {
+        val info = EventInfo(erstelltVon = who)
+        val event = arbeitseinsatzMapper.fromStueckArbeitsverhaeltnisToRemoteEvent(verhaeltnis, info)
+        return teamUpApi.postEvent(event)//
+            .subscribeOn(Schedulers.io()).map { it.event.id.toLong() }
+    }
+
+    fun updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis: StueckArbeitsverhaeltnis, info: EventInfo): Single<String> {
+        val remoteEvent = arbeitseinsatzMapper.fromStueckArbeitsverhaeltnisToRemoteEvent(arbeitsverhaeltnis, info)
+        return teamUpApi.updateEvent(remoteEvent.id, remoteEvent)//
+            .subscribeOn(Schedulers.io())//
+            .map {
+                it.event.id
+            }
+    }
+
+
+    fun deleteArbeitseinsatz(eventInfo: EventInfo) {
+        teamUpApi.deleteEvent(eventInfo.remoteCalenderId, eventInfo.version)//
             .subscribeOn(Schedulers.io())//
             .subscribe()
     }

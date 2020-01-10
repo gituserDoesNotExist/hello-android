@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.helloandroid.persistence.StringListTypeConverter
+import com.example.helloandroid.persistence.*
+import com.example.helloandroid.timerecording.config.*
 
 @Entity(tableName = "CALENDER_CONFIGURATION_ENTITY")
 class CalendarConfigurationEntity {
@@ -15,17 +16,20 @@ class CalendarConfigurationEntity {
 
     var appUser: String = ""
 
-    @TypeConverters(StringListTypeConverter::class)
-    lateinit var kategorien: List<String>
+    @TypeConverters(ProduktListTypeConverter::class)
+    lateinit var produkte: List<Produkt>
 
-    @TypeConverters(StringListTypeConverter::class)
-    lateinit var teilnehmer: List<String>
+    @TypeConverters(TaetigkeitListTypeConverter::class)
+    lateinit var taetigkeiten: List<Taetigkeit>
 
-    @TypeConverters(StringListTypeConverter::class)
-    lateinit var fahrzeuge: List<String>
+    @TypeConverters(PersonListTypeConverter::class)
+    lateinit var teilnehmer: List<Person>
 
-    @TypeConverters(StringListTypeConverter::class)
-    lateinit var maschinen: List<String>
+    @TypeConverters(FahrzeugListTypeConverter::class)
+    lateinit var fahrzeuge: List<Fahrzeug>
+
+    @TypeConverters(AnbaugeraetListTypeConverter::class)
+    lateinit var anbaugeraete: List<Anbaugeraet>
 
 
 }

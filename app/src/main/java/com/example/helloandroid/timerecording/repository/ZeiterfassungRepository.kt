@@ -1,8 +1,10 @@
 package com.example.helloandroid.timerecording.repository
 
 import androidx.lifecycle.LiveData
-import com.example.helloandroid.timerecording.TeamupEvent
-import com.example.helloandroid.timerecording.TeamupEvents
+import com.example.helloandroid.timerecording.Arbeitseinsaetze
+import com.example.helloandroid.timerecording.EventInfo
+import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
 import com.example.helloandroid.timerecording.view.Suchkriterien
 import io.reactivex.Single
@@ -11,26 +13,44 @@ import io.reactivex.schedulers.Schedulers
 class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigurationRepository,
                               private val arbeitsverhaeltnisRepository: ArbeitsverhaeltnisRepository) {
 
-    fun fetchArbeitsverhaeltnisseFromRemote(suchkriterien: Suchkriterien): Single<TeamupEvents> {
-        return arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien)
+    fun fetchArbeitseinsaetzeFromRemote(suchkriterien: Suchkriterien): Single<Arbeitseinsaetze> {
+        return Single.fromCallable {
+            appConfigurationRepository.getConfigurationSynchronous()
+        }.subscribeOn(Schedulers.io())//
+            .flatMap {
+                arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien, it)
+            }.map {
+                Arbeitseinsaetze(it)
+            }
     }
 
-    fun addArbeitsverhaeltnisToRemoteCalendar(event: TeamupEvent): Single<Long> {
+    fun addZeitArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis: ZeitArbeitsverhaeltnis): Single<Long> {
         return appConfigurationRepository.getAppUser()//
             .subscribeOn(Schedulers.io())//
-            .map { event.apply { this.erstelltVon = it } }
-            .flatMap { arbeitsverhaeltnisRepository.addTeamupEventToRemoteCalendar(it) }
+            .flatMap { arbeitsverhaeltnisRepository.addZeitArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis, it) }
     }
 
-    fun updateArbeitsverhaeltnisInRemoteCalender(event: TeamupEvent): Single<TeamupEvent> {
+    fun addStueckArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis: StueckArbeitsverhaeltnis): Single<Long> {
         return appConfigurationRepository.getAppUser()//
             .subscribeOn(Schedulers.io())//
-            .map { event.apply { this.erstelltVon = it } }
-            .flatMap { arbeitsverhaeltnisRepository.updateArbeitsverhaeltnisInRemoteCalender(it) }
+            .flatMap {
+                arbeitsverhaeltnisRepository.addStueckArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis, it)
+            }
     }
 
-    fun deleteArbeitsverhaeltnis(teamupEvent: TeamupEvent) {
-        arbeitsverhaeltnisRepository.deleteTeamupEvent(teamupEvent)
+    fun updateZeitArbeitsverhaeltnis(verhaeltnis: ZeitArbeitsverhaeltnis, info: EventInfo): Single<String> {
+        return arbeitsverhaeltnisRepository.updateZeitArbeitsverhaeltnis(verhaeltnis,info)//
+            .subscribeOn(Schedulers.io())//
+    }
+
+    fun updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis: StueckArbeitsverhaeltnis, info: EventInfo): Single<String> {
+        return arbeitsverhaeltnisRepository.updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis,info)//
+            .subscribeOn(Schedulers.io())//
+    }
+
+
+    fun deleteArbeitsverhaeltnis(eventInfo: EventInfo) {
+        arbeitsverhaeltnisRepository.deleteArbeitseinsatz(eventInfo)
     }
 
     fun getConfiguration(): LiveData<CalendarConfiguration> {

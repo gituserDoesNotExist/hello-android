@@ -1,5 +1,6 @@
 package com.example.helloandroid.timerecording
 
+import com.example.helloandroid.timerecording.config.RemoteCalendarMetadata
 import com.google.gson.Gson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -12,7 +13,7 @@ class RemoteCalendarMetadataSerializationTest {
 
         val metadata = Gson().fromJson(jsonString, RemoteCalendarMetadata::class.java)
 
-        assertThat(metadata.kategorien).containsExactlyInAnyOrder("a","b")
+        assertThat(metadata.taetigkeiten.map { it.bezeichnung }).containsExactlyInAnyOrder("a","b")
         assertThat(metadata.teilnehmer[0].name).isEqualTo("max")
     }
 }

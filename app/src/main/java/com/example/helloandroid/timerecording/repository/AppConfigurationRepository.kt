@@ -3,7 +3,7 @@ package com.example.helloandroid.timerecording.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.helloandroid.DatabaseOperationException
-import com.example.helloandroid.timerecording.RemoteCalendarMetadata
+import com.example.helloandroid.timerecording.config.RemoteCalendarMetadata
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
@@ -24,8 +24,13 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     fun getConfiguration(): LiveData<CalendarConfiguration> {
         return Transformations.map(calendarConfigurationDao.getConfiguration()) {
-            CalendarConfiguration(it.appUser, it.kategorien, it.teilnehmer, it.fahrzeuge, it.maschinen)
+            calendarConfigMapper.fromConfigEntityToCalendarConfig(it)
         }
+    }
+
+    fun getConfigurationSynchronous(): CalendarConfiguration {
+        val config = calendarConfigurationDao.getConfigurationSynchronous()
+        return calendarConfigMapper.fromConfigEntityToCalendarConfig(config)
     }
 
     fun getAppUser(): Single<String> {
@@ -38,19 +43,17 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
                 calendarConfigMapper.fromRemoteMetadataToCalendarConfigurationEntity(extractKalenderMetadata(it))
             }.map {
                 upsertConfiguration(it)
-            }.map {
-                CalendarConfiguration(it.appUser, it.kategorien, it.teilnehmer,it.fahrzeuge,it.maschinen)
             }
     }
 
-    private fun upsertConfiguration(config: CalendarConfigurationEntity): CalendarConfigurationEntity {
+    private fun upsertConfiguration(config: CalendarConfigurationEntity): CalendarConfiguration {
         if (calendarConfigurationDao.existsConfiguration()) {
-            config.appUser = calendarConfigurationDao.getConfigurationSynchronous().appUser
+            config.appUser = getConfigurationSynchronous().appUser
             calendarConfigurationDao.updateConfiguration(config)
         } else {
             calendarConfigurationDao.insertConfiguration(config)
         }
-        return calendarConfigurationDao.getConfigurationSynchronous()
+        return getConfigurationSynchronous()
     }
 
     private fun extractKalenderMetadata(it: ConfigurationWrapper): RemoteCalendarMetadata {
@@ -61,7 +64,7 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     fun saveAppUser(appUser: String) {
         val config = calendarConfigurationDao.getConfigurationSynchronous()
-        if (!config.teilnehmer.contains(appUser)) {
+        if (!config.teilnehmer.map { it.name }.contains(appUser)) {
             throw DatabaseOperationException("$appUser konnte in der bestehenden Konfiguration nicht gefunden werden")
         }
         calendarConfigurationDao.updateConfiguration(config.apply { this.appUser = appUser })

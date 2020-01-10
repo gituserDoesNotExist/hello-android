@@ -9,6 +9,9 @@
     <string name="uhr">Uhr</string>
     <string name="ok">OK</string>
     <string name="von">Von</string>
+    <string name="kosten_in_euro">%1$s €</string>
+    <string name="euro_pro_stunde">%1$s € / Stunde</string>
+    <string name="kosten_pro_stueck">%1$s € / Stück</string>
     <string name="bis">Bis</string>
     <string name="euro">€</string>
     <string name="datum">Datum</string>
@@ -60,7 +63,7 @@
     <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
     <string name="add_arbeitsverhaeltnis_date_von_bis">bis</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
-    <string name="label_edit_text_neue_zeiterfassung_kategorie">Kategorie</string>
+    <string name="label_edit_text_neue_zeiterfassung_teatigkeit">Teatigkeit</string>
     <string name="title_fragment_configuration">Konfiguration</string>
     <string name="title_fragment_arbeitsvheraeltnis_ubersicht">Übersicht</string>
     <string name="title_fragment_suchfilter">Suche</string>
@@ -71,8 +74,18 @@
     <string name="geleistete_stunden">Geleistete Stunden:</string>
     <string name="label_edit_text_neue_zeiterfassung_fahrzeug">Fahrzeug</string>
     <string name="label_edit_text_neue_zeiterfassung_maschine">Anbaugerät</string>
-    <string name="title_arbeitsverhaeltnis">%1$s hilft %2$s beim %3$s</string>
-    <string name="description_fahrzeug_mit_maschine">%1$s mit %2$s</string>
+    <string name="title_zeit_arbeitsverhaeltnis">%1$s hilft %2$s beim %3$s</string>
+    <string name="title_stueck_arbeitsverhaeltnis">%1$s hilft %2$s</string>
+    <string name="description_zeit_arbeitsverhaeltnis">%1$s mit %2$s</string>
+    <string name="label_edit_text_app_user">Appuser</string>
+    <string name="gesamtkosten">Gesamtkosten:</string>
+    <string name="kosten">Kosten:</string>
+    <string name="title_edit_arbeitsverhaeltnis_fragment">Details</string>
+    <string name="label_edit_text_neue_zeiterfassun_stueckzahl">Anzahl</string>
+    <string name="title_add_arbeitsverhaeltnis_fragment">Anlegen</string>
+    <string name="label_edit_text_neue_zeiterfassung_produkt">Produktname</string>
+    <string name="stundensaetze">Stundensätze</string>
+    <string name="title_kosten_pro_stueck">Kosten pro Einheit</string>
 
     <!--    fragment-sht-->
     <string name="label_btn_start_fragment_activity">Fun with Fragments</string>

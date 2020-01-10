@@ -8,17 +8,18 @@
 
         <import type="com.example.helloandroid.view.LocalDateConverter" />
 
-        <import type="com.example.helloandroid.view.LocalDateTimeConverter" />
+        <import type="com.example.helloandroid.view.ZonedDateTimeConverter" />
 
         <import type="com.example.helloandroid.view.BigDecimalConverter" />
 
         <variable
-                name="dto"
-                type="com.example.helloandroid.timerecording.view.ArbeitsverhaeltnisDetailsDTO" />
+                name="viewModel"
+                type="com.example.helloandroid.timerecording.view.UpsertZeitArbeitsverhaeltnisViewModel" />
+
 
         <variable
-                name="editArbeitsverhaeltnisDetailsFragment"
-                type="com.example.helloandroid.timerecording.view.EditArbeitsverhaeltnisDetailsFragment" />
+                name="upsertArbeitsverhaeltnisDetailsFragment"
+                type="com.example.helloandroid.timerecording.view.UpsertZeitArbeitsverhaeltnisFragment" />
 
 
     </data>
@@ -28,78 +29,81 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dip">
 
-
         <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
+                android:id="@+id/linear_layout_metadata"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                visibleOrGone="@{viewModel.updateArbeitsverhaeltnis}"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@string/erstellt_am" />
-
             <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:text="@{LocalDateTimeConverter.dateToString(dto.erstelltAm)}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
-                        tools:text="26.07.2019 - 16:50" />
+                        android:text="@string/erstellt_am" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@{ZonedDateTimeConverter.dateToString(viewModel.eventInfo.erstelltAm)}"
+                            android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                            tools:text="26.07.2019 - 16:50" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:text="@string/uhr"
+                            android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:orientation="vertical">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dip"
+                        android:layout_gravity="start"
+                        android:text="@string/erstellt_von" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="@{viewModel.eventInfo.erstelltVon}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
-                        android:text="@string/uhr" />
+                        tools:text="Max" />
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/separator"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-            <TextView
+            <View
+                    android:id="@+id/separator"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@string/erstellt_von" />
+                    android:layout_height="2dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:background="@color/black" />
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@{dto.erstelltVon}"
-                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
-                    tools:text="Max" />
         </LinearLayout>
-
-        <View
-                android:id="@+id/separator"
-                android:layout_width="0dip"
-                android:layout_height="2dip"
-                android:layout_marginTop="10dip"
-                android:layout_marginBottom="10dip"
-                android:background="@color/black"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout3" />
 
         <LinearLayout
                 android:id="@+id/linearLayout4"
@@ -110,7 +114,7 @@
                 app:layout_constraintBottom_toTopOf="@id/linearLayout8"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/separator">
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_metadata">
 
             <com.google.android.material.textfield.TextInputLayout
                     style="@style/styleTextInputLayout"
@@ -122,11 +126,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusable="false"
                         android:hint="@string/datum"
-                        android:onClick="@{() -> editArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
-                        android:text="@{LocalDateConverter.dateToString(dto.arbeitsverhaeltnisDto.datumZeiterfassung)}"
+                        android:onClick="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
+                        android:text="@{LocalDateConverter.dateToString(viewModel.arbeitseinsatzForAnzeige.datum)}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,11 +145,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_weight="0.5"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_anzahl_stunden"
                         android:inputType="numberDecimal"
                         android:maxLength="8"
-                        android:text="@={BigDecimalConverter.bigDecimalToString(dto.arbeitsverhaeltnisDto.dauer)}"
+                        android:text="@={viewModel.arbeitseinsatzForAnzeige.arbeitszeit}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -173,11 +177,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
-                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
-                        android:text="@{dto.arbeitsverhaeltnisDto.leistungsnehmer}"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
+                        android:text="@{viewModel.arbeitseinsatzForAnzeige.leistungsnehmer}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,11 +194,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
-                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
-                        android:text="@{dto.arbeitsverhaeltnisDto.leistungserbringer}"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
+                        android:text="@{viewModel.arbeitseinsatzForAnzeige.leistungserbringer}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -223,11 +227,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_fahrzeug"
-                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
-                        android:text="@{dto.arbeitsverhaeltnisDto.fahrzeug}"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
+                        android:text="@{viewModel.arbeitseinsatzForAnzeige.fahrzeug}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -240,11 +244,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusableInTouchMode="false"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_maschine"
-                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
-                        android:text="@{dto.arbeitsverhaeltnisDto.maschine}"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
+                        android:text="@{viewModel.arbeitseinsatzForAnzeige.anbaugeraet}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -271,11 +275,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_kategorie"
-                        android:onClick="@{(v) -> editArbeitsverhaeltnisDetailsFragment.openKategorieListPopUp(v)}"
-                        android:text="@{dto.arbeitsverhaeltnisDto.kategorie}"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_teatigkeit"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openTaetigkeitListPopUp(v)}"
+                        android:text="@{viewModel.arbeitseinsatzForAnzeige.taetigkeit}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -299,9 +303,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="@{editArbeitsverhaeltnisDetailsFragment.editable}"
+                        android:enabled="@{viewModel.editable}"
                         android:hint="@string/label_edit_text_neue_zeiterfassung_kommentar"
-                        android:text="@={dto.arbeitsverhaeltnisDto.kommentar}"
+                        android:text="@={viewModel.arbeitseinsatzForAnzeige.kommentar}"
                         android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -310,12 +314,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dip"
-                android:onClick="@{()-> editArbeitsverhaeltnisDetailsFragment.saveChanges()}"
+                android:onClick="@{()-> upsertArbeitsverhaeltnisDetailsFragment.upsert()}"
                 android:src="@drawable/btn_confirm"
                 app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:visible="@{editArbeitsverhaeltnisDetailsFragment.showConfirmButton}" />
+                app:visible="@{viewModel.editable}" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_left"

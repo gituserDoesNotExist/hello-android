@@ -4,7 +4,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.helloandroid.timerecording.TeamupEvents
+import com.example.helloandroid.timerecording.Arbeitseinsaetze
 import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.disposables.Disposable
 import java.math.BigDecimal
@@ -12,19 +12,19 @@ import java.math.BigDecimal
 class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository: ZeiterfassungRepository)//
     : ViewModel() {
 
-    val teamupEvents = MutableLiveData<TeamupEvents>()
+    val arbeitseinsaetze = MutableLiveData<Arbeitseinsaetze>()
     private var fetchArbeitsverhaeltnisseDisposable: Disposable? = null
     val showProgressbar = ObservableBoolean().apply { this.set(true) }
-    val gesamtstunden = ObservableField<BigDecimal>().apply { this.set(BigDecimal.ZERO) }
+    val gesamtkosten = ObservableField<BigDecimal>().apply { this.set(BigDecimal.ZERO) }
 
 
     fun loadArbeitsverhaeltnisse(suchkriterien: Suchkriterien) {
         showProgressbar.set(true)
         fetchArbeitsverhaeltnisseDisposable =
-            zeiterfassungRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien)//
-                .subscribe { events ->
-                    gesamtstunden.set(events.gesamtstunden())
-                    teamupEvents.postValue(events)
+            zeiterfassungRepository.fetchArbeitseinsaetzeFromRemote(suchkriterien)//
+                .subscribe { arbeitseinsaetze ->
+                    gesamtkosten.set(arbeitseinsaetze.gesamtkosten())
+                    this.arbeitseinsaetze.postValue(arbeitseinsaetze)
                     showProgressbar.set(false)
                 }
     }

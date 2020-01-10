@@ -1,24 +1,28 @@
 package com.example.helloandroid.view
 
 import androidx.databinding.InverseMethod
+import com.example.helloandroid.HelloBigDecimalFormat
 import org.apache.commons.lang3.StringUtils
 import java.math.BigDecimal
-import java.text.DecimalFormat
 
 object BigDecimalConverter {
 
     @JvmStatic
     @InverseMethod("stringToBigDecimal")
     fun bigDecimalToString(value: BigDecimal?): String {
-        val decimalFormat = DecimalFormat().apply {
-            this.maximumFractionDigits = 2
+        if (BigDecimal.ZERO == value || HelloBigDecimalFormat.default(BigDecimal.ZERO) == value) {
+            return "0"
         }
-        return decimalFormat.format(value)
+        return value.toString()
     }
 
     @JvmStatic
     fun stringToBigDecimal(value: String): BigDecimal {
-       return if (StringUtils.isBlank(value) || value.contains(",")) BigDecimal.ZERO else BigDecimal(value)
+        return if (StringUtils.isBlank(value) || value.contains(",")) {
+            BigDecimal.ZERO
+        } else {
+            HelloBigDecimalFormat.default(BigDecimal(value))
+        }
     }
 
 }

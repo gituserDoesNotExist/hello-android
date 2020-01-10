@@ -26,8 +26,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
-                android:id="@+id/gesamtstunden"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_gesamtstunden_gesamtkosten"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:background="@color/white"
@@ -38,24 +38,70 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <!--            <LinearLayout-->
+            <!--                    android:id="@+id/layout_gesamtstunden"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:orientation="vertical"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintEnd_toStartOf="@id/layout_gesamtkosten"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--                <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="@string/geleistete_stunden" />-->
+
+
+            <!--                <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center_horizontal"-->
+            <!--                        android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtstunden)}"-->
+            <!--                        android:textColor="@color/colorPrimaryDark"-->
+            <!--                        tools:text="50.43 h" />-->
+            <!--            </LinearLayout>-->
+
+
+            <LinearLayout
+                    android:id="@+id/layout_gesamtkosten"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/geleistete_stunden" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                    android:layout_width="4dip"
-                    android:layout_height="wrap_content" />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtstunden)}"
-                    android:textColor="@color/colorPrimaryDark"
-                    tools:text="50.43" />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gesamtkosten" />
 
 
-        </LinearLayout>
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtkosten)}"
+                            android:textColor="@color/colorPrimaryDark"
+                            tools:text="500.43" />
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dip"
+                            android:text="@string/euro" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
                 android:id="@+id/linear_layout_filters"
@@ -67,7 +113,7 @@
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/gesamtstunden">
+                app:layout_constraintTop_toBottomOf="@id/layout_gesamtstunden_gesamtkosten">
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_filters"
@@ -102,6 +148,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dip"
+                    android:layout_marginEnd="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddStueckArbeitsverhaeltnisFragment()}"
+                    android:src="@drawable/ic_add_black_48dp"
+                    app:backgroundTint="@color/colorSecondary"
+                    app:fabSize="mini"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
@@ -109,7 +167,7 @@
                     android:layout_margin="16dip"
                     android:layout_marginEnd="10dip"
                     android:layout_marginBottom="10dip"
-                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddArbeitsverhaeltnisDialog()}"
+                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddArbeitsverhaeltnisFragment()}"
                     android:src="@drawable/ic_add_black_48dp"
                     app:backgroundTint="@color/colorSecondary"
                     app:fabSize="mini"
@@ -128,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.05" />
+                app:layout_constraintGuide_percent="0.09" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

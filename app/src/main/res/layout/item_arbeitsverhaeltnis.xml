@@ -23,55 +23,89 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:layout_marginBottom="5dip"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:weightSum="1">
 
-
-        <TextView
-                android:id="@+id/item_arbeitsverhaeltnis_date"
-                android:layout_width="0dp"
+        <LinearLayout
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                tools:text="20 Nov 2019" />
+                android:layout_weight="0.7"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginBottom="5dip"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
 
-        <TextView
-                android:id="@+id/item_arbeitsverhaeltnis_duration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                tools:text="43.2 Stunden" />
+                <TextView
+                        android:id="@+id/item_arbeitsverhaeltnis_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        tools:text="20 Nov 2019" />
 
-        <TextView
-                android:id="@+id/item_arbeitsverhaeltnis_comment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dip"
-                android:layout_weight="0.4"
-                tools:text="egal" />
+
+                <TextView
+                        android:id="@+id/item_arbeitsverhaeltnis_quantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        tools:text="43.2 Stunden" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginBottom="5dip">
+
+
+                <TextView
+                        android:id="@+id/item_arbeitsverhaeltnis_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="5720 mit Ladewagen der eine sehr lange Bezeichnung hat die nicht auf eine Seite passtsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kosten"
+                        android:layout_gravity="start"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                        android:id="@+id/item_arbeitsverhaeltnis_kosten"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dip"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="20sp"
+                        tools:text="500 €" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:layout_marginBottom="5dip"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-
-        <TextView
-                android:id="@+id/item_arbeitsverhaeltnis_fahrzeug_mit_maschine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="5720 mit Ladewagen" />
-
-    </LinearLayout>
-
 
     <LinearLayout
             android:layout_width="wrap_content"

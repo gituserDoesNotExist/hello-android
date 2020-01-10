@@ -11,21 +11,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.BaseActivity
-import com.example.helloandroid.DialogOpener
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
-import com.example.helloandroid.timerecording.TeamupEvents
+import com.example.helloandroid.timerecording.Arbeitseinsaetze
+import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
 
 
-class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltnisseListener {
-
-    override fun onArbeitsverhaeltnisseUpdated() {
-        arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
-    }
+class ArbeitsverhaltnisUebersichtFragment : Fragment() {
 
 
     private lateinit var arbeitsverhaeltnisViewModel: ArbeitsverhaeltnisUebersichtViewModel
-    private lateinit var sharedTeamupEventViewModel: SharedTeamupEventViewModel
+    private lateinit var sharedZeitArbeitsverhaeltnisViewModel: SharedZeitArbeitsverhaeltnisViewModel
+    private lateinit var sharedStueckArbeitsverhaeltnisViewModel: SharedStueckArbeitsverhaeltnisViewModel
     private lateinit var filtersViewModel: FiltersViewModel
 
 
@@ -39,7 +37,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
             configureNetworkErrorHandling(activity)
             initializeViewModel(activity)
             addFiltersRecyclerView(rootView, activity)
-            arbeitsverhaeltnisViewModel.teamupEvents.observe(this, Observer {
+            arbeitsverhaeltnisViewModel.arbeitseinsaetze.observe(this, Observer {
                 addEventsRecyclerView(rootView, activity, it)
             })
 
@@ -83,23 +81,37 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
                 .apply {
                     this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
                 }
-        sharedTeamupEventViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(SharedTeamupEventViewModel::class.java)
+        sharedZeitArbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
+        sharedStueckArbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(activity).get(SharedStueckArbeitsverhaeltnisViewModel::class.java)
     }
 
-    private fun addEventsRecyclerView(root: View, activity: AppCompatActivity, events: TeamupEvents) {
+    private fun addEventsRecyclerView(root: View, activity: AppCompatActivity, arbeitseinsaetze: Arbeitseinsaetze) {
         val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_arbeitsverhaeltnisse)
-        recyclerView.adapter = ArbeitsverhaeltnisRecyclerViewAdapter(events).apply {
+        recyclerView.adapter = ArbeitseinsaetzeRecyclerViewAdapter(arbeitseinsaetze).apply {
             this.onItemClickListener = View.OnClickListener { v ->
-                val viewHolder = v.tag as ArbeitsverhaeltnisRecyclerViewAdapter.ItemViewHolder
-                events.findById(viewHolder.arbeitsverhaeltnisRemoteId)?.let {
-                    sharedTeamupEventViewModel.currentEvent = it
-                    ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToDetails()
-                }
+                val viewHolder = v.tag as ArbeitseinsaetzeRecyclerViewAdapter.ItemViewHolder
+                openMatchingEditFragment(arbeitseinsaetze, viewHolder.arbeitsverhaeltnisRemoteId)
             }
         }
         recyclerView.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private fun openMatchingEditFragment(arbeitseinsaetze: Arbeitseinsaetze, eventId: String) {
+        arbeitseinsaetze.findById(eventId)?.let {
+            val verhaeltnis = it.arbeitsverhaeltnis
+            val navController = findNavController()
+            if (verhaeltnis is ZeitArbeitsverhaeltnis) {
+                sharedZeitArbeitsverhaeltnisViewModel.eventInfo = it.eventInfo
+                sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis = verhaeltnis
+                ZeiterfassungNavigation.getNavigation(navController).fromUebersichtToEditZeitArbeitsverhaeltnis()
+            } else if (verhaeltnis is StueckArbeitsverhaeltnis) {
+                sharedStueckArbeitsverhaeltnisViewModel.eventInfo = it.eventInfo
+                sharedStueckArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis = verhaeltnis
+                ZeiterfassungNavigation.getNavigation(navController).fromUebersichtToEditStueckArbeitsverhaeltnis()
+            }
+        }
     }
 
     private fun addFiltersRecyclerView(root: View, activity: AppCompatActivity) {
@@ -107,19 +119,21 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment(), OnUpdateArbeitsverhaeltn
 
         recyclerView.adapter = FiltersRecyclerViewAdapter(filtersViewModel.suchkriterien) {
             filtersViewModel.removeFilter(it)
-            onArbeitsverhaeltnisseUpdated()
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
         }
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }
 
 
-    fun openAddArbeitsverhaeltnisDialog() {
-        activity?.let {
-            DialogOpener.openDialog(it, AddArbeitsverhaeltnisDialog(this), "dialog_add_arbeitsverhaeltnis")
-        }
+    fun openAddArbeitsverhaeltnisFragment() {
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddZeitArbeitseinsatz()
     }
 
-    fun openFilterFragment() {
+    fun openAddStueckArbeitsverhaeltnisFragment() {
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddStueckArbeitsverhaeltnis()
+    }
+
+    private fun openFilterFragment() {
         ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToSuchfilter()
     }
 

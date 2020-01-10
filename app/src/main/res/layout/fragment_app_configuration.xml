@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,110 +21,93 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+        <com.google.android.material.textfield.TextInputLayout
+                style="@style/styleTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/label_edit_text_app_user"
+                    android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
+                    android:text="@{configViewModel.savedAppUser}"
+                    android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="0.5"
-                android:background="@color/colorBackground">
-
-
-            <TextView
-                    android:id="@+id/txt_question_who_is_app_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dip"
-                    android:text="@string/label_who_is_app_user"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/guideline_top" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
             <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/linear_layout_stundensaetze"
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:layout_marginEnd="5dip"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/linear_layout_stueckkosten"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:gravity="center"
-                    android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
-                    app:layout_constraintTop_toBottomOf="@id/txt_question_who_is_app_user">
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                        android:id="@+id/txt_selected_user"
-                        android:layout_width="wrap_content"
+                <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dip"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/app_configuration_hint_edit_text_select_user"
-                        android:minWidth="150dip"
-                        android:textAlignment="textEnd"
-                        android:text="@{configViewModel.savedAppUser}"
-                        android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="15sp" />
+                        android:text="@string/stundensaetze" />
 
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/sort_icon_24x24" />
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_stundensaetze"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:scrollbars="vertical" />
+
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.15" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:layout_weight="0.5"
-                android:background="@color/white">
-
-            <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dip"
+            <LinearLayout
+                    android:id="@+id/linear_layout_stueckkosten"
+                    android:layout_width="0dip"
+                    android:layout_height="0dip"
+                    android:layout_marginStart="5dip"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@id/linear_layout_stundensaetze"
+                    app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_kosten_pro_stueck" />
 
-            <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_kosten_pro_stueck"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:scrollbars="vertical" />
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dip"
-                    android:text="Benutzer"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                    android:id="@+id/txt_current_app_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dip"
-                    android:text="@{configViewModel.savedAppUser}"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/colorSecondary"
+                    android:contentDescription="@string/zeiterfassung_config_confirm_content_description"
+                    android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
+                    android:src="@drawable/btn_confirm"
+                    app:borderWidth="0dip"
+                    app:fabSize="normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="16dp"
-                android:backgroundTint="@color/colorSecondary"
-                android:contentDescription="@string/zeiterfassung_config_confirm_content_description"
-                android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
-                android:src="@drawable/btn_confirm"
-                app:borderWidth="0dip"
-                app:fabSize="normal" />
 
 
     </LinearLayout>
