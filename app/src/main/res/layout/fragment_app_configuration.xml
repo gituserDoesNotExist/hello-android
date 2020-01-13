@@ -108,7 +108,7 @@
                 android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
                 android:src="@drawable/btn_confirm"
                 app:borderWidth="0dip"
-                app:fabSize="normal"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
