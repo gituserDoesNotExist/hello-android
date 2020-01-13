@@ -14,7 +14,8 @@ class CalendarConfigurationEntity {
     @PrimaryKey(autoGenerate = false)
     var id: Long = 1
 
-    var appUser: String = ""
+    @TypeConverters(PersonTypeConverter::class)
+    var appUser: Person = Person()
 
     @TypeConverters(ProduktListTypeConverter::class)
     lateinit var produkte: List<Produkt>

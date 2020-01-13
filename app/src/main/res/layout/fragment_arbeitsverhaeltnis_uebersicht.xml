@@ -38,31 +38,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <!--            <LinearLayout-->
-            <!--                    android:id="@+id/layout_gesamtstunden"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="match_parent"-->
-            <!--                    android:orientation="vertical"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintEnd_toStartOf="@id/layout_gesamtkosten"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                <TextView-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:text="@string/geleistete_stunden" />-->
-
-
-            <!--                <TextView-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_gravity="center_horizontal"-->
-            <!--                        android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtstunden)}"-->
-            <!--                        android:textColor="@color/colorPrimaryDark"-->
-            <!--                        tools:text="50.43 h" />-->
-            <!--            </LinearLayout>-->
-
 
             <LinearLayout
                     android:id="@+id/layout_gesamtkosten"
@@ -107,9 +82,10 @@
                 android:id="@+id/linear_layout_filters"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_marginTop="10dip"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,25 +105,28 @@
                 android:id="@+id/constraint_layout_arbeitsverhaeltnisse"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_marginTop="16dip"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linear_layout_filters"
                 tools:context=".timerecording.view.ArbeitsverhaltnisUebersichtFragment">
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/swiperefresh_arbeitsverhaeltnisse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_arbeitsverhaeltnisse"
-                    android:layout_width="0dip"
-                    android:layout_height="0dip"
-                    android:background="@color/white"
-                    android:scrollbars="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_arbeitsverhaeltnisse"
+                        android:layout_width="0dip"
+                        android:layout_height="0dip"
+                        android:background="@color/white"
+                        android:scrollbars="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"

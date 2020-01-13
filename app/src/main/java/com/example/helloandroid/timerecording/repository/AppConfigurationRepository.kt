@@ -3,6 +3,7 @@ package com.example.helloandroid.timerecording.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.helloandroid.DatabaseOperationException
+import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.config.RemoteCalendarMetadata
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
@@ -62,9 +63,9 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
         return Gson().fromJson(metadataString, RemoteCalendarMetadata::class.java)
     }
 
-    fun saveAppUser(appUser: String) {
+    fun saveAppUser(appUser: Person) {
         val config = calendarConfigurationDao.getConfigurationSynchronous()
-        if (!config.teilnehmer.map { it.name }.contains(appUser)) {
+        if (!config.teilnehmer.map { it.key }.contains(appUser.key)) {
             throw DatabaseOperationException("$appUser konnte in der bestehenden Konfiguration nicht gefunden werden")
         }
         calendarConfigurationDao.updateConfiguration(config.apply { this.appUser = appUser })

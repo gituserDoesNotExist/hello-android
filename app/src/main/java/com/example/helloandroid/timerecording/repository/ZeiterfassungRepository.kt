@@ -5,6 +5,7 @@ import com.example.helloandroid.timerecording.Arbeitseinsaetze
 import com.example.helloandroid.timerecording.EventInfo
 import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
 import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
 import com.example.helloandroid.timerecording.view.Suchkriterien
 import io.reactivex.Single
@@ -49,8 +50,8 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
     }
 
 
-    fun deleteArbeitsverhaeltnis(eventInfo: EventInfo) {
-        arbeitsverhaeltnisRepository.deleteArbeitseinsatz(eventInfo)
+    fun deleteArbeitsverhaeltnis(eventInfo: EventInfo): Single<String> {
+        return arbeitsverhaeltnisRepository.deleteArbeitseinsatz(eventInfo)
     }
 
     fun getConfiguration(): LiveData<CalendarConfiguration> {
@@ -65,7 +66,7 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
         return appConfigurationRepository.downloadRemoteConfiguration()
     }
 
-    fun saveAppUser(appUser: String) {
+    fun saveAppUser(appUser: Person) {
         appConfigurationRepository.saveAppUser(appUser)
     }
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
@@ -31,7 +32,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         setHasOptionsMenu(true)
         val binding = FragmentArbeitsverhaeltnisUebersichtBinding.inflate(inflater, container, false)
         val rootView = binding.root
-
+        configureOnSwipeDownToRefresh(binding.swiperefreshArbeitsverhaeltnisse)
         (activity as? BaseActivity)?.let { activity ->
             activity.supportActionBar?.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
             configureNetworkErrorHandling(activity)
@@ -51,6 +52,13 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         return rootView
     }
 
+    private fun configureOnSwipeDownToRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
+        swipeRefreshLayout.setOnRefreshListener {
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, false)
+            swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_arbeitsverhaeltnis_uebersicht, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -68,7 +76,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
             arbeitsverhaeltnisViewModel.showProgressbar.set(false)
         }
         activity.reloadCallback = {
-            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, true)
         }
     }
 
@@ -79,7 +87,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
             ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
                 .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
                 .apply {
-                    this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
+                    this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, true)
                 }
         sharedZeitArbeitsverhaeltnisViewModel =
             ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
@@ -119,7 +127,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
 
         recyclerView.adapter = FiltersRecyclerViewAdapter(filtersViewModel.suchkriterien) {
             filtersViewModel.removeFilter(it)
-            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien)
+            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, true)
         }
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }

@@ -5,7 +5,7 @@ import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.config.Produkt
 import com.example.helloandroid.timerecording.config.Taetigkeit
 
-data class CalendarConfiguration(var appUser: String,
+data class CalendarConfiguration(var appUser: Person,
                                  var teatigkeiten: List<Taetigkeit>,
                                  var teilnehmer: List<Person>,
                                  var fahrzeuge: List<Maschine>,

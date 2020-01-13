@@ -87,7 +87,7 @@ class UpsertZeitArbeitsverhaeltnisViewModel(private val zeiterfassungRepository:
         }
     }
 
-    fun deleteArbeitsverhaeltnis() {
+    fun deleteArbeitsverhaeltnis(): Single<String> {
         return zeiterfassungRepository.deleteArbeitsverhaeltnis(eventInfo)
     }
 

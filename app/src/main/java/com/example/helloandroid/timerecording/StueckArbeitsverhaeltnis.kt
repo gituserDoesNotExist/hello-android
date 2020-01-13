@@ -34,5 +34,4 @@ class StueckArbeitsverhaeltnis(var stueckzahl: Int = 0, var produkt: Produkt = P
         }
     }
 
-
 }

@@ -56,6 +56,12 @@ class ZeiterfassungNavigation private constructor(private val navController: Nav
         navController.navigate(action)
     }
 
+    fun fromUpdateStueckArbeitsverhaeltnisTouebersicht() {
+        val action =
+            EditStueckArbeitsverhaeltnisFragmentDirections.actionEditStueckArbeitsverhaeltnisFragmentToArbeitsverhaltnisUebersichtFragment()
+        navController.navigate(action)
+    }
+
 
     fun fromUebersichtToSuchfilter() {
         val action =

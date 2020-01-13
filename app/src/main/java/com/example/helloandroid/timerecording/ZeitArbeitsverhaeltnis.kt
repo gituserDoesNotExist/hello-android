@@ -51,10 +51,8 @@ class ZeitArbeitsverhaeltnis(var fahrzeug: Maschine? = null, var anbaugeraet: Ma
     }
 
     override fun matchesSuchkriterien(suchkriterien: Suchkriterien): Boolean {
-        val containsLeistungsnehmer = suchkriterien.shouldSearchForLeistungsnehmer(leistungsnehmer.key)
-        val containsLeistungserbringer = suchkriterien.shouldSearchForLeistungserbringer(leistungserbringer?.key ?: "")
         val containsTaetigkeit = suchkriterien.shouldSearchForTaetigkeit(taetigkeit.key)
-        return containsLeistungsnehmer && containsLeistungserbringer && containsTaetigkeit
+        return super.matchesSuchkriterien(suchkriterien) && containsTaetigkeit
     }
 
     fun copy(): ZeitArbeitsverhaeltnis {

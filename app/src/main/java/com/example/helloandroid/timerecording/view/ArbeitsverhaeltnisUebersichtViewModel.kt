@@ -18,15 +18,14 @@ class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository:
     val gesamtkosten = ObservableField<BigDecimal>().apply { this.set(BigDecimal.ZERO) }
 
 
-    fun loadArbeitsverhaeltnisse(suchkriterien: Suchkriterien) {
-        showProgressbar.set(true)
-        fetchArbeitsverhaeltnisseDisposable =
-            zeiterfassungRepository.fetchArbeitseinsaetzeFromRemote(suchkriterien)//
-                .subscribe { arbeitseinsaetze ->
-                    gesamtkosten.set(arbeitseinsaetze.gesamtkosten())
-                    this.arbeitseinsaetze.postValue(arbeitseinsaetze)
-                    showProgressbar.set(false)
-                }
+    fun loadArbeitsverhaeltnisse(suchkriterien: Suchkriterien, showProgessIndicator: Boolean) {
+        showProgressbar.set(showProgessIndicator)
+        fetchArbeitsverhaeltnisseDisposable = zeiterfassungRepository.fetchArbeitseinsaetzeFromRemote(suchkriterien)//
+            .subscribe { arbeitseinsaetze ->
+                gesamtkosten.set(arbeitseinsaetze.gesamtkosten())
+                this.arbeitseinsaetze.postValue(arbeitseinsaetze)
+                showProgressbar.set(false)
+            }
     }
 
 

@@ -19,6 +19,7 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
 
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
     private lateinit var sharedZeitArbeitsverhaeltnisViewModel: SharedZeitArbeitsverhaeltnisViewModel
+    private var deleteArbeitsverhaeltnisDisposable: Disposable? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,19 +30,9 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
 
         (activity as? BaseActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
-            initSharedArbeitsverhaeltnisViewModel(it)
-            upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
-                sharedZeitArbeitsverhaeltnisViewModel.eventInfo,
-                sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
         }
         return rootView
     }
-
-    private fun initSharedArbeitsverhaeltnisViewModel(it: BaseActivity) {
-        sharedZeitArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(it).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
@@ -61,8 +52,10 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
     }
 
     private fun confirmDeleteListener(navController: NavController) {
-        upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()
-        ZeiterfassungNavigation.getNavigation(navController).fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+        deleteArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
+            .subscribe(Consumer<String> {
+                ZeiterfassungNavigation.getNavigation(navController).fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+            })
     }
 
 
@@ -75,9 +68,24 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
             })
     }
 
+    override fun initializeArbeitsverhaeltnis() {
+        (activity as? BaseActivity)?.let {
+        initSharedArbeitsverhaeltnisViewModel(it)
+        upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
+            sharedZeitArbeitsverhaeltnisViewModel.eventInfo,
+            sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
+        }
+    }
+
+    private fun initSharedArbeitsverhaeltnisViewModel(it: BaseActivity) {
+        sharedZeitArbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(it).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
+    }
+
 
     override fun onStop() {
         super.onStop()
         updateArbeitsverhaeltnisDisposable?.dispose()
+        deleteArbeitsverhaeltnisDisposable?.dispose()
     }
 }

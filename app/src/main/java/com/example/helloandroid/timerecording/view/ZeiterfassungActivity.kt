@@ -13,7 +13,9 @@ import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
 import com.example.helloandroid.R.navigation.navigation_zeiterfassung
+import com.example.helloandroid.timerecording.KeineAuswahl
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 
 class ZeiterfassungActivity : BaseActivity() {
@@ -22,6 +24,8 @@ class ZeiterfassungActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
+        KeineAuswahl.init(this)
         initViewModel()
         setContentView(R.layout.activity_zeiterfassung)
 

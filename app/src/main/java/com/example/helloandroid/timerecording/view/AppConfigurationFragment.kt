@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -20,6 +21,7 @@ import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentAppConfigurationBinding
 import com.example.helloandroid.timerecording.config.Person
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 
 class AppConfigurationFragment : Fragment() {
@@ -27,29 +29,47 @@ class AppConfigurationFragment : Fragment() {
     private lateinit var appConfigurationViewModel: AppConfigurationViewModel
     private lateinit var participantsListPopupWindow: ListPopupWindow
 
+    var showProgressbar = ObservableBoolean().apply { set(true) }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentAppConfigurationBinding.inflate(inflater, container, false)
         initializeViewModel()
 
+        val rootView = binding.root
         (activity as? BaseActivity)?.let { activity ->
+            configureNetworkErrorHandling(activity, rootView)
             activity.supportActionBar?.title = resources.getString(R.string.title_fragment_configuration)
-            appConfigurationViewModel.downloadRemoteConfig()//
-                .observeOn(AndroidSchedulers.mainThread())//
-                .subscribe { config ->
-                    participantsListPopupWindow = createParticipantsListPopUpWindow(activity, config.teilnehmer)
-                    appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                        appConfigurationViewModel.savedAppUser.set(it.appUser)
-                        addStundensaetzeRecyclerView(binding.root, activity, config)
-                        addKostenProStueckRecyclerView(binding.root, activity, config)
-                    })
-                }
+            downloadRemoteConfig(activity, rootView)
 
         }
 
         binding.configViewModel = appConfigurationViewModel
         binding.appConfigurationFragment = this
 
-        return binding.root
+        return rootView
+    }
+
+    private fun configureNetworkErrorHandling(activity: BaseActivity, rootView: View) {
+        activity.hideProgressbarCallback = {
+            showProgressbar.set(false)
+        }
+        activity.reloadCallback = {
+            downloadRemoteConfig(activity, rootView)
+        }
+    }
+
+    private fun downloadRemoteConfig(activity: BaseActivity, view: View): Disposable? {
+        return appConfigurationViewModel.downloadRemoteConfig()//
+            .observeOn(AndroidSchedulers.mainThread())//
+            .subscribe { config ->
+                showProgressbar.set(false)
+                participantsListPopupWindow = createParticipantsListPopUpWindow(activity, config.teilnehmer)
+                appConfigurationViewModel.calendarConfig.observe(this, Observer {
+                    appConfigurationViewModel.savedAppUser.set(it.appUser.name)
+                    addStundensaetzeRecyclerView(view, activity, config)
+                    addKostenProStueckRecyclerView(view, activity, config)
+                })
+            }
     }
 
 
@@ -63,9 +83,8 @@ class AppConfigurationFragment : Fragment() {
     private fun createParticipantsListPopUpWindow(it: FragmentActivity, entries: List<Person>): ListPopupWindow {
         val names = entries.map { it.name }
         val listener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            appConfigurationViewModel.selectedAppUser.set(names[position])
-            DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(
-                appConfigurationViewModel.selectedAppUser.get())
+            appConfigurationViewModel.selectedAppUser = entries[position]
+            DatabaseAsyncTask(appConfigurationViewModel::saveAppUser).execute(appConfigurationViewModel.selectedAppUser)
             participantsListPopupWindow.dismiss()
         }
 

@@ -79,7 +79,7 @@ class UpsertStueckArbeitsverhaeltnisViewModel(private val zeiterfassungRepositor
         stueckArbeitsverhaeltnis.stueckzahl = arbeitsverhaeltnisForAnzeige.stueckzahl.get()
     }
 
-    fun deleteArbeitsverhaeltnis() {
+    fun deleteArbeitsverhaeltnis(): Single<String> {
         return zeiterfassungRepository.deleteArbeitsverhaeltnis(eventInfo)
     }
 

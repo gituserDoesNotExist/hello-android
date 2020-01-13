@@ -68,10 +68,10 @@ class ArbeitsverhaeltnisRepository(private val teamUpApi: TeamUpApi) {
     }
 
 
-    fun deleteArbeitseinsatz(eventInfo: EventInfo) {
-        teamUpApi.deleteEvent(eventInfo.remoteCalenderId, eventInfo.version)//
+    fun deleteArbeitseinsatz(eventInfo: EventInfo): Single<String> {
+        return teamUpApi.deleteEvent(eventInfo.remoteCalenderId, eventInfo.version)//
             .subscribeOn(Schedulers.io())//
-            .subscribe()
+            .map { it.undoId }
     }
 
 

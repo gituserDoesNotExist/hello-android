@@ -27,7 +27,9 @@ abstract class Arbeitsverhaeltnis {
     abstract fun calculateKostenForArbeitsverhaeltnis(): BigDecimal
 
     open fun matchesSuchkriterien(suchkriterien: Suchkriterien): Boolean {
-        return true
+        val containsLeistungsnehmer = suchkriterien.shouldSearchForLeistungsnehmer(leistungsnehmer.key)
+        val containsLeistungserbringer = suchkriterien.shouldSearchForLeistungserbringer(leistungserbringer?.key ?: "")
+        return containsLeistungsnehmer && containsLeistungserbringer
     }
 
     protected fun mapToArbeitsverhaeltnis(source: Arbeitsverhaeltnis, target: Arbeitsverhaeltnis) {

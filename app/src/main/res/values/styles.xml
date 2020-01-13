@@ -11,6 +11,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Theme.HelloAndroid.Toolbar" parent="Theme.HelloAndroid">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
+
 
     <style name="CKButton" parent="android:style/Widget.Button">
         <item name="android:textSize">19sp</item>
@@ -18,6 +24,7 @@
         <item name="android:layout_margin">0dip</item>
         <item name="android:background">@color/colorSecondary</item>
     </style>
+
 
     <style name="editTextStyle">
         <item name="android:textColor">@color/edit_text_color</item>

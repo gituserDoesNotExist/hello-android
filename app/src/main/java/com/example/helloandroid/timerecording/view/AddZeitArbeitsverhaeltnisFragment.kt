@@ -26,7 +26,7 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
         upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis.set(false)
         upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
 
-        upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(), ZeitArbeitsverhaeltnis())
+
 
         (activity as? BaseActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
@@ -43,6 +43,10 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
             .subscribe(Consumer {
                 ZeiterfassungNavigation.getNavigation(findNavController()).fromAddZeitArbeitsverhaeltnisToUebersicht()
             })
+    }
+
+    override fun initializeArbeitsverhaeltnis() {
+        upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(), ZeitArbeitsverhaeltnis())
     }
 
     override fun onStop() {

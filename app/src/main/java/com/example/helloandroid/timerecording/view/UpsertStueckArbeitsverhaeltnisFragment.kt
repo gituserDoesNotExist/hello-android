@@ -17,6 +17,7 @@ import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.HelloDatePickerDialog
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentUpsertStueckArbeitsverhaeltnisBinding
+import com.example.helloandroid.timerecording.KeineAuswahl
 import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.config.Produkt
 import org.threeten.bp.LocalDate
@@ -36,7 +37,9 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (activity as? BaseActivity)?.let { activity ->
             initializeViewModel(activity)
+            initializeArbeitsverhaeltnis(activity)
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
+                upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
                 leistungserbringerListPopupWindow = createListPopupWindowLeistungserbringer(activity, it.teilnehmer)
                 leistungsnehmerListPopupWindow = createListPopupWindowLeistungsnehmer(activity, it.teilnehmer)
                 produktListPopupWindow = createListPopupWindowProdukt(activity, it.produkte)
@@ -55,33 +58,40 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : Fragment() {
     private fun initializeViewModel(it: AppCompatActivity) {
         appConfigurationViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
             .get(AppConfigurationViewModel::class.java)
-        upsertStueckArbeitsverhaeltnisViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
-            .get(UpsertStueckArbeitsverhaeltnisViewModel::class.java)
+        upsertStueckArbeitsverhaeltnisViewModel =
+            ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
+                .get(UpsertStueckArbeitsverhaeltnisViewModel::class.java)
     }
 
     private fun createListPopupWindowLeistungserbringer(it: AppCompatActivity, entries: List<Person>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(entries[it])
+            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(Person())
+            else upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(entries[it - 1])
             leistungserbringerListPopupWindow.dismiss()
         }
-        return createListPopupWindow(it, entries.map { it.name }, updateModelListener)
+        val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.name }) }
+        return createListPopupWindow(it, dropdownEntries, updateModelListener)
     }
 
 
     private fun createListPopupWindowLeistungsnehmer(it: AppCompatActivity, entries: List<Person>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            upsertStueckArbeitsverhaeltnisViewModel.setLeistungsnehmer(entries[it])
+            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setLeistungsnehmer(Person())
+            else upsertStueckArbeitsverhaeltnisViewModel.setLeistungsnehmer(entries[it - 1])
             leistungsnehmerListPopupWindow.dismiss()
         }
-        return createListPopupWindow(it, entries.map { it.name }, updateModelListener)
+        val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.name }) }
+        return createListPopupWindow(it, dropdownEntries, updateModelListener)
     }
 
     private fun createListPopupWindowProdukt(it: AppCompatActivity, entries: List<Produkt>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            upsertStueckArbeitsverhaeltnisViewModel.setProdukt(entries[it])
+            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setProdukt(Produkt())
+            else upsertStueckArbeitsverhaeltnisViewModel.setProdukt(entries[it - 1])
             produktListPopupWindow.dismiss()
         }
-        return createListPopupWindow(it, entries.map { it.name }, updateModelListener)
+        val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.name }) }
+        return createListPopupWindow(it, dropdownEntries, updateModelListener)
     }
 
     private fun createListPopupWindow(it: FragmentActivity, entries: List<String>,
@@ -114,7 +124,6 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : Fragment() {
     }
 
 
-
     fun openLeistgunserbringerListPopUp(editTextView: View) {
         leistungserbringerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
@@ -133,5 +142,7 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : Fragment() {
     }
 
     abstract fun upsert()
+
+    abstract fun initializeArbeitsverhaeltnis(baseActivity: BaseActivity)
 
 }

@@ -27,9 +27,6 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
         upsertStueckArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis.set(false)
         upsertStueckArbeitsverhaeltnisViewModel.editable.set(true)
 
-        upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(),
-            StueckArbeitsverhaeltnis())
-
         (activity as? BaseActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
         }
@@ -45,6 +42,11 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
         } else {
             Toast.makeText(this.context, this.resources.getString(R.string.fehlende_daten), Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun initializeArbeitsverhaeltnis(baseActivity: BaseActivity) {
+        upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(),
+            StueckArbeitsverhaeltnis())
     }
 
     private fun updateArbeitsverhaeltnis() {

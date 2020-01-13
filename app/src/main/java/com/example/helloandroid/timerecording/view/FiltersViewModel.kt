@@ -15,11 +15,15 @@ class FiltersViewModel(zeiterfassungRepository: ZeiterfassungRepository) : ViewM
 
     val suchkriterien = Suchkriterien()
 
-    val observableStartDate = ObservableField<LocalDate>().apply { set(getStartDate()) }
-    val observableEndDate = ObservableField<LocalDate>().apply { set(getEndDate()) }
-    val observableLeistungsnehmer = ObservableString().apply { set(suchkriterien.joinLeistungsnehmer()) }
-    val observableLeistungserbringer = ObservableString().apply { set(suchkriterien.joinLeistungserbringer()) }
-    val observableTaetigkeit = ObservableString().apply { set(suchkriterien.joinTaetigkeiten()) }
+    val observableStartDate = ObservableField<LocalDate>()
+    val observableEndDate = ObservableField<LocalDate>()
+    val observableLeistungsnehmer = ObservableString()
+    val observableLeistungserbringer = ObservableString()
+    val observableTaetigkeit = ObservableString()
+
+    init {
+        updateObservables()
+    }
 
     private val selectedLeistungsnehmer: MutableList<Person> = ArrayList()
     private val selectedLeistungserbringer: MutableList<Person> = ArrayList()
@@ -47,6 +51,7 @@ class FiltersViewModel(zeiterfassungRepository: ZeiterfassungRepository) : ViewM
 
     fun removeFilter(filterKey: FilterKeys) {
         suchkriterien.removeFilter(filterKey)
+        updateObservables()
     }
 
     fun addSelectedItemLeistungsnehmer(item: Person) {
@@ -79,20 +84,28 @@ class FiltersViewModel(zeiterfassungRepository: ZeiterfassungRepository) : ViewM
         suchkriterien.leistungsnehmerToFilter.clear()
         selectedLeistungsnehmer.forEach { suchkriterien.addFilterForLeistungsnehmer(it) }
         selectedLeistungsnehmer.clear()
-        observableLeistungsnehmer.set(suchkriterien.joinLeistungsnehmer())
+        updateObservables()
     }
 
     fun saveSelectedLeistungserbringerItems() {
         suchkriterien.leistungserbringerToFilter.clear()
         selectedLeistungserbringer.forEach { suchkriterien.addFilterForLeistungserbringer(it) }
         selectedLeistungserbringer.clear()
-        observableLeistungserbringer.set(suchkriterien.joinLeistungserbringer())
+        updateObservables()
     }
 
     fun saveSelectedTaetigkeitItems() {
         suchkriterien.taetigkeitenToFilter.clear()
         selectedTaetigkeiten.forEach { suchkriterien.addFilterForTaetigkeit(it) }
         selectedTaetigkeiten.clear()
+        updateObservables()
+    }
+
+    fun updateObservables() {
+        observableStartDate.set(getStartDate())
+        observableEndDate.set(getEndDate())
+        observableLeistungsnehmer.set(suchkriterien.joinLeistungsnehmer())
+        observableLeistungserbringer.set(suchkriterien.joinLeistungserbringer())
         observableTaetigkeit.set(suchkriterien.joinTaetigkeiten())
     }
 

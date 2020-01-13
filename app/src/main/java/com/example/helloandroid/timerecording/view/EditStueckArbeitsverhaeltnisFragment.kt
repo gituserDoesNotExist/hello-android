@@ -19,6 +19,7 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
 
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
     private lateinit var sharedStueckArbeitsverhaeltnisViewModel: SharedStueckArbeitsverhaeltnisViewModel
+    private var deleteArbeitsverhaeltnisDisposable: Disposable? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,10 +30,6 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
 
         (activity as? BaseActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
-            initSharedArbeitsverhaeltnisViewModel(it)
-            upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
-                sharedStueckArbeitsverhaeltnisViewModel.eventInfo,
-                sharedStueckArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
         }
         return rootView
     }
@@ -61,8 +58,10 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
     }
 
     private fun confirmDeleteListener(navController: NavController) {
-        upsertStueckArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()
-        ZeiterfassungNavigation.getNavigation(navController).fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+        deleteArbeitsverhaeltnisDisposable = upsertStueckArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
+            .subscribe(Consumer<String> {
+                ZeiterfassungNavigation.getNavigation(navController).fromUpdateStueckArbeitsverhaeltnisTouebersicht()
+            })
     }
 
 
@@ -75,9 +74,20 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
             })
     }
 
+    override fun initializeArbeitsverhaeltnis(baseActivity: BaseActivity) {
+        (activity as? BaseActivity)?.let {
+            initSharedArbeitsverhaeltnisViewModel(it)
+            upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
+                sharedStueckArbeitsverhaeltnisViewModel.eventInfo,
+                sharedStueckArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
+
+        }
+    }
+
 
     override fun onStop() {
         super.onStop()
         updateArbeitsverhaeltnisDisposable?.dispose()
+        deleteArbeitsverhaeltnisDisposable?.dispose()
     }
 }

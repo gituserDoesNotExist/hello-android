@@ -15,13 +15,13 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.HelloAndroid"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".timerecording.view.ZeiterfassungActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".databinding.DatabindingActivity" />
         <activity android:name=".finances.view.FinancesActivity" />
         <activity android:name=".fragmentsht.FunWithFragmentsActivity" />
         <activity android:name=".count.CountActivity" />
         <activity android:name=".verzicht.view.VerzichtUebersichtActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".timerecording.view.ZeiterfassungActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
