@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_zeiterfassung"
+        app:startDestination="@id/postenUebersichtFragment">
+    <fragment
+            android:id="@+id/postenUebersichtFragment"
+            android:name="com.example.helloandroid.finances.view.PostenUebersichtFragment"
+            android:label="PostenUebersichtFragment" >
+        <action
+                android:id="@+id/action_postenUebersichtFragment_to_postenDetailsFragment"
+                app:destination="@id/postenDetailsFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/postenDetailsFragment"
+            android:name="com.example.helloandroid.finances.view.PostenDetailsFragment"
+            android:label="fragment_posten_details"
+            tools:layout="@layout/fragment_posten_details" >
+        <action
+                android:id="@+id/action_postenDetailsFragment_to_postenUebersichtFragment"
+                app:destination="@id/postenUebersichtFragment" />
+    </fragment>
+</navigation>

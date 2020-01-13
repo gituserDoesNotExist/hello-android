@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.helloandroid.view.LocalDateConverter" />
+
+        <import type="com.example.helloandroid.view.IntConverter" />
+
+        <import type="com.example.helloandroid.view.ZonedDateTimeConverter" />
+
+        <import type="com.example.helloandroid.view.BigDecimalConverter" />
+
+        <variable
+                name="viewModel"
+                type="com.example.helloandroid.timerecording.view.UpsertStueckArbeitsverhaeltnisViewModel" />
+
+
+        <variable
+                name="upsertArbeitsverhaeltnisDetailsFragment"
+                type="com.example.helloandroid.timerecording.view.UpsertStueckArbeitsverhaeltnisFragment" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dip">
+
+        <LinearLayout
+                android:id="@+id/linear_layout_metadata"
+                visibleOrGone="@{viewModel.updateArbeitsverhaeltnis}"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="@string/erstellt_am" />
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:text="@{ZonedDateTimeConverter.dateToString(viewModel.eventInfo.erstelltAm)}"
+                            android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                            tools:text="26.07.2019 - 16:50" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:text="@string/uhr"
+                            android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="@string/erstellt_von" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="@{viewModel.eventInfo.erstelltVon}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                        tools:text="Max" />
+            </LinearLayout>
+
+            <View
+                    android:id="@+id/separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:background="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout8"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_metadata">
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:enabled="@{viewModel.editable}"
+                        android:focusable="false"
+                        android:hint="@string/datum"
+                        android:onClick="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
+                        android:text="@{LocalDateConverter.dateToString(viewModel.arbeitsverhaeltnisForAnzeige.datum)}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    erroneous="@{viewModel.anzahlMissing}"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_weight="0.5"
+                        android:enabled="@{viewModel.editable}"
+                        android:hint="@string/label_edit_text_neue_zeiterfassun_stueckzahl"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:text="@={IntConverter.intToString(viewModel.arbeitsverhaeltnisForAnzeige.stueckzahl)}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/linear_layout_fahrzeug_maschine"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungsnehmer}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungserbringer}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/linear_layout_fahrzeug_maschine"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/linearLayout10"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout8">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    erroneous="@{viewModel.produktnameMissing}"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.editable}"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_produkt"
+                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openProduktListPopUp(v)}"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.produktName}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout_fahrzeug_maschine">
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/styleTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.editable}"
+                        android:hint="@string/label_edit_text_neue_zeiterfassung_kommentar"
+                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.kommentar}"
+                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dip"
+                android:onClick="@{()-> upsertArbeitsverhaeltnisDetailsFragment.addOrUpdate()}"
+                android:src="@drawable/btn_confirm"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:visible="@{viewModel.editable}" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

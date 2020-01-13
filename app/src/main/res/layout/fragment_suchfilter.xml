@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.helloandroid.view.LocalDateConverter" />
+
+        <variable
+                name="viewModel"
+                type="com.example.helloandroid.timerecording.view.FiltersViewModel" />
+
+        <variable
+                name="suchfilterFragment"
+                type="com.example.helloandroid.timerecording.view.SuchfilterFragment" />
+
+    </data>
+
+    <LinearLayout
+            android:layout_marginTop="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".timerecording.view.SuchfilterFragment">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/suchkriterien_divider_drawable"
+                android:orientation="vertical"
+                android:showDividers="end">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_suchfilter_start_date"
+                        style="@style/styleTextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            style="@style/styleEditTextSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/start"
+                            android:onClick="@{() -> suchfilterFragment.openDatePickerStartDate()}"
+                            android:text="@{LocalDateConverter.dateToString(viewModel.observableStartDate)}"
+                            tools:text="20.02.2019" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_suchfilter_end_date"
+                        style="@style/styleTextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            style="@style/styleEditTextSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="false"
+                            android:hint="@string/ende"
+                            android:onClick="@{() -> suchfilterFragment.openDatePickerEndDate()}"
+                            android:text="@{LocalDateConverter.dateToString(viewModel.observableEndDate)}"
+                            tools:text="20.02.2019" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:divider="@drawable/suchkriterien_divider_drawable"
+                android:focusable="true"
+                android:onClick="@{() -> suchfilterFragment.openSelectLeistungsnehmerDialog()}"
+                android:orientation="vertical"
+                android:showDividers="end">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/filter_leistungsnehmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.observableLeistungsnehmer}"
+                    android:textSize="20sp"
+                    tools:text="max,muster" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/suchkriterien_divider_drawable"
+                android:focusable="true"
+                android:onClick="@{() -> suchfilterFragment.openSelectLeistungserbringerDialog()}"
+                android:orientation="vertical"
+                android:showDividers="end">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/filter_leistungserbringer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.observableLeistungserbringer}"
+                    android:textSize="20sp"
+            tools:text="max,muster" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/suchkriterien_divider_drawable"
+                android:focusable="true"
+                android:onClick="@{() -> suchfilterFragment.openSelectTaetigkeitDialog()}"
+                android:orientation="vertical"
+                android:showDividers="end">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_edit_text_neue_zeiterfassung_teatigkeit"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/filter_teatigkeit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.observableTaetigkeit}"
+                    android:textSize="20sp"
+                    tools:text="a,b" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dip"
+                    android:backgroundTint="@color/colorSecondary"
+                    android:onClick="@{() -> suchfilterFragment.applyFilters()}"
+                    android:src="@drawable/btn_confirm"
+                    app:borderWidth="0dip"
+                    app:fabSize="normal" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
