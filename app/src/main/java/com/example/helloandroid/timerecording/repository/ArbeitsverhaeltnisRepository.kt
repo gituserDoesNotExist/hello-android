@@ -4,6 +4,7 @@ import com.example.helloandroid.timerecording.Arbeitseinsatz
 import com.example.helloandroid.timerecording.EventInfo
 import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
 import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
+import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
 import com.example.helloandroid.timerecording.view.Suchkriterien
 import com.example.helloandroid.timerecording.web.TeamUpApi
@@ -34,8 +35,8 @@ class ArbeitsverhaeltnisRepository(private val teamUpApi: TeamUpApi) {
     }
 
     fun addZeitArbeitsverhaeltnisToRemoteCalendar(verhaeltnis: ZeitArbeitsverhaeltnis,
-                                                  erstelltVon: String): Single<Long> {
-        val info = EventInfo(erstelltVon = erstelltVon)
+                                                  erstelltVon: Person): Single<Long> {
+        val info = EventInfo(erstelltVon = erstelltVon.name)
         val event = arbeitseinsatzMapper.fromZeitArbeitsverhaeltnisToRemoteEvent(verhaeltnis, info)
         return teamUpApi.postEvent(event)//
             .subscribeOn(Schedulers.io()).map { it.event.id.toLong() }
@@ -51,8 +52,8 @@ class ArbeitsverhaeltnisRepository(private val teamUpApi: TeamUpApi) {
     }
 
 
-    fun addStueckArbeitsverhaeltnisToRemoteCalendar(verhaeltnis: StueckArbeitsverhaeltnis, who: String): Single<Long> {
-        val info = EventInfo(erstelltVon = who)
+    fun addStueckArbeitsverhaeltnisToRemoteCalendar(verhaeltnis: StueckArbeitsverhaeltnis, who: Person): Single<Long> {
+        val info = EventInfo(erstelltVon = who.name)
         val event = arbeitseinsatzMapper.fromStueckArbeitsverhaeltnisToRemoteEvent(verhaeltnis, info)
         return teamUpApi.postEvent(event)//
             .subscribeOn(Schedulers.io()).map { it.event.id.toLong() }

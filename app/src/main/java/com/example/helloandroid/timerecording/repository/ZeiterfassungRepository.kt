@@ -27,26 +27,22 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
 
     fun addZeitArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis: ZeitArbeitsverhaeltnis): Single<Long> {
         return appConfigurationRepository.getAppUser()//
-            .subscribeOn(Schedulers.io())//
             .flatMap { arbeitsverhaeltnisRepository.addZeitArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis, it) }
     }
 
     fun addStueckArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis: StueckArbeitsverhaeltnis): Single<Long> {
         return appConfigurationRepository.getAppUser()//
-            .subscribeOn(Schedulers.io())//
             .flatMap {
                 arbeitsverhaeltnisRepository.addStueckArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis, it)
             }
     }
 
     fun updateZeitArbeitsverhaeltnis(verhaeltnis: ZeitArbeitsverhaeltnis, info: EventInfo): Single<String> {
-        return arbeitsverhaeltnisRepository.updateZeitArbeitsverhaeltnis(verhaeltnis,info)//
-            .subscribeOn(Schedulers.io())//
+        return arbeitsverhaeltnisRepository.updateZeitArbeitsverhaeltnis(verhaeltnis,info)
     }
 
     fun updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis: StueckArbeitsverhaeltnis, info: EventInfo): Single<String> {
-        return arbeitsverhaeltnisRepository.updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis,info)//
-            .subscribeOn(Schedulers.io())//
+        return arbeitsverhaeltnisRepository.updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis,info)
     }
 
 

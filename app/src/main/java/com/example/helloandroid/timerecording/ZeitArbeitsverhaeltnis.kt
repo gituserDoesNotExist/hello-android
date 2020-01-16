@@ -45,7 +45,7 @@ class ZeitArbeitsverhaeltnis(var fahrzeug: Maschine? = null, var anbaugeraet: Ma
         val dauer = arbeitszeit.dauer
         val kostenFahrzeug = fahrzeug?.stundensatz?.times(dauer) ?: BigDecimal.ZERO
         val kostenAnbaugeraet = anbaugeraet?.stundensatz?.times(dauer) ?: BigDecimal.ZERO
-        val kostenLeistungserbringer = BigDecimal.ZERO
+        val kostenLeistungserbringer = leistungserbringer?.stundensatz?.times(dauer) ?: BigDecimal.ZERO
 
         return kostenFahrzeug.plus(kostenAnbaugeraet).plus(kostenLeistungserbringer)
     }

@@ -34,13 +34,15 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
         return calendarConfigMapper.fromConfigEntityToCalendarConfig(config)
     }
 
-    fun getAppUser(): Single<String> {
-        return calendarConfigurationDao.getAppUser()
+    fun getAppUser(): Single<Person> {
+        return Single.fromCallable { calendarConfigurationDao.getConfigurationSynchronous().appUser }
+            .subscribeOn(Schedulers.io())
     }
 
     fun downloadRemoteConfiguration(): Single<CalendarConfiguration> {
         return teamUpApi.getConfiguration()//
-            .subscribeOn(Schedulers.io()).map {
+            .subscribeOn(Schedulers.io())//
+            .map {
                 calendarConfigMapper.fromRemoteMetadataToCalendarConfigurationEntity(extractKalenderMetadata(it))
             }.map {
                 upsertConfiguration(it)
