@@ -9,5 +9,6 @@ class SharedStueckArbeitsverhaeltnisViewModel : ViewModel() {
     lateinit var eventInfo: EventInfo
     lateinit var currentArbeitsverhaeltnis: StueckArbeitsverhaeltnis
 
+    lateinit var fullName: String
 
 }

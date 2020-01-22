@@ -1,6 +1,5 @@
 package com.example.helloandroid.timerecording.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.example.helloandroid.BaseActivity
-import com.example.helloandroid.MainActivity
 import com.example.helloandroid.R
 import com.example.helloandroid.R.navigation.navigation_zeiterfassung
 import com.example.helloandroid.timerecording.KeineAuswahl
@@ -81,10 +79,6 @@ class ZeiterfassungActivity : BaseActivity() {
         }
     }
 
-
-    private fun goToHome() {
-        startActivity(Intent(this, MainActivity::class.java))
-    }
 
     private fun activityTitle() = resources.getString(R.string.title_activity_zeiterfassung)
 

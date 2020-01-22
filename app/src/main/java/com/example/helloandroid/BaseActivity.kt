@@ -1,5 +1,6 @@
 package com.example.helloandroid
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,5 +17,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun getParentViewForSnackbar() : View
 
+    fun goToHome() {
+        startActivity(Intent(this, MainActivity::class.java))
+    }
 
 }

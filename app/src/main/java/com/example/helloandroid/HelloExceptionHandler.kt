@@ -13,6 +13,14 @@ class HelloExceptionHandler(private val baseActivity: BaseActivity) : Thread.Unc
     }
 
     override fun uncaughtException(thread: Thread, ex: Throwable) {
+        when (ex) {
+            is HelloException -> createSnackbar(ex.message ?: "Unknown error")
+            is UninitializedPropertyAccessException -> baseActivity.goToHome()
+        }
+        handleWrappedException(ex)
+    }
+
+    private fun handleWrappedException(ex: Throwable) {
         when (val cause = ex.cause) {
             is NoNetworkException -> {
                 createSnackbar(cause.message ?: "").setAction("Try again") {
@@ -25,8 +33,7 @@ class HelloExceptionHandler(private val baseActivity: BaseActivity) : Thread.Unc
                 baseActivity.hideProgressbarCallback()
             }
             else -> {
-                rootHandler.uncaughtException(thread, ex)
-
+                createSnackbar("This should not happen...")
             }
         }
     }
