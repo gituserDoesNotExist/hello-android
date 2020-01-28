@@ -53,7 +53,7 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
         addArbeitseinsatzDisposable = upsertStueckArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<Long> {
-                ZeiterfassungNavigation.getNavigation(findNavController()).fromAddStueckArbeitsverhaeltnisToUebersicht()
+                ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
 

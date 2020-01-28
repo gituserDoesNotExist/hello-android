@@ -21,95 +21,38 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_gesamtstunden_gesamtkosten"
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_filters"
                 android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:background="@color/white"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_to_parent"
+                android:layout_marginTop="@dimen/margin_to_parent"
+                android:layout_marginBottom="@dimen/margin_to_parent"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/guideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:scrollbars="horizontal" />
 
-
-            <LinearLayout
-                    android:id="@+id/layout_gesamtkosten"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gesamtkosten" />
-
-
-                <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{BigDecimalConverter.bigDecimalToString(viewModel.gesamtkosten)}"
-                            android:textColor="@color/colorPrimaryDark"
-                            tools:text="500.43" />
-
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="4dip"
-                            android:text="@string/euro" />
-                </LinearLayout>
-            </LinearLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-                android:id="@+id/linear_layout_filters"
+        <ImageView
+                android:id="@+id/separator"
                 android:layout_width="match_parent"
-                android:layout_height="0dip"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:paddingTop="10dip"
-                android:paddingBottom="10dip"
-                android:weightSum="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_gesamtstunden_gesamtkosten">
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_filters"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal" />
+                android:layout_height="5dip"
+                android:layout_below="@id/recycler_view_filters"
+                android:src="@drawable/divider" />
 
 
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
                 android:id="@+id/constraint_layout_arbeitsverhaeltnisse"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout_filters"
-                tools:context=".timerecording.view.ArbeitsverhaltnisUebersichtFragment">
+                android:layout_above="@id/bottom_bar"
+                android:layout_below="@id/separator"
+                android:layout_marginStart="@dimen/margin_to_parent"
+                android:layout_marginEnd="@dimen/margin_to_parent">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:id="@+id/swiperefresh_arbeitsverhaeltnisse"
@@ -120,41 +63,74 @@
                         android:id="@+id/recycler_view_arbeitsverhaeltnisse"
                         android:layout_width="0dip"
                         android:layout_height="0dip"
-                        android:background="@color/white"
                         android:scrollbars="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_arbeitsverhaeltnis" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dip"
-                    android:layout_marginEnd="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddArbeitsverhaeltnisFragment()}"
-                    android:src="@drawable/ic_add_black_48dp"
-                    app:backgroundTint="@color/colorSecondary"
-                    app:fabSize="mini"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
+        </FrameLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/bottom_bar"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="16dip"
+                android:onClick="@{() -> arbeitsverhaltnisUebersichtFragment.openAddArbeitsverhaeltnisFragment()}"
+                android:src="@drawable/ic_add_black_48dp"
+                app:backgroundTint="@color/colorSecondary"
+                app:fabSize="normal" />
 
         <include
                 layout="@layout/hello_progressbar"
-                bind:showProgressbar="@{viewModel.showProgressbar}" />
-
-        <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.09" />
+                android:layout_centerInParent="true"
+                bind:showProgressbar="@{viewModel.showProgressbar}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+                android:id="@+id/bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_to_parent"
+                android:paddingBottom="@dimen/margin_to_parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <LinearLayout
+                    android:id="@+id/layout_gesamtkosten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gesamtkosten"
+                        android:textColor="@color/colorOnPrimary"
+                        android:textStyle="bold" />
+
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/betrag_in_euro(BigDecimalConverter.bigDecimalToString(viewModel.gesamtkosten))}"
+                        android:textColor="@color/colorOnPrimary"
+                        android:textStyle="bold"
+                        tools:text="500.43 €" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>

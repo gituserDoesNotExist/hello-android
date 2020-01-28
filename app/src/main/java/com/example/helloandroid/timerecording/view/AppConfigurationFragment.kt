@@ -117,9 +117,7 @@ class AppConfigurationFragment : Fragment() {
     }
 
     fun exitAppConfigFragment() {
-        val action =
-            AppConfigurationFragmentDirections.actionAppConfigurationFragmentToArbeitsverhaltnisUebersichtFragment()
-        findNavController().navigate(action)
+        ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
     }
 
 }

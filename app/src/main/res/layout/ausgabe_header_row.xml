@@ -51,12 +51,10 @@
     </LinearLayout>
 
 
-
     <View
             android:layout_width="match_parent"
             android:layout_height="2dip"
-            android:layout_margin="5dip"
-            android:background="@color/grey" />
+            android:layout_margin="5dip" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -154,8 +152,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="2dip"
-            android:layout_marginTop="5dip"
-            android:background="@color/grey" />
+            android:layout_marginTop="5dip" />
 
 </LinearLayout>
 

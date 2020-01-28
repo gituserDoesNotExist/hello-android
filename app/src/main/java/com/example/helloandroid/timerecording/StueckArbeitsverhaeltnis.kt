@@ -7,17 +7,8 @@ import java.math.BigDecimal
 
 class StueckArbeitsverhaeltnis(var stueckzahl: Int = 0, var produkt: Produkt = Produkt()) : Arbeitsverhaeltnis() {
 
-
-    override fun createTitle(): String {
-        return produkt.name
-    }
-
     override fun createDescription(resources: Resources): String {
         return resources.getString(R.string.description_stueck_arbeitsverhaeltnis, produkt.name, stueckzahl.toString())
-    }
-
-    override fun getQuantity(): String {
-        return ""
     }
 
     override fun calculateKostenForArbeitsverhaeltnis(): BigDecimal {

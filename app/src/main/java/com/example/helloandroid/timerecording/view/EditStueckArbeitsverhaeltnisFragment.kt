@@ -60,7 +60,7 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
     private fun confirmDeleteListener(navController: NavController) {
         deleteArbeitsverhaeltnisDisposable = upsertStueckArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
             .subscribe(Consumer<String> {
-                ZeiterfassungNavigation.getNavigation(navController).fromUpdateStueckArbeitsverhaeltnisTouebersicht()
+                ZeiterfassungNavigation.getNavigation(navController).toUebersicht()
             })
     }
 
@@ -69,8 +69,7 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
         updateArbeitsverhaeltnisDisposable = upsertStueckArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {
-                ZeiterfassungNavigation.getNavigation(findNavController())
-                    .fromEditStueckArbeitsverhaeltnisToUebersicht()
+                ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
 

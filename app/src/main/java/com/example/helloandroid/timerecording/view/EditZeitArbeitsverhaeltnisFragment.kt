@@ -54,7 +54,7 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
     private fun confirmDeleteListener(navController: NavController) {
         deleteArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
             .subscribe(Consumer<String> {
-                ZeiterfassungNavigation.getNavigation(navController).fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+                ZeiterfassungNavigation.getNavigation(navController).toUebersicht()
             })
     }
 
@@ -63,8 +63,7 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
         updateArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {
-                ZeiterfassungNavigation.getNavigation(findNavController())
-                    .fromUpdateZeitArbeitsverhaeltnisTouebersicht()
+                ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
 

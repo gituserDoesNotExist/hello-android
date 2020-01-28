@@ -14,10 +14,6 @@ class ZeitArbeitsverhaeltnis(var fahrzeug: Maschine? = null, var anbaugeraet: Ma
                              var arbeitszeit: Arbeitszeit = Arbeitszeit(BigDecimal.ZERO)) : Arbeitsverhaeltnis() {
 
 
-    override fun createTitle(): String {
-        return taetigkeit.bezeichnung
-    }
-
     override fun createDescription(resources: Resources): String {
         val fahrzeugBezeichnung = fahrzeug?.bezeichnung ?: ""
         val anbaugeraetBezeichnung = anbaugeraet?.bezeichnung ?: ""
@@ -30,10 +26,6 @@ class ZeitArbeitsverhaeltnis(var fahrzeug: Maschine? = null, var anbaugeraet: Ma
 
             }
         }
-    }
-
-    override fun getQuantity(): String {
-        return arbeitszeit.toString()
     }
 
 

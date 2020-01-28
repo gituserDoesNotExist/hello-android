@@ -6,7 +6,7 @@ import android.widget.DatePicker
 import org.threeten.bp.LocalDate
 
 class HelloDatePickerDialog(context: Context, dateSetListener: (LocalDate) -> Unit, preselectedDate: LocalDate) :
-    DatePickerDialog(context) {
+    DatePickerDialog(context, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert) {
 
     init {
         val listener = DatePicker.OnDateChangedListener { _, year, monthOfYear, dayOfMonth ->

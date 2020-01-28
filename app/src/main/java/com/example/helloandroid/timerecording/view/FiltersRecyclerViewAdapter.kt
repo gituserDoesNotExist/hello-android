@@ -3,11 +3,10 @@ package com.example.helloandroid.timerecording.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
+import kotlinx.android.synthetic.main.item_filter.view.*
 
 class FiltersRecyclerViewAdapter(private val suchkriterien: Suchkriterien,
                                  private val removeFilterConsumer: (FilterKeys) -> Unit) :
@@ -41,12 +40,12 @@ class FiltersRecyclerViewAdapter(private val suchkriterien: Suchkriterien,
 
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val filterName: TextView = itemView.findViewById(R.id.filter_name)
-        val filterText: TextView = itemView.findViewById(R.id.filter_text)
-        val btnDeleteFilter: ImageButton = itemView.findViewById(R.id.btn_remove_filter)
+        val filterName: TextView = itemView.filter_name
+        val filterText: TextView = itemView.filter_text
+        val btnDeleteFilter: View = itemView.element_remove_filter
 
         fun hide() {
-            itemView.findViewById<LinearLayout>(R.id.linear_layout_filter_container).setVisibleOrGone(false)
+            itemView.linear_layout_filter_container.setVisibleOrGone(false)
         }
     }
 

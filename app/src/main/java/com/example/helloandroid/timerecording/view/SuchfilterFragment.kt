@@ -23,6 +23,7 @@ class SuchfilterFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (activity as? AppCompatActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_fragment_suchfilter)
+            it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             initializeViewModel(it)
         }
         val binding = FragmentSuchfilterBinding.inflate(inflater, container, false)
@@ -72,7 +73,7 @@ class SuchfilterFragment : Fragment() {
     }
 
     fun applyFilters() {
-        ZeiterfassungNavigation.getNavigation(findNavController()).fromSuchfilterToUebersicht()
+        ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
     }
 
 

@@ -2,7 +2,7 @@
 
 <layout>
 
-    <data>
+    <data>he
 
         <variable
                 name="showProgressbar"
@@ -11,24 +11,18 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
         <ProgressBar
                 android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyle"
                 visibleOrGone="@{showProgressbar}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:indeterminateTint="@color/colorSecondary" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </layout>

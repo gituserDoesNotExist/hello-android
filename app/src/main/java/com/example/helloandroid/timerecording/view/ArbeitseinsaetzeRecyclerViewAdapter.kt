@@ -9,6 +9,8 @@ import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.Arbeitseinsaetze
 import com.example.helloandroid.timerecording.Arbeitsverhaeltnis
 import com.example.helloandroid.view.BigDecimalConverter
+import kotlinx.android.synthetic.main.item_arbeitsverhaeltnis.view.*
+import org.apache.commons.lang3.StringUtils
 import org.threeten.bp.format.DateTimeFormatter
 
 class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitseinsaetze) :
@@ -29,22 +31,24 @@ class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitse
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val arbeitseinsatz = arbeitseinsaetze.einsaetze[position]
         val arbeitsverhaeltnis = arbeitseinsatz.arbeitsverhaeltnis
+        val nameLeistungserbringer = arbeitsverhaeltnis.leistungserbringer?.name
 
         if (holder is ItemViewHolder) {
+            val description = arbeitsverhaeltnis.createDescription(holder.itemView.resources)
+
             holder.arbeitsverhaeltnisRemoteId = arbeitseinsatz.eventInfo.remoteCalenderId
-            holder.beteiligte.text = beteiligte(holder, arbeitsverhaeltnis)
-            holder.title.text = arbeitsverhaeltnis.createTitle()
+            holder.title.text = arbeitsverhaeltnis.title
             holder.date.text = arbeitsverhaeltnis.datum.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            holder.duration.text = arbeitsverhaeltnis.getQuantity()
+            holder.leistungserbringer.text = nameLeistungserbringer ?: ""
+            holder.leistungsnehmer.text = arbeitsverhaeltnis.leistungsnehmer.name
             holder.kosten.text = kostenForArbeitsverhaeltnis(holder, arbeitsverhaeltnis)
-            holder.fahrzeug.text = arbeitsverhaeltnis.createDescription(holder.itemView.resources)
+            holder.description.text = description
+
+            holder.description.setVisibleOrGone(StringUtils.isNotBlank(description))
+            holder.tableRowLeistungserbringer.setVisibleOrGone(StringUtils.isNotBlank(nameLeistungserbringer))
         }
 
     }
-
-    private fun beteiligte(holder: RecyclerView.ViewHolder, arbeitsverhaeltnis: Arbeitsverhaeltnis) =
-        holder.itemView.resources.getString(R.string.beteiligte, arbeitsverhaeltnis.leistungserbringer?.name ?: "",
-            arbeitsverhaeltnis.leistungsnehmer.name)
 
     private fun kostenForArbeitsverhaeltnis(holder: RecyclerView.ViewHolder, verhaeltnis: Arbeitsverhaeltnis): String {
         val kosten = BigDecimalConverter.bigDecimalToString(verhaeltnis.calculateKostenForArbeitsverhaeltnis())
@@ -59,12 +63,13 @@ class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitse
 
     class ItemViewHolder(itemView: View, onClickListener: View.OnClickListener) : RecyclerView.ViewHolder(itemView) {
         lateinit var arbeitsverhaeltnisRemoteId: String
-        val title: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_title)
-        val beteiligte: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_beteiligte)
-        val date: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_date)
-        val duration: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_quantity)
+        val title: TextView = itemView.title_arbeitsverhaeltnis
+        val tableRowLeistungserbringer = itemView.table_row_leistungserbringer
+        val date: TextView = itemView.item_arbeitsverhaeltnis_date
+        val leistungserbringer: TextView = itemView.item_arbeitsverhaeltnis_leistungserbringer
+        val leistungsnehmer: TextView = itemView.item_arbeitsverhaeltnis_leistungsnehmer
         val kosten: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_kosten)
-        val fahrzeug: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_description)
+        val description: TextView = itemView.findViewById(R.id.item_arbeitsverhaeltnis_description)
 
         init {
             itemView.setOnClickListener(onClickListener)

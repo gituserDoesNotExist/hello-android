@@ -17,4 +17,5 @@
     <dimen name="fragment_arbeitsverhaeltnis_details_info">25sp</dimen>
     <dimen name="fragment_arbeitsverhaeltnis_edit_details_info">15sp</dimen>
     <dimen name="text_size_item_filter">10sp</dimen>
+    <dimen name="margin_to_parent">10dip</dimen>
 </resources>

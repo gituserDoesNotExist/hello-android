@@ -13,7 +13,7 @@ class AddArbeitsverhaeltnisViewPagerAdapter(fragmentManager: FragmentManager) :
         return when (position) {
             0 -> AddZeitArbeitsverhaeltnisFragment()
             1 -> AddStueckArbeitsverhaeltnisFragment()
-            else -> BlankFragment()
+            else -> StartFragment()
         }
     }
 

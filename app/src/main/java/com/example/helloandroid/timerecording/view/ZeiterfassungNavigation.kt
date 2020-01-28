@@ -2,7 +2,6 @@ package com.example.helloandroid.timerecording.view
 
 import androidx.navigation.NavController
 import com.example.helloandroid.NavigationZeiterfassungDirections
-import com.example.helloandroid.WelcomeZeiterfassungFragmentDirections
 
 class ZeiterfassungNavigation private constructor(private val navController: NavController) {
 
@@ -14,27 +13,10 @@ class ZeiterfassungNavigation private constructor(private val navController: Nav
         }
     }
 
-    fun fromWelcomeToConfig() {
-        val action =
-            WelcomeZeiterfassungFragmentDirections.actionWelcomeZeiterfassungFragmentToAppConfigurationFragment()
-        navController.navigate(action)
-    }
-
-    fun fromWelcomeToUebersicht() {
-        val action =
-            WelcomeZeiterfassungFragmentDirections.actionWelcomeZeiterfassungFragmentToArbeitsverhaltnisUebersichtFragment()
-        navController.navigate(action)
-    }
 
     fun fromUebersichtToAddArbeitsverhaeltnis() {
         val action =
             ArbeitsverhaltnisUebersichtFragmentDirections.actionArbeitsverhaltnisUebersichtFragmentToAddArbeitsverhaeltnisFragment2()
-        navController.navigate(action)
-    }
-
-    fun fromAddZeitArbeitsverhaeltnisToUebersicht() {
-        val action =
-            AddArbeitsverhaeltnisFragmentDirections.actionAddArbeitsverhaeltnisFragmentToArbeitsverhaltnisUebersichtFragment()
         navController.navigate(action)
     }
 
@@ -50,34 +32,10 @@ class ZeiterfassungNavigation private constructor(private val navController: Nav
         navController.navigate(action)
     }
 
-    fun fromUpdateZeitArbeitsverhaeltnisTouebersicht() {
-        val action =
-            EditZeitArbeitsverhaeltnisFragmentDirections.actionEditZeitArbeitsverhaeltnisDetailsFragmentToArbeitsverhaltnisUebersichtFragment()
-        navController.navigate(action)
-    }
-
-    fun fromUpdateStueckArbeitsverhaeltnisTouebersicht() {
-        val action =
-            EditStueckArbeitsverhaeltnisFragmentDirections.actionEditStueckArbeitsverhaeltnisFragmentToArbeitsverhaltnisUebersichtFragment()
-        navController.navigate(action)
-    }
-
 
     fun fromUebersichtToSuchfilter() {
         val action =
             ArbeitsverhaltnisUebersichtFragmentDirections.actionArbeitsverhaltnisUebersichtFragmentToSuchfilterFragment()
-        navController.navigate(action)
-    }
-
-    fun fromSuchfilterToUebersicht() {
-        val action = SuchfilterFragmentDirections.actionSuchfilterFragmentToArbeitsverhaltnisUebersichtFragment()
-        navController.navigate(action)
-    }
-
-
-    fun fromEditStueckArbeitsverhaeltnisToUebersicht() {
-        val action =
-            EditStueckArbeitsverhaeltnisFragmentDirections.actionEditStueckArbeitsverhaeltnisFragmentToArbeitsverhaltnisUebersichtFragment()
         navController.navigate(action)
     }
 
@@ -87,9 +45,9 @@ class ZeiterfassungNavigation private constructor(private val navController: Nav
         navController.navigate(action)
     }
 
-    fun fromAddStueckArbeitsverhaeltnisToUebersicht() {
-        val action =
-            AddArbeitsverhaeltnisFragmentDirections.actionAddArbeitsverhaeltnisFragmentToArbeitsverhaltnisUebersichtFragment()
+
+    fun toUebersicht() {
+        val action = NavigationZeiterfassungDirections.actionGlobalArbeitsverhaltnisUebersichtFragment()
         navController.navigate(action)
     }
 

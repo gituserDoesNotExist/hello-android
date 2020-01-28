@@ -41,7 +41,7 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
         addArbeitseinsatzDisposable = upsertZeitArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer {
-                ZeiterfassungNavigation.getNavigation(findNavController()).fromAddZeitArbeitsverhaeltnisToUebersicht()
+                ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
 

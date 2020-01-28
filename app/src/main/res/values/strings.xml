@@ -7,6 +7,7 @@
     <string name="zeitraum">Zeitraum:</string>
     <string name="cancel">Cancel</string>
     <string name="uhr">Uhr</string>
+    <string name="betrag_in_euro">%1$s €</string>
     <string name="ok">OK</string>
     <string name="von">Von</string>
     <string name="kosten_in_euro">%1$s €</string>
@@ -52,11 +53,13 @@
     <string name="title_count_activity">CountActivity</string>
 
     <!--    timerecording-->
+    <string name="leistungserbringer">Leistungserbringer:</string>
+    <string name="leistungsnehmer">Leistungsnehmer:</string>
     <string name="title_activity_zeiterfassung">Zeiterfassung</string>
     <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
     <string name="content_description_timerecording_image">timerecording image</string>
     <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
-    <string name="label_edit_text_neue_zeiterfassung_anzahl_stunden">Dauer</string>
+    <string name="dauer">Dauer</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungserbringer">Leistungserbringer</string>
     <string name="title_configure_app_user_fragment">Konfiguration</string>
     <string name="label_who_is_app_user">Wer benutzt die App?</string>
@@ -80,7 +83,6 @@
     <string name="description_stueck_arbeitsverhaeltnis">Produkt: %1$s. Menge: %2$s</string>
     <string name="loeschen">Löschen?</string>
     <string name="fehlende_daten">Bitte Daten vollständig angeben</string>
-    <string name="beteiligte">"Leistungserbringer: %1$s, Leistungsnehmer: %2$s"</string>
     <string name="label_edit_text_app_user">Appuser</string>
     <string name="gesamtkosten">Gesamtkosten:</string>
     <string name="kosten">Kosten:</string>

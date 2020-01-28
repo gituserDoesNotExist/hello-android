@@ -142,7 +142,7 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : Fragment() {
     }
 
 
-    fun openLeistgunsnehmerListPopUp(editTextView: View) {
+    fun openLeistungsnehmerListPopUp(editTextView: View) {
         leistungsnehmerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
@@ -155,7 +155,7 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : Fragment() {
     }
 
 
-    fun openLeistgunserbringerListPopUp(editTextView: View) {
+    fun openLeistungserbringerListPopUp(editTextView: View) {
         leistungserbringerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 

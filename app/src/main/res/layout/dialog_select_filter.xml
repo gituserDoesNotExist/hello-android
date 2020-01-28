@@ -31,7 +31,6 @@
                     android:id="@+id/recycler_view_leistungsnehmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:scrollbars="vertical" />
         </LinearLayout>
 

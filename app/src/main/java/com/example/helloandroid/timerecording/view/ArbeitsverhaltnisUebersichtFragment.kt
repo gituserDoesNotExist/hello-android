@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.helloandroid.BaseActivity
+import com.example.helloandroid.DividerItemDecoration
 import com.example.helloandroid.R
 import com.example.helloandroid.databinding.FragmentArbeitsverhaeltnisUebersichtBinding
 import com.example.helloandroid.timerecording.Arbeitseinsaetze
 import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
 import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
+import kotlinx.android.synthetic.main.fragment_arbeitsverhaeltnis_uebersicht.view.*
 
 
 class ArbeitsverhaltnisUebersichtFragment : Fragment() {
@@ -96,7 +98,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
     }
 
     private fun addEventsRecyclerView(root: View, activity: AppCompatActivity, arbeitseinsaetze: Arbeitseinsaetze) {
-        val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_arbeitsverhaeltnisse)
+        val recyclerView = root.recycler_view_arbeitsverhaeltnisse
         recyclerView.adapter = ArbeitseinsaetzeRecyclerViewAdapter(arbeitseinsaetze).apply {
             this.onItemClickListener = View.OnClickListener { v ->
                 val viewHolder = v.tag as ArbeitseinsaetzeRecyclerViewAdapter.ItemViewHolder
@@ -104,6 +106,8 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
             }
         }
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.addItemDecoration(DividerItemDecoration(this.context))
+
     }
 
     private fun openMatchingEditFragment(arbeitseinsaetze: Arbeitseinsaetze, eventId: String) {

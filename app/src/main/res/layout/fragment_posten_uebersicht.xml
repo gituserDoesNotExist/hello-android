@@ -29,7 +29,6 @@
             android:id="@+id/testit"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@id/guideline_lower_bound_posten_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -100,8 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="2dip"
                     android:layout_marginTop="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:background="@color/black" />
+                    android:layout_marginBottom="10dip" />
 
         </LinearLayout>
 
@@ -116,42 +116,27 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/linear_layout_metadata">
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+
+            <include
+                    layout="@layout/hello_text_input_no_edit"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
+                    bind:inputText="@{LocalDateConverter.dateToString(viewModel.arbeitsverhaeltnisForAnzeige.datum)}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/datum}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusable="false"
-                        android:hint="@string/datum"
-                        android:onClick="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
-                        android:text="@{LocalDateConverter.dateToString(viewModel.arbeitsverhaeltnisForAnzeige.datum)}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+            <include
+                    layout="@layout/hello_text_input_allow_input"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.4"
+                    bind:inputText="@={viewModel.arbeitsverhaeltnisForAnzeige.arbeitszeit}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/dauer}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_weight="0.5"
-                        android:enabled="@{viewModel.editable}"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_anzahl_stunden"
-                        android:inputType="numberDecimal"
-                        android:maxLength="8"
-                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.arbeitszeit}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -168,40 +153,25 @@
                 app:layout_constraintTop_toBottomOf="@id/linearLayout4">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+            <include
+                    layout="@layout/hello_text_input_no_edit"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistungsnehmerListPopUp(v)}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungsnehmer}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_leistungsnehmer}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungsnehmer"
-                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunsnehmerListPopUp(v)}"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungsnehmer}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+            <include
+                    layout="@layout/hello_text_input_no_edit"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_leistungserbringer"
-                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistgunserbringerListPopUp(v)}"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungserbringer}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openLeistungserbringerListPopUp(v)}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.leistungserbringer}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_leistungserbringer}" />
 
         </LinearLayout>
 
@@ -218,40 +188,26 @@
                 app:layout_constraintTop_toBottomOf="@id/linearLayout8">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+            <include
+                    layout="@layout/hello_text_input_no_edit"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.fahrzeug}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_fahrzeug}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_fahrzeug"
-                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openFahrzeugListPopUp(v)}"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.fahrzeug}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+            <include
+                    layout="@layout/hello_text_input_no_edit"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.anbaugeraet}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_maschine}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_maschine"
-                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openMaschineListPopUp(v)}"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.anbaugeraet}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -260,55 +216,44 @@
                 android:id="@+id/linearLayout9"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@id/linearLayout10"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/linear_layout_fahrzeug_maschine">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
-                    erroneous="@{viewModel.taetigkeitMissing}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_teatigkeit"
-                        android:onClick="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openTaetigkeitListPopUp(v)}"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.taetigkeit}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <include
+                    layout="@layout/hello_text_input_no_edit"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openTaetigkeitListPopUp(v)}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.taetigkeit}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_teatigkeit}" />
         </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/linearLayout10"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:weightSum="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/linearLayout9">
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <include
+                    layout="@layout/hello_text_input_allow_input"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    bind:inputText="@={viewModel.arbeitsverhaeltnisForAnzeige.kommentar}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:myHint="@{@string/label_edit_text_neue_zeiterfassung_kommentar}" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="@{viewModel.editable}"
-                        android:hint="@string/label_edit_text_neue_zeiterfassung_kommentar"
-                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.kommentar}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -318,7 +263,8 @@
                 android:backgroundTint="@color/colorSecondary"
                 android:onClick="@{()-> upsertArbeitsverhaeltnisDetailsFragment.addOrUpdate()}"
                 android:src="@drawable/btn_confirm"
-                app:fabSize="mini"
+                app:borderWidth="0dip"
+                app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:visible="@{viewModel.editable}" />

@@ -9,16 +9,13 @@ import java.math.BigDecimal
 
 abstract class Arbeitsverhaeltnis {
 
+    var title: String = "Test"
     var datum: LocalDate = LocalDate.now()
     var leistungserbringer: Person? = null
     var leistungsnehmer: Person = Person()
     var kommentar: String = ""
 
-    abstract fun createTitle(): String
-
     abstract fun createDescription(resources: Resources): String
-
-    abstract fun getQuantity(): String
 
     open fun calculateEndDatum(): LocalDateTime {
         return datum.atStartOfDay()
