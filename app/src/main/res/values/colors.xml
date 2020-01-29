@@ -3,6 +3,7 @@
 
     <color name="colorPrimary">#6200EE</color>
     <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnPrimarySixtyPercentOpacity">#99FFFFFF</color>
     <color name="colorPrimaryLight">#9e47ff</color>
     <color name="colorPrimaryDark">#0400ba</color>
 
@@ -18,6 +19,7 @@
     <color name="colorOnBackground">#000000</color>
     <color name="colorOnBackgroundDivider">#1F000000</color>
     <color name="colorOnSurface">#000000</color>
+    <color name="colorOnSurfaceSixtyPercentOpacity">#99000000</color>
     <color name="colorOnError">#FFFFFF</color>
     <color name="textColorBackgroundDisabled">#919191</color>
 

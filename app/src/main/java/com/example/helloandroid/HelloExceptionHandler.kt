@@ -16,8 +16,8 @@ class HelloExceptionHandler(private val baseActivity: BaseActivity) : Thread.Unc
         when (ex) {
             is HelloException -> createSnackbar(ex.message ?: "Unknown error")
             is UninitializedPropertyAccessException -> baseActivity.goToHome()
+            else -> handleWrappedException(ex)
         }
-        handleWrappedException(ex)
     }
 
     private fun handleWrappedException(ex: Throwable) {

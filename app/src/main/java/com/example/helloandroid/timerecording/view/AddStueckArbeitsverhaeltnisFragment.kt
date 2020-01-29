@@ -24,7 +24,7 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = super.onCreateView(inflater, container, savedInstanceState)
 
-        upsertStueckArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis.set(false)
+        upsertStueckArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
         upsertStueckArbeitsverhaeltnisViewModel.editable.set(true)
 
         (activity as? BaseActivity)?.let {

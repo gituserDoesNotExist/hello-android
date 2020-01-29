@@ -1,8 +1,6 @@
 package com.example.helloandroid.timerecording.view
 
 import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.example.helloandroid.timerecording.EventInfo
 import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnis
 import com.example.helloandroid.timerecording.StueckArbeitsverhaeltnisForAnzeige
@@ -12,38 +10,33 @@ import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 
-class UpsertStueckArbeitsverhaeltnisViewModel(private val zeiterfassungRepository: ZeiterfassungRepository) :
-    ViewModel() {
+class UpsertStueckArbeitsverhaeltnisViewModel(zeiterfassungRepository: ZeiterfassungRepository) :
+    UpsertArbeitsverhaeltnisViewModel(zeiterfassungRepository) {
 
-    val updateArbeitsverhaeltnis = ObservableBoolean().apply { this.set(false) }
-    var editable: ObservableBoolean = ObservableBoolean(false)
-    var anzahlMissing = ObservableBoolean().apply { this.set(false) }
-    var produktnameMissing = ObservableBoolean().apply { this.set(false) }
+    var anzahlMissing = ObservableBoolean()
+    var produktnameMissing = ObservableBoolean()
 
-    val config: LiveData<CalendarConfiguration> = zeiterfassungRepository.getConfiguration()
-
-    lateinit var eventInfo: EventInfo
     lateinit var stueckArbeitsverhaeltnis: StueckArbeitsverhaeltnis
     var arbeitsverhaeltnisForAnzeige = StueckArbeitsverhaeltnisForAnzeige()
 
     fun initEventInfoAndArbeitsverhaeltnis(eventInfo: EventInfo, arbeitsverhaeltnis: StueckArbeitsverhaeltnis) {
-        this.eventInfo = eventInfo.copy()
+        super.initEventInfo(eventInfo)
         this.stueckArbeitsverhaeltnis = arbeitsverhaeltnis.copy()
         arbeitsverhaeltnisForAnzeige.copyValuesFromArbeitsverhaeltnis(this.stueckArbeitsverhaeltnis)
     }
 
 
-    fun updateArbeitsverhaeltnis(): Single<String> {
+    override fun updateArbeitsverhaeltnis(): Single<String> {
         takeRelevantValuesFromArbeitseinsatzForAnzeige()
-        return zeiterfassungRepository.updateStueckArbeitsverhaeltnis(stueckArbeitsverhaeltnis,eventInfo)//
+        return zeiterfassungRepository.updateStueckArbeitsverhaeltnis(stueckArbeitsverhaeltnis, eventInfo)//
     }
 
-    fun addArbeitsverhaeltnis(): Single<Long> {
+    override fun addArbeitsverhaeltnis(): Single<Long> {
         takeRelevantValuesFromArbeitseinsatzForAnzeige()
         return zeiterfassungRepository.addStueckArbeitsverhaeltnisToRemoteCalendar(stueckArbeitsverhaeltnis)
     }
 
-    fun isValid() : Boolean {
+    fun isValid(): Boolean {
         val stueckzahlSet = arbeitsverhaeltnisForAnzeige.stueckzahl.get() > 0
         val produktSet = arbeitsverhaeltnisForAnzeige.produktName.get().isNotBlank()
         anzahlMissing.set(!stueckzahlSet)
@@ -75,6 +68,7 @@ class UpsertStueckArbeitsverhaeltnisViewModel(private val zeiterfassungRepositor
     }
 
     private fun takeRelevantValuesFromArbeitseinsatzForAnzeige() {
+        stueckArbeitsverhaeltnis.title = arbeitsverhaeltnisForAnzeige.title.get()
         stueckArbeitsverhaeltnis.kommentar = arbeitsverhaeltnisForAnzeige.kommentar.get()
         stueckArbeitsverhaeltnis.stueckzahl = arbeitsverhaeltnisForAnzeige.stueckzahl.get()
     }

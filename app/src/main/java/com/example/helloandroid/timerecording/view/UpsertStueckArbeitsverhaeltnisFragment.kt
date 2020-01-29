@@ -119,12 +119,12 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : Fragment() {
     }
 
 
-    fun openLeistgunsnehmerListPopUp(editTextView: View) {
+    fun openLeistungsnehmerListPopUp(editTextView: View) {
         leistungsnehmerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 
 
-    fun openLeistgunserbringerListPopUp(editTextView: View) {
+    fun openLeistungserbringerListPopUp(editTextView: View) {
         leistungserbringerListPopupWindow.apply { this.anchorView = editTextView }.show()
     }
 

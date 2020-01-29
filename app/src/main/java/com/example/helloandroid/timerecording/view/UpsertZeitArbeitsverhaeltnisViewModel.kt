@@ -1,8 +1,6 @@
 package com.example.helloandroid.timerecording.view
 
 import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.example.helloandroid.timerecording.Arbeitszeit
 import com.example.helloandroid.timerecording.EventInfo
 import com.example.helloandroid.timerecording.ZeitArbeitsverhaeltnis
@@ -14,33 +12,28 @@ import com.example.helloandroid.timerecording.repository.ZeiterfassungRepository
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 
-class UpsertZeitArbeitsverhaeltnisViewModel(private val zeiterfassungRepository: ZeiterfassungRepository) :
-    ViewModel() {
+class UpsertZeitArbeitsverhaeltnisViewModel(zeiterfassungRepository: ZeiterfassungRepository) :
+    UpsertArbeitsverhaeltnisViewModel(zeiterfassungRepository) {
 
-    val updateArbeitsverhaeltnis = ObservableBoolean().apply { this.set(false) }
-    var editable: ObservableBoolean = ObservableBoolean(false)
     var taetigkeitMissing = ObservableBoolean()
 
-    val config: LiveData<CalendarConfiguration> = zeiterfassungRepository.getConfiguration()
-
-    lateinit var eventInfo: EventInfo
     lateinit var zeitArbeitsverhaeltnis: ZeitArbeitsverhaeltnis
     var arbeitsverhaeltnisForAnzeige = ZeitArbeitsverhaeltnisForAnzeige()
 
 
     fun initEventInfoAndArbeitsverhaeltnis(eventInfo: EventInfo, arbeitsverhaeltnis: ZeitArbeitsverhaeltnis) {
-        this.eventInfo = eventInfo.copy()
+        super.initEventInfo(eventInfo)
         this.zeitArbeitsverhaeltnis = arbeitsverhaeltnis.copy()
         arbeitsverhaeltnisForAnzeige.copyValuesFromArbeitsverhaeltnis(this.zeitArbeitsverhaeltnis)
     }
 
 
-    fun updateArbeitsverhaeltnis(): Single<String> {
+    override fun updateArbeitsverhaeltnis(): Single<String> {
         takeRelevantValuesFromArbeitseinsatzForAnzeige()
         return zeiterfassungRepository.updateZeitArbeitsverhaeltnis(zeitArbeitsverhaeltnis, eventInfo)//
     }
 
-    fun addArbeitsverhaeltnis(): Single<Long> {
+    override fun addArbeitsverhaeltnis(): Single<Long> {
         takeRelevantValuesFromArbeitseinsatzForAnzeige()
         return zeiterfassungRepository.addZeitArbeitsverhaeltnisToRemoteCalendar(zeitArbeitsverhaeltnis)//
     }
@@ -81,6 +74,7 @@ class UpsertZeitArbeitsverhaeltnisViewModel(private val zeiterfassungRepository:
     }
 
     private fun takeRelevantValuesFromArbeitseinsatzForAnzeige() {
+        zeitArbeitsverhaeltnis.title = arbeitsverhaeltnisForAnzeige.title.get()
         zeitArbeitsverhaeltnis.kommentar = arbeitsverhaeltnisForAnzeige.kommentar.get()
         arbeitsverhaeltnisForAnzeige.arbeitszeit.get().let {
             zeitArbeitsverhaeltnis.arbeitszeit = Arbeitszeit(it)

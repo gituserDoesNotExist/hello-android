@@ -2,7 +2,9 @@ package com.example.helloandroid.timerecording.view
 
 import android.view.View
 import androidx.databinding.BindingAdapter
+import com.example.helloandroid.HelloInputType
 import com.example.helloandroid.R
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 @BindingAdapter("visibleOrGone")
@@ -22,6 +24,13 @@ fun TextInputLayout.setErroneous(errorneous: Boolean) {
         this.error = this.resources.getString(R.string.wert_eingeben)
     } else {
         this.error = ""
+    }
+}
+
+@BindingAdapter("inputType")
+fun TextInputEditText.setInputType(helloInputType: HelloInputType?) {
+    helloInputType?.let {
+        this.inputType = it.inputType
     }
 }
 

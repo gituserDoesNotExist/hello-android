@@ -6,13 +6,14 @@ import ru.gildor.databinding.observables.ObservableString
 
 open class ArbeitsverhaeltnisForAnzeige {
 
-
+    var title = ObservableString()
     var datum = ObservableField<LocalDate>().apply { this.set(LocalDate.now()) }
     var leistungserbringer = ObservableString()
     var leistungsnehmer = ObservableString()
     var kommentar = ObservableString()
 
     protected fun copyValuesFromArbeitsverhaeltnis(arbeitsverhaeltnis: Arbeitsverhaeltnis) {
+        this.title.set(arbeitsverhaeltnis.title)
         this.datum.set(arbeitsverhaeltnis.datum)
         this.leistungserbringer.set(arbeitsverhaeltnis.leistungserbringer?.name ?: "")
         this.leistungsnehmer.set(arbeitsverhaeltnis.leistungsnehmer.name)

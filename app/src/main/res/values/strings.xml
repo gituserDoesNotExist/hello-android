@@ -59,7 +59,8 @@
     <string name="label_btn_start_timerecording_activity">Zeiterfassung</string>
     <string name="content_description_timerecording_image">timerecording image</string>
     <string name="label_edit_text_neue_zeiterfassung_kommentar">Kommentar</string>
-    <string name="dauer">Dauer</string>
+    <string name="dauer">Dauer (Stunden)</string>
+    <string name="title">Titel</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungserbringer">Leistungserbringer</string>
     <string name="title_configure_app_user_fragment">Konfiguration</string>
     <string name="label_who_is_app_user">Wer benutzt die App?</string>
@@ -87,12 +88,13 @@
     <string name="gesamtkosten">Gesamtkosten:</string>
     <string name="kosten">Kosten:</string>
     <string name="title_edit_arbeitsverhaeltnis_fragment">Details</string>
-    <string name="label_edit_text_neue_zeiterfassun_stueckzahl">Anzahl</string>
+    <string name="stueckzahl">Anzahl</string>
+    <string name="zeit_plus_uhr">%1$s Uhr</string>
     <string name="title_add_arbeitsverhaeltnis_fragment">Anlegen</string>
     <string name="wert_eingeben">Fehlender Wert</string>
     <string name="keine_auswahl">- (Keine Auswahl)</string>
     <string name="bearbeiten">bearbeiten</string>
-    <string name="label_edit_text_neue_zeiterfassung_produkt">Produktname</string>
+    <string name="produktname">Produktname</string>
     <string name="stundensaetze">Stundensätze</string>
     <string name="title_kosten_pro_stueck">Kosten pro Einheit</string>
 

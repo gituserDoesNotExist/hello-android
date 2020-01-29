@@ -27,7 +27,7 @@
                 android:weightSum="1">
 
             <com.google.android.material.textfield.TextInputLayout
-                    style="@style/styleTextInputLayout"
+                    style="@style/Theme.HelloAndroid.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dip">
@@ -106,7 +106,7 @@
                 android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
                 android:src="@drawable/btn_confirm"
                 app:borderWidth="0dip"
-                app:fabSize="mini"
+                app:fabSize="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

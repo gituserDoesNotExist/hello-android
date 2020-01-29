@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="com.example.helloandroid.view.ZonedDateTimeConverter" />
+
+        <variable
+                name="viewModel"
+                type="com.example.helloandroid.timerecording.view.UpsertArbeitsverhaeltnisViewModel" />
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            visibleOrGone="@{viewModel.isUpdateMode}"
+            android:orientation="vertical">
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/erstellt_am" />
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@{@string/zeit_plus_uhr(ZonedDateTimeConverter.dateToString(viewModel.eventInfo.erstelltAm))}"
+                android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                tools:text="26.07.2019 - 16:50" />
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/erstellt_von" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@{viewModel.eventInfo.erstelltVon}"
+                android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info"
+                tools:text="Max" />
+    </LinearLayout>
+
+</layout>

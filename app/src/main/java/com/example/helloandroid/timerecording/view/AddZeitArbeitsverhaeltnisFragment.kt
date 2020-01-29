@@ -23,7 +23,7 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = super.onCreateView(inflater, container, savedInstanceState)
 
-        upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis.set(false)
+        upsertZeitArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
         upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
 
 

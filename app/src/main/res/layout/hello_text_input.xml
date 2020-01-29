@@ -5,7 +5,15 @@
     <data>
 
         <variable
-                name="myHint"
+                name="inputType"
+                type="com.example.helloandroid.HelloInputType" />
+        
+        <variable
+                name="isInvalid"
+                type="Boolean" />
+
+        <variable
+                name="hintText"
                 type="String" />
 
         <variable
@@ -24,26 +32,28 @@
 
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-                style="@style/styleTextInputLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Theme.HelloAndroid.TextInputLayout.OutlinedBox"
+                erroneous="@{isInvalid, default=false}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:hint="@{myHint}">
+                android:hint="@{hintText}">
 
             <com.google.android.material.textfield.TextInputEditText
-                    style="@style/styleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    inputType="@{inputType}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{isEnabled}"
-                    android:focusableInTouchMode="false"
+                    android:focusableInTouchMode="@{clickListener == null}"
                     android:onClick="@{clickListener}"
-                    android:text="@{inputText}"
-                    tools:text="20.02.2019" />
+                    android:text="@={inputText}"
+                    tools:text="open-sth" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
