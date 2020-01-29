@@ -37,7 +37,7 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
     }
 
 
-    override fun performUpsertOperation() {
+    override fun upsert() {
         addArbeitseinsatzDisposable = upsertZeitArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer {

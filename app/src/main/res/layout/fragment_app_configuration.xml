@@ -7,7 +7,7 @@
     <data>
 
         <variable
-                name="configViewModel"
+                name="viewModel"
                 type="com.example.helloandroid.timerecording.view.AppConfigurationViewModel" />
 
         <variable
@@ -16,7 +16,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -26,21 +26,14 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
-            <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Theme.HelloAndroid.TextInputLayout.OutlinedBox"
+            <include
+                    layout="@layout/hello_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dip">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusableInTouchMode="false"
-                        android:hint="@string/label_edit_text_app_user"
-                        android:onClick="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
-                        android:text="@{configViewModel.savedAppUser}"
-                        android:textSize="@dimen/fragment_arbeitsverhaeltnis_edit_details_info" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="@dimen/margin_to_parent"
+                    bind:clickListener="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
+                    bind:hintText="@{@string/label_edit_text_app_user}"
+                    bind:inputText="@{viewModel.savedAppUser}" />
 
 
             <LinearLayout
@@ -53,22 +46,30 @@
                         android:id="@+id/linear_layout_stundensaetze"
                         android:layout_width="match_parent"
                         android:layout_height="0dip"
-                        android:layout_weight="0.5"
                         android:layout_marginEnd="5dip"
+                        android:layout_weight="0.5"
                         android:orientation="vertical">
 
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/stundensaetze" />
+                            android:layout_margin="@dimen/margin_to_parent"
+                            android:text="@string/stundensaetze"
+                            android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view_stundensaetze"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_margin="@dimen/margin_to_parent"
                             android:scrollbars="vertical" />
 
                 </LinearLayout>
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="5dip"
+                        android:src="@drawable/divider" />
 
                 <LinearLayout
                         android:id="@+id/linear_layout_stueckkosten"
@@ -81,12 +82,15 @@
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/title_kosten_pro_stueck" />
+                            android:layout_margin="@dimen/margin_to_parent"
+                            android:text="@string/title_kosten_pro_stueck"
+                            android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_view_kosten_pro_stueck"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_margin="@dimen/margin_to_parent"
                             android:scrollbars="vertical" />
 
                 </LinearLayout>
@@ -100,20 +104,26 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/colorSecondary"
                 android:contentDescription="@string/zeiterfassung_config_confirm_content_description"
                 android:onClick="@{() -> appConfigurationFragment.exitAppConfigFragment()}"
                 android:src="@drawable/btn_confirm"
                 app:borderWidth="0dip"
-                app:fabSize="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:fabSize="normal" />
 
-        <include
-                layout="@layout/hello_progressbar"
-                bind:showProgressbar="@{appConfigurationFragment.showProgressbar}" />
+        <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                    layout="@layout/hello_progressbar"
+                    bind:showProgressbar="@{appConfigurationFragment.showProgressbar}" />
+        </FrameLayout>
+
+    </RelativeLayout>
 
 </layout>

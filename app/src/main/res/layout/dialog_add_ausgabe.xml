@@ -38,7 +38,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/btn_ausgabe_date_range_start"
-                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
@@ -56,7 +56,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
@@ -74,7 +74,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/wert_euro"
@@ -92,7 +92,7 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/beschreibung"

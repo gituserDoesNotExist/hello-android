@@ -1,5 +1,6 @@
 package com.example.helloandroid.timerecording.view
 
+import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.config.Taetigkeit
 
 class SelectTaetigkeitDialog : SelectFilterDialog<Taetigkeit>() {
@@ -20,6 +21,11 @@ class SelectTaetigkeitDialog : SelectFilterDialog<Taetigkeit>() {
         }
     }
 
+
+    override fun dialogTitle(): String {
+        return resources.getString(R.string.taetigkeit)
+    }
+
     private fun extractFilterValuesFromConfig(config: CalendarConfiguration): List<CheckableFilterItem<Taetigkeit>> {
         val allCategories = config.teatigkeiten
         val selectedTaetigkeiten = filterViewModel.suchkriterien.taetigkeitenToFilter
@@ -36,8 +42,7 @@ class SelectTaetigkeitDialog : SelectFilterDialog<Taetigkeit>() {
     }
 
     override fun initSelectedFilterValues() {
-        filterViewModel.suchkriterien.taetigkeitenToFilter
-            .forEach { filterViewModel.addSelectedItemTaetigkeit(it) }
+        filterViewModel.suchkriterien.taetigkeitenToFilter.forEach { filterViewModel.addSelectedItemTaetigkeit(it) }
     }
 
 

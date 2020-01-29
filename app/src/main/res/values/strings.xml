@@ -67,10 +67,10 @@
     <string name="zeiterfassung_config_confirm_content_description">Descritpion</string>
     <string name="add_arbeitsverhaeltnis_date_von_bis">bis</string>
     <string name="label_edit_text_neue_zeiterfassung_leistungsnehmer">Leistungsnehmer</string>
-    <string name="label_edit_text_neue_zeiterfassung_teatigkeit">Teatigkeit</string>
+    <string name="taetigkeit">Tätigkeit</string>
     <string name="title_fragment_configuration">Konfiguration</string>
     <string name="title_fragment_arbeitsvheraeltnis_ubersicht">Übersicht</string>
-    <string name="title_fragment_suchfilter">Suche</string>
+    <string name="title_fragment_suchfilter">Suchfilter</string>
     <string name="text_fragment_welcome_zeiterfassung">Willkommen zur Zeiterfassungsapp. Was wollen Sie tun?</string>
     <string name="erstellt_von">Erstellt von:</string>
     <string name="erstellt_am">Erstellt am</string>

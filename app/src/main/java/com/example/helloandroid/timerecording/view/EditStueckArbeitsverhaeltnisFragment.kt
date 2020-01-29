@@ -73,7 +73,7 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
             })
     }
 
-    override fun initializeArbeitsverhaeltnis(baseActivity: BaseActivity) {
+    override fun initializeArbeitsverhaeltnis() {
         (activity as? BaseActivity)?.let {
             initSharedArbeitsverhaeltnisViewModel(it)
             upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(

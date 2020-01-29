@@ -15,6 +15,7 @@ open class ArbeitsverhaeltnisMapper {
         val leistungsnehmer = config.teilnehmer.find { it.key == leistungsnehmerKey }
 
         target.apply {
+            this.title = remoteArbeitsverhaeltnis.title
             this.datum = remoteArbeitsverhaeltnis.datum
             this.kommentar = remoteArbeitsverhaeltnis.kommentar
             this.leistungserbringer = leistungserbringer

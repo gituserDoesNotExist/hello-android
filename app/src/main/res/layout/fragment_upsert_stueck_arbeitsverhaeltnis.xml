@@ -153,8 +153,8 @@
                     android:layout_weight="0.4"
                     bind:hintText="@{@string/stueckzahl}"
                     bind:inputText="@={IntConverter.intToString(viewModel.arbeitsverhaeltnisForAnzeige.stueckzahl)}"
-                    bind:isEnabled="@{viewModel.editable}"
                     bind:inputType="@{HelloInputType.NUMBER}"
+                    bind:isEnabled="@{viewModel.editable}"
                     bind:isInvalid="@{viewModel.anzahlMissing}" />
 
 

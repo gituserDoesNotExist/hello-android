@@ -5,7 +5,8 @@
         <item name="android:textColorPrimary">@color/colorOnPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorSecondary">@color/colorSecondary</item>
-        <item name="android:textColorSecondary">@color/colorOnPrimary</item> <!--for overflow icon-->
+        <item name="android:textColorSecondary">@color/colorOnPrimary
+        </item> <!--for overflow icon-->
 
         <item name="colorError">@color/colorError</item>
 
@@ -47,18 +48,17 @@
         <item name="android:background">@color/colorSecondary</item>
     </style>
 
-
-    <style name="Theme.HelloAndroid.EditTextStyle">
-        <item name="android:textColor">@color/edit_text_color</item>
+    <style name="Theme.HelloAndroid.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/colorOnBackground</item>
     </style>
 
     <style name="Theme.HelloAndroid.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/edit_text_box_border</item>
+        <item name="boxStrokeColor">@color/text_input_layout_outlined_box</item>
     </style>
 
-    <style name="Theme.HelloAndroid.StyleEditTextSmall">
+    <style name="Theme.HelloAndroid.TextInputEditText">
         <item name="android:padding">8dip</item>
-        <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="android:textColor">@color/color_text_input_edit_text</item>
     </style>
 
     <style name="Divider">

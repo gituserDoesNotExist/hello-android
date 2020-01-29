@@ -1,5 +1,6 @@
 package com.example.helloandroid.timerecording.view
 
+import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.config.Person
 
 class SelectLeistungserbringerDialog : SelectFilterDialog<Person>() {
@@ -16,6 +17,10 @@ class SelectLeistungserbringerDialog : SelectFilterDialog<Person>() {
                 else filterViewModel.removeSelectedItemLeistungserbringer(item)
             }
         }
+    }
+
+    override fun dialogTitle(): String {
+        return resources.getString(R.string.leistungserbringer)
     }
 
     private fun extractFilterValuesFromConfig(config: CalendarConfiguration): List<CheckableFilterItem<Person>> {

@@ -9,7 +9,7 @@ import java.math.BigDecimal
 
 abstract class Arbeitsverhaeltnis {
 
-    var title: String = "Test"
+    var title: String = "No title"
     var datum: LocalDate = LocalDate.now()
     var leistungserbringer: Person? = null
     var leistungsnehmer: Person = Person()

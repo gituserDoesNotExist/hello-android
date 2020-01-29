@@ -94,11 +94,11 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    bind:isInvalid="@{viewModel.taetigkeitMissing}"
                     bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openTaetigkeitListPopUp(v)}"
-                    bind:hintText="@{@string/label_edit_text_neue_zeiterfassung_teatigkeit}"
+                    bind:hintText="@{@string/taetigkeit}"
                     bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.taetigkeit}"
-                    bind:isEnabled="@{viewModel.editable}" />
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:isInvalid="@{viewModel.taetigkeitMissing}" />
 
             <Space
                     android:layout_width="0dip"
@@ -110,10 +110,11 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    bind:inputType="@{HelloInputType.DECIMAL}"
                     bind:hintText="@{@string/dauer}"
                     bind:inputText="@={viewModel.arbeitsverhaeltnisForAnzeige.arbeitszeit}"
-                    bind:isEnabled="@{viewModel.editable}" />
+                    bind:inputType="@{HelloInputType.DECIMAL}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:isInvalid="@{viewModel.dauerMissing}" />
 
 
         </LinearLayout>

@@ -16,14 +16,18 @@
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dip"
-                android:layout_weight="0.5"
-                tools:text="5720:" />
+                android:layout_weight="1"
+                tools:text="5720" />
+
+        <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
         <TextView
                 android:id="@+id/item_stundensatz_wert"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 tools:text="5 € / Stunde" />
 
     </LinearLayout>

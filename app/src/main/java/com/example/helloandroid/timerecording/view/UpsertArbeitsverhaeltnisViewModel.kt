@@ -25,5 +25,7 @@ abstract class UpsertArbeitsverhaeltnisViewModel(protected val zeiterfassungRepo
 
     abstract fun addArbeitsverhaeltnis(): Single<Long>
 
+    abstract fun validate(): Boolean
+
 
 }

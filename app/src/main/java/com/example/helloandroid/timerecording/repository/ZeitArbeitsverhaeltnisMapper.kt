@@ -48,6 +48,7 @@ class ZeitArbeitsverhaeltnisMapper {
     private fun fromArbeitsverhaeltnisToRemoteArbeitsverhaeltnis(
         arbeitsverhaeltnis: ZeitArbeitsverhaeltnis): RemoteArbeitsverhaeltnis {
         return RemoteArbeitsverhaeltnis().apply {
+            this.title = arbeitsverhaeltnis.title
             this.datum = arbeitsverhaeltnis.datum
             this.kommentar = arbeitsverhaeltnis.kommentar
             this.leistungsnehmerKey = arbeitsverhaeltnis.leistungsnehmer.key

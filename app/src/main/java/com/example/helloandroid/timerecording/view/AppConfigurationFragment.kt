@@ -43,7 +43,7 @@ class AppConfigurationFragment : Fragment() {
 
         }
 
-        binding.configViewModel = appConfigurationViewModel
+        binding.viewModel = appConfigurationViewModel
         binding.appConfigurationFragment = this
 
         return rootView

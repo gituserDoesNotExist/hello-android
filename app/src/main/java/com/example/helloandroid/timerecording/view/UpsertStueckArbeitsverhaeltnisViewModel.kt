@@ -36,7 +36,7 @@ class UpsertStueckArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfas
         return zeiterfassungRepository.addStueckArbeitsverhaeltnisToRemoteCalendar(stueckArbeitsverhaeltnis)
     }
 
-    fun isValid(): Boolean {
+    override fun validate(): Boolean {
         val stueckzahlSet = arbeitsverhaeltnisForAnzeige.stueckzahl.get() > 0
         val produktSet = arbeitsverhaeltnisForAnzeige.produktName.get().isNotBlank()
         anzahlMissing.set(!stueckzahlSet)

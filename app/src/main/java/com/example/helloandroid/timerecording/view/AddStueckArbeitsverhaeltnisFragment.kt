@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
@@ -37,24 +36,16 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
 
 
     override fun upsert() {
-        if (upsertStueckArbeitsverhaeltnisViewModel.isValid()) {
-            updateArbeitsverhaeltnis()
-        } else {
-            Toast.makeText(this.context, this.resources.getString(R.string.fehlende_daten), Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun initializeArbeitsverhaeltnis(baseActivity: BaseActivity) {
-        upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(),
-            StueckArbeitsverhaeltnis())
-    }
-
-    private fun updateArbeitsverhaeltnis() {
         addArbeitseinsatzDisposable = upsertStueckArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
-            .subscribe(Consumer<Long> {
+            .subscribe(Consumer {
                 ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
+    }
+
+    override fun initializeArbeitsverhaeltnis() {
+        upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(),
+            StueckArbeitsverhaeltnis())
     }
 
     override fun onStop() {

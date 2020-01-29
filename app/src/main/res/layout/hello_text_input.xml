@@ -45,11 +45,11 @@
                 android:hint="@{hintText}">
 
             <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Theme.HelloAndroid.StyleEditTextSmall"
+                    style="@style/Theme.HelloAndroid.TextInputEditText"
                     inputType="@{inputType}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="@{isEnabled}"
+                    android:enabled="@{isEnabled, default=true}"
                     android:focusableInTouchMode="@{clickListener == null}"
                     android:onClick="@{clickListener}"
                     android:text="@={inputText}"

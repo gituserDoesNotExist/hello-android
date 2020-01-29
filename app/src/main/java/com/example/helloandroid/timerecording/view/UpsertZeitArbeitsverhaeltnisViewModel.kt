@@ -16,6 +16,7 @@ class UpsertZeitArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfassu
     UpsertArbeitsverhaeltnisViewModel(zeiterfassungRepository) {
 
     var taetigkeitMissing = ObservableBoolean()
+    var dauerMissing = ObservableBoolean()
 
     lateinit var zeitArbeitsverhaeltnis: ZeitArbeitsverhaeltnis
     var arbeitsverhaeltnisForAnzeige = ZeitArbeitsverhaeltnisForAnzeige()
@@ -36,6 +37,14 @@ class UpsertZeitArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfassu
     override fun addArbeitsverhaeltnis(): Single<Long> {
         takeRelevantValuesFromArbeitseinsatzForAnzeige()
         return zeiterfassungRepository.addZeitArbeitsverhaeltnisToRemoteCalendar(zeitArbeitsverhaeltnis)//
+    }
+
+    override fun validate(): Boolean {
+        val taetigkeitSet = arbeitsverhaeltnisForAnzeige.taetigkeit.get().isNotBlank()
+        val dauerGreaterThanZero = Arbeitszeit(arbeitsverhaeltnisForAnzeige.arbeitszeit.get()).getTimeInMinutes() > 0
+        taetigkeitMissing.set(!taetigkeitSet)
+        dauerMissing.set(!dauerGreaterThanZero)
+        return taetigkeitSet && dauerGreaterThanZero
     }
 
 
@@ -83,12 +92,6 @@ class UpsertZeitArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfassu
 
     fun deleteArbeitsverhaeltnis(): Single<String> {
         return zeiterfassungRepository.deleteArbeitsverhaeltnis(eventInfo)
-    }
-
-    fun isValid(): Boolean {
-        val taetigkeitSet = arbeitsverhaeltnisForAnzeige.taetigkeit.get().isNotBlank()
-        taetigkeitMissing.set(!taetigkeitSet)
-        return taetigkeitSet
     }
 
 }

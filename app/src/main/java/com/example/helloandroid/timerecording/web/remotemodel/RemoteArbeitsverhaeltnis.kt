@@ -7,6 +7,7 @@ import java.math.BigInteger
 
 class RemoteArbeitsverhaeltnis {
 
+    var title: String = ""
     var kommentar: String = ""
     lateinit var datum: LocalDate
     lateinit var leistungsnehmerKey: String

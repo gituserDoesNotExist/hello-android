@@ -59,7 +59,7 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
     }
 
 
-    override fun performUpsertOperation() {
+    override fun upsert() {
         updateArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {
@@ -69,16 +69,16 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
 
     override fun initializeArbeitsverhaeltnis() {
         (activity as? BaseActivity)?.let {
-        initSharedArbeitsverhaeltnisViewModel(it)
-        upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
-            sharedZeitArbeitsverhaeltnisViewModel.eventInfo,
-            sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
+            initSharedArbeitsverhaeltnisViewModel(it)
+            upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
+                sharedZeitArbeitsverhaeltnisViewModel.eventInfo,
+                sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
         }
     }
 
-    private fun initSharedArbeitsverhaeltnisViewModel(it: BaseActivity) {
+    private fun initSharedArbeitsverhaeltnisViewModel(activity: BaseActivity) {
         sharedZeitArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(it).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
+            ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
     }
 
 

@@ -6,20 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
-import com.example.helloandroid.timerecording.config.Abrechenbar
-import com.example.helloandroid.timerecording.config.Maschine
-import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.view.BigDecimalConverter
+import java.math.BigDecimal
 
 class StundensaetzeRecyclerViewAdapter(config: CalendarConfiguration) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val abrechenbareLeistungsbringer = ArrayList<Abrechenbar>()
+    private val bezeichnungenUndStundensaetze = ArrayList<Pair<String, BigDecimal>>()
 
     init {
-        abrechenbareLeistungsbringer.addAll(config.anbaugeraete)
-        abrechenbareLeistungsbringer.addAll(config.fahrzeuge)
-        abrechenbareLeistungsbringer.addAll(config.teilnehmer)
+        bezeichnungenUndStundensaetze.addAll(config.anbaugeraete.map { Pair(it.bezeichnung, it.stundensatz) })
+        bezeichnungenUndStundensaetze.addAll(config.fahrzeuge.map { Pair(it.bezeichnung, it.stundensatz) })
+        bezeichnungenUndStundensaetze.addAll(config.teilnehmer.map { Pair(it.name, it.stundensatz) })
     }
 
 
@@ -29,24 +27,24 @@ class StundensaetzeRecyclerViewAdapter(config: CalendarConfiguration) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = abrechenbareLeistungsbringer[position]
+        val bezeichnung = bezeichnungenUndStundensaetze[position].first
+        val stundensatz = bezeichnungenUndStundensaetze[position].second
 
         if (holder is ItemViewHolder) {
-            holder.bezeichnung.text =
-                if (item is Person) "${item.name}:" else if (item is Maschine) "${item.bezeichnung}:" else ""
-            holder.wert.text = stundensatzForAnzeige(holder, item)
+            holder.bezeichnung.text = bezeichnung
+            holder.wert.text = stundensatzForAnzeige(holder, stundensatz)
         }
 
     }
 
-    private fun stundensatzForAnzeige(holder: RecyclerView.ViewHolder, item: Abrechenbar): String {
-        val stundensatz = BigDecimalConverter.bigDecimalToString(item.stundensatz)
-        return holder.itemView.resources.getString(R.string.euro_pro_stunde, stundensatz)
+    private fun stundensatzForAnzeige(holder: RecyclerView.ViewHolder, stundensatz: BigDecimal): String {
+        val satz = BigDecimalConverter.bigDecimalToString(stundensatz)
+        return holder.itemView.resources.getString(R.string.euro_pro_stunde, satz)
     }
 
 
     override fun getItemCount(): Int {
-        return abrechenbareLeistungsbringer.size
+        return bezeichnungenUndStundensaetze.size
     }
 
 
