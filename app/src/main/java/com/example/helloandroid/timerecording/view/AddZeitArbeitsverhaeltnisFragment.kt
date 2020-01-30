@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
@@ -26,6 +27,9 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
         upsertZeitArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
         upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
 
+        appConfigurationViewModel.calendarConfig.observe(this, Observer {
+            upsertZeitArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
+        })
 
 
         (activity as? BaseActivity)?.let {

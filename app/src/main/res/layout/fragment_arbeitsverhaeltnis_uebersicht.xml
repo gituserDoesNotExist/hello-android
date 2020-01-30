@@ -45,34 +45,17 @@
                 android:src="@drawable/divider" />
 
 
-        <FrameLayout
-                android:id="@+id/constraint_layout_arbeitsverhaeltnisse"
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_arbeitsverhaeltnisse"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
+                android:layout_marginStart="@dimen/margin_to_parent"
+                android:layout_marginEnd="@dimen/margin_to_parent"
                 android:layout_above="@id/bottom_bar"
                 android:layout_below="@id/separator"
-                android:layout_marginStart="@dimen/margin_to_parent"
-                android:layout_marginEnd="@dimen/margin_to_parent">
+                android:scrollbars="vertical"
+                tools:listitem="@layout/item_arbeitsverhaeltnis" />
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/swiperefresh_arbeitsverhaeltnisse"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_arbeitsverhaeltnisse"
-                        android:layout_width="0dip"
-                        android:layout_height="0dip"
-                        android:scrollbars="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:listitem="@layout/item_arbeitsverhaeltnis" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-        </FrameLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"

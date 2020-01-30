@@ -3,7 +3,6 @@ package com.example.helloandroid.timerecording.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableRow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloandroid.R
@@ -61,7 +60,7 @@ class ArbeitseinsaetzeRecyclerViewAdapter(private val arbeitseinsaetze: Arbeitse
     class ItemViewHolder(itemView: View, onClickListener: View.OnClickListener) : RecyclerView.ViewHolder(itemView) {
         lateinit var arbeitsverhaeltnisRemoteId: String
         val title: TextView = itemView.title_arbeitsverhaeltnis
-        val tableRowLeistungserbringer: TableRow = itemView.table_row_leistungserbringer
+        val tableRowLeistungserbringer = itemView.table_row_leistungserbringer
         val date: TextView = itemView.item_arbeitsverhaeltnis_date
         val leistungserbringer: TextView = itemView.item_arbeitsverhaeltnis_leistungserbringer
         val leistungsnehmer: TextView = itemView.item_arbeitsverhaeltnis_leistungsnehmer

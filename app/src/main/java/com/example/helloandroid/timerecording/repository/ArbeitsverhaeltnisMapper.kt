@@ -23,5 +23,13 @@ open class ArbeitsverhaeltnisMapper {
         }
     }
 
+    fun mapToRemoteArbeitsverhaeltnis(target: RemoteArbeitsverhaeltnis, source: Arbeitsverhaeltnis) {
+        target.title = source.title
+        target.datum = source.datum
+        target.kommentar = source.kommentar
+        target.leistungsnehmerKey = source.leistungsnehmer.key
+        target.leistungserbringerKey = source.leistungserbringer?.key
+    }
+
 
 }

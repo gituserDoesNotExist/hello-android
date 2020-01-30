@@ -14,9 +14,8 @@ class ArbeitsverhaeltnisUebersichtViewModel(private val zeiterfassungRepository:
 
     val arbeitseinsaetze = MutableLiveData<Arbeitseinsaetze>()
     private var fetchArbeitsverhaeltnisseDisposable: Disposable? = null
-    val showProgressbar = ObservableBoolean().apply { this.set(true) }
+    val showProgressbar = ObservableBoolean(true)
     val gesamtkosten = ObservableField<BigDecimal>().apply { this.set(BigDecimal.ZERO) }
-
 
     fun loadArbeitsverhaeltnisse(suchkriterien: Suchkriterien, showProgessIndicator: Boolean) {
         showProgressbar.set(showProgessIndicator)

@@ -31,6 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_to_parent"
+                    bind:isEnabled="@{true}"
                     bind:clickListener="@{(v) -> appConfigurationFragment.openParticipantsListPopupWindow(v)}"
                     bind:hintText="@{@string/label_edit_text_app_user}"
                     bind:inputText="@{viewModel.savedAppUser}" />

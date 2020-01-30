@@ -2,7 +2,8 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:bind="http://schemas.android.com/apk/res-auto">
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -33,15 +34,45 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dip">
 
-        <include
-                android:id="@+id/metadaten"
-                layout="@layout/arbeitsverhaeltnis_metadaten"
+        <LinearLayout
+                android:id="@+id/metadaten_and_kosten"
+                visibleOrGone="@{viewModel.isUpdateMode}"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:viewModel="@{viewModel}" />
+                app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                    layout="@layout/arbeitsverhaeltnis_metadaten"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    bind:viewModel="@{viewModel}" />
+
+            <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="center_vertical|end"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kosten" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dip"
+                        android:paddingEnd="5dip"
+                        android:text="@{@string/kosten_in_euro(BigDecimalConverter.bigDecimalToString(viewModel.arbeitsverhaeltnisForAnzeige.kosten))}"
+                        tools:text="500 €" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -52,10 +83,11 @@
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/metadaten">
+                app:layout_constraintTop_toBottomOf="@id/metadaten_and_kosten">
 
             <com.google.android.material.textfield.TextInputLayout
                     style="@style/Theme.HelloAndroid.TextInputLayout.OutlinedBox"
+                    errorneous="@{viewModel.titleMissing}"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -69,8 +101,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="@{viewModel.editable}"
-                        android:hint="@string/title"
-                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.title}" />
+                        android:hint="@string/title_required"
+                        android:text="@={viewModel.arbeitsverhaeltnisForAnzeige.title}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -86,10 +118,52 @@
                     bind:clickListener="@{() -> upsertArbeitsverhaeltnisDetailsFragment.openDatePickerDialog()}"
                     bind:hintText="@{@string/datum}"
                     bind:inputText="@{LocalDateConverter.dateToString(viewModel.arbeitsverhaeltnisForAnzeige.datum)}"
+                    bind:isDate="@{true}"
                     bind:isEnabled="@{viewModel.editable}" />
 
         </LinearLayout>
 
+        <LinearLayout
+                android:id="@+id/layout_produktname_and_stueckzahl"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toTopOf="@id/layout_leistungserbringer_und_nehmer"
+                app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/title_and_date">
+
+
+            <include
+                    layout="@layout/hello_text_input"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openProduktListPopUp(v)}"
+                    bind:hintText="@{@string/produktname_required}"
+                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.produktName}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:isInvalid="@{viewModel.produktnameMissing}" />
+
+            <Space
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1" />
+
+            <include
+                    layout="@layout/hello_text_input"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    bind:hintText="@{@string/stueckzahl_required}"
+                    bind:inputText="@={IntConverter.intToString(viewModel.arbeitsverhaeltnisForAnzeige.stueckzahl)}"
+                    bind:inputType="@{HelloInputType.NUMBER}"
+                    bind:isEnabled="@{viewModel.editable}"
+                    bind:isInvalid="@{viewModel.anzahlMissing}" />
+
+
+        </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/layout_leistungserbringer_und_nehmer"
@@ -97,10 +171,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1"
-                app:layout_constraintBottom_toTopOf="@id/layout_produktname_and_stueckzahl"
+                app:layout_constraintBottom_toTopOf="@id/kommentar"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/title_and_date">
+                app:layout_constraintTop_toBottomOf="@id/layout_produktname_and_stueckzahl">
 
 
             <include
@@ -127,49 +201,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-                android:id="@+id/layout_produktname_and_stueckzahl"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                app:layout_constraintBottom_toTopOf="@id/kommentar"
-                app:layout_constraintEnd_toEndOf="@id/guideline_right"
-                app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/layout_leistungserbringer_und_nehmer">
-
-
-            <include
-                    layout="@layout/hello_text_input"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    bind:clickListener="@{(v) -> upsertArbeitsverhaeltnisDetailsFragment.openProduktListPopUp(v)}"
-                    bind:hintText="@{@string/produktname}"
-                    bind:inputText="@{viewModel.arbeitsverhaeltnisForAnzeige.produktName}"
-                    bind:isEnabled="@{viewModel.editable}"
-                    bind:isInvalid="@{viewModel.produktnameMissing}" />
-
-            <Space
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1" />
-
-            <include
-                    layout="@layout/hello_text_input"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    bind:hintText="@{@string/stueckzahl}"
-                    bind:inputText="@={IntConverter.intToString(viewModel.arbeitsverhaeltnisForAnzeige.stueckzahl)}"
-                    bind:inputType="@{HelloInputType.NUMBER}"
-                    bind:isEnabled="@{viewModel.editable}"
-                    bind:isInvalid="@{viewModel.anzahlMissing}" />
-
-
-        </LinearLayout>
-
-
         <include
                 android:id="@+id/kommentar"
                 layout="@layout/hello_text_input"
@@ -178,7 +209,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline_right"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/layout_produktname_and_stueckzahl"
+                app:layout_constraintTop_toBottomOf="@id/layout_leistungserbringer_und_nehmer"
                 bind:hintText="@{@string/label_edit_text_neue_zeiterfassung_kommentar}"
                 bind:inputText="@={viewModel.arbeitsverhaeltnisForAnzeige.kommentar}"
                 bind:isEnabled="@{viewModel.editable}" />

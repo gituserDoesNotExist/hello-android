@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.DividerItemDecoration
 import com.example.helloandroid.R
@@ -34,11 +33,11 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         setHasOptionsMenu(true)
         val binding = FragmentArbeitsverhaeltnisUebersichtBinding.inflate(inflater, container, false)
         val rootView = binding.root
-        configureOnSwipeDownToRefresh(binding.swiperefreshArbeitsverhaeltnisse)
         (activity as? BaseActivity)?.let { activity ->
             activity.supportActionBar?.title = resources.getString(R.string.title_fragment_arbeitsvheraeltnis_ubersicht)
             configureNetworkErrorHandling(activity)
             initializeViewModel(activity)
+            loadArbeitsverhaeltnisse()
             addFiltersRecyclerView(rootView, activity)
             arbeitsverhaeltnisViewModel.arbeitseinsaetze.observe(this, Observer {
                 addEventsRecyclerView(rootView, activity, it)
@@ -48,29 +47,7 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         binding.arbeitsverhaltnisUebersichtFragment = this
         binding.viewModel = arbeitsverhaeltnisViewModel
 
-
-
-
         return rootView
-    }
-
-    private fun configureOnSwipeDownToRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
-        swipeRefreshLayout.setOnRefreshListener {
-            arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, false)
-            swipeRefreshLayout.isRefreshing = false
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_uebersicht, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_filter_arbeitshverhaeltnisse -> openFilterFragment()
-        }
-        return false
     }
 
     private fun configureNetworkErrorHandling(activity: BaseActivity) {
@@ -87,14 +64,15 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
             .get(FiltersViewModel::class.java)
         arbeitsverhaeltnisViewModel =
             ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)//
-                .apply {
-                    this.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, true)
-                }
+                .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)
         sharedZeitArbeitsverhaeltnisViewModel =
             ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
         sharedStueckArbeitsverhaeltnisViewModel =
             ViewModelProviders.of(activity).get(SharedStueckArbeitsverhaeltnisViewModel::class.java)
+    }
+
+    private fun loadArbeitsverhaeltnisse() {
+        arbeitsverhaeltnisViewModel.loadArbeitsverhaeltnisse(filtersViewModel.suchkriterien, true)
     }
 
     private fun addEventsRecyclerView(root: View, activity: AppCompatActivity, arbeitseinsaetze: Arbeitseinsaetze) {
@@ -136,14 +114,27 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_arbeitsverhaeltnis_uebersicht, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-    fun openAddArbeitsverhaeltnisFragment() {
-        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddArbeitsverhaeltnis()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_filter_arbeitshverhaeltnisse -> openFilterFragment()
+            R.id.action_refresh_arbeitshverhaeltnisse -> loadArbeitsverhaeltnisse()
+        }
+        return false
     }
 
     private fun openFilterFragment() {
         ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToSuchfilter()
     }
+
+    fun openAddArbeitsverhaeltnisFragment() {
+        ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddArbeitsverhaeltnis()
+    }
+
 
 
 }

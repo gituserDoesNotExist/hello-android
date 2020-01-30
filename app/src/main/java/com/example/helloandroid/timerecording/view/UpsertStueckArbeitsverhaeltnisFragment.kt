@@ -31,7 +31,6 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnis
         (activity as? BaseActivity)?.let { activity ->
             initializeArbeitsverhaeltnis()
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
                 produktListPopupWindow = createListPopupWindowProdukt(activity, it.produkte)
             })
         }

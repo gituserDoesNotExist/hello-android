@@ -38,7 +38,7 @@
                 android:id="@+id/element_remove_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="@color/textColorBackgroundDisabled"
+                android:tint="@color/colorOnBackgroundDisabled"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_cancel_black_24dp" />
 

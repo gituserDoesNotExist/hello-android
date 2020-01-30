@@ -42,9 +42,11 @@ class UpsertZeitArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfassu
     override fun validate(): Boolean {
         val taetigkeitSet = arbeitsverhaeltnisForAnzeige.taetigkeit.get().isNotBlank()
         val dauerGreaterThanZero = Arbeitszeit(arbeitsverhaeltnisForAnzeige.arbeitszeit.get()).getTimeInMinutes() > 0
+        val titleSet = arbeitsverhaeltnisForAnzeige.title.get().isNotBlank()
         taetigkeitMissing.set(!taetigkeitSet)
         dauerMissing.set(!dauerGreaterThanZero)
-        return taetigkeitSet && dauerGreaterThanZero
+        titleMissing.set(!titleSet)
+        return taetigkeitSet && dauerGreaterThanZero && titleSet
     }
 
 

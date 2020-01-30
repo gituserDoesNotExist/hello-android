@@ -21,8 +21,9 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
 
     private val calendarConfigMapper = CalendarConfigurationMapper()
 
-    fun existsConfiguration(): Boolean {
-        return calendarConfigurationDao.existsConfiguration()
+    fun existsConfiguration(): Single<Boolean> {
+        return Single.fromCallable<Boolean> { calendarConfigurationDao.existsConfiguration() }
+            .subscribeOn(Schedulers.io())
     }
 
     fun getConfiguration(): LiveData<CalendarConfiguration> {
@@ -79,12 +80,9 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
         return titleDao.insertTitle(TitleEntity(title))
     }
 
-    fun deleteAllTitles() {
-        titleDao.deleteAll()
-    }
 
     fun getTitles(): Single<List<String>> {
-        return titleDao.getTitles().observeOn(Schedulers.io())//
+        return titleDao.getTitles().subscribeOn(Schedulers.io())//
             .map { titles ->
                 titles.map { it.title }
             }

@@ -58,7 +58,7 @@
 
     <style name="Theme.HelloAndroid.TextInputEditText">
         <item name="android:padding">8dip</item>
-        <item name="android:textColor">@color/color_text_input_edit_text</item>
+        <item name="android:textColor">@color/color_enabled_disabled</item>
     </style>
 
     <style name="Divider">

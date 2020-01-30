@@ -28,7 +28,6 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
     }
 
     private fun saveTitles(arbeitseinsaetze: Arbeitseinsaetze) {
-        appConfigurationRepository.deleteAllTitles()
         arbeitseinsaetze.einsaetze.forEach {
             appConfigurationRepository.saveTitle(it.arbeitsverhaeltnis.title)
         }
@@ -63,7 +62,7 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
         return appConfigurationRepository.getConfiguration()
     }
 
-    fun existsConfiguration(): Boolean {
+    fun existsConfiguration(): Single<Boolean> {
         return appConfigurationRepository.existsConfiguration()
     }
 

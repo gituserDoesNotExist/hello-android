@@ -38,10 +38,11 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_to_parent"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     bind:clickListener="@{() -> suchfilterFragment.openDatePickerStartDate()}"
                     bind:hintText="@{@string/start}"
                     bind:inputText="@{LocalDateConverter.dateToString(viewModel.observableStartDate)}"
+                    bind:isDate="@{true}"
                     bind:isEnabled="@{true}" />
 
             <include
@@ -49,10 +50,11 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_to_parent"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     bind:clickListener="@{() -> suchfilterFragment.openDatePickerEndDate()}"
                     bind:hintText="@{@string/ende}"
                     bind:inputText="@{LocalDateConverter.dateToString(viewModel.observableEndDate)}"
+                    bind:isDate="@{true}"
                     bind:isEnabled="@{true}" />
 
         </LinearLayout>

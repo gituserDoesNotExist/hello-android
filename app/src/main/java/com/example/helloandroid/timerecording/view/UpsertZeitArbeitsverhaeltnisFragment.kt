@@ -31,7 +31,6 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.let { activity ->
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                upsertZeitArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
                 fahrzeugListPopupWindow = createListPopupWindowFahrzeug(activity, it.fahrzeuge)
                 anbaugeraetListPopupWindow = createListPopupWindowAnaugeraet(activity, it.anbaugeraete)
                 taetigkeitListPopupWindow = createListPopupWindowTaetigkeit(activity, it.teatigkeiten)

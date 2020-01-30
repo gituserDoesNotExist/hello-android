@@ -9,9 +9,9 @@ import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.config.Produkt
 import com.example.helloandroid.view.BigDecimalConverter
 
-class StueckkostenRecyclerViewAdapter(private val produkte: List<Produkt>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StueckkostenRecyclerViewAdapter(produkte: List<Produkt>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var produkte: List<Produkt> = produkte.sortedBy { it.name }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

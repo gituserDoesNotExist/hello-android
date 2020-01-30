@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
@@ -25,6 +26,10 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
 
         upsertStueckArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
         upsertStueckArbeitsverhaeltnisViewModel.editable.set(true)
+
+        appConfigurationViewModel.calendarConfig.observe(this, Observer {
+            upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
+        })
 
         (activity as? BaseActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)

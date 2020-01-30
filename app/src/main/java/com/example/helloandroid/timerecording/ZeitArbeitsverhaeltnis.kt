@@ -1,11 +1,8 @@
 package com.example.helloandroid.timerecording
 
-import android.content.res.Resources
-import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.config.Maschine
 import com.example.helloandroid.timerecording.config.Taetigkeit
 import com.example.helloandroid.timerecording.view.Suchkriterien
-import org.apache.commons.lang3.StringUtils
 import org.threeten.bp.LocalDateTime
 import java.math.BigDecimal
 

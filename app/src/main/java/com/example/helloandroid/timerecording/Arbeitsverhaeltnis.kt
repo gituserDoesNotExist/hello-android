@@ -8,7 +8,7 @@ import java.math.BigDecimal
 
 abstract class Arbeitsverhaeltnis {
 
-    var title: String = "No title"
+    var title: String = ""
     var datum: LocalDate = LocalDate.now()
     var leistungserbringer: Person? = null
     var leistungsnehmer: Person = Person()
@@ -28,6 +28,7 @@ abstract class Arbeitsverhaeltnis {
     }
 
     protected fun mapToArbeitsverhaeltnis(source: Arbeitsverhaeltnis, target: Arbeitsverhaeltnis) {
+        target.title = source.title
         target.datum = source.datum
         target.leistungserbringer = source.leistungserbringer
         target.leistungsnehmer = source.leistungsnehmer

@@ -39,9 +39,11 @@ class UpsertStueckArbeitsverhaeltnisViewModel(zeiterfassungRepository: Zeiterfas
     override fun validate(): Boolean {
         val stueckzahlSet = arbeitsverhaeltnisForAnzeige.stueckzahl.get() > 0
         val produktSet = arbeitsverhaeltnisForAnzeige.produktName.get().isNotBlank()
+        val titleSet = arbeitsverhaeltnisForAnzeige.title.get().isNotBlank()
         anzahlMissing.set(!stueckzahlSet)
         produktnameMissing.set(!produktSet)
-        return stueckzahlSet && produktSet
+        titleMissing.set(!titleSet)
+        return stueckzahlSet && produktSet && titleSet
     }
 
 

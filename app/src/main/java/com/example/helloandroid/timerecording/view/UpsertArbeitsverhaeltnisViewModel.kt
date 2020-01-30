@@ -11,7 +11,8 @@ abstract class UpsertArbeitsverhaeltnisViewModel(protected val zeiterfassungRepo
     ViewModel() {
 
     val isUpdateMode = ObservableBoolean()
-    var editable: ObservableBoolean = ObservableBoolean()
+    var editable = ObservableBoolean()
+    var titleMissing = ObservableBoolean()
 
     val config: LiveData<CalendarConfiguration> = zeiterfassungRepository.getConfiguration()
 

@@ -3,6 +3,7 @@ package com.example.helloandroid.timerecording
 import androidx.databinding.ObservableField
 import org.threeten.bp.LocalDate
 import ru.gildor.databinding.observables.ObservableString
+import java.math.BigDecimal
 
 open class ArbeitsverhaeltnisForAnzeige {
 
@@ -11,6 +12,7 @@ open class ArbeitsverhaeltnisForAnzeige {
     var leistungserbringer = ObservableString()
     var leistungsnehmer = ObservableString()
     var kommentar = ObservableString()
+    var kosten = ObservableField<BigDecimal>()
 
     protected fun copyValuesFromArbeitsverhaeltnis(arbeitsverhaeltnis: Arbeitsverhaeltnis) {
         this.title.set(arbeitsverhaeltnis.title)
@@ -18,6 +20,7 @@ open class ArbeitsverhaeltnisForAnzeige {
         this.leistungserbringer.set(arbeitsverhaeltnis.leistungserbringer?.name ?: "")
         this.leistungsnehmer.set(arbeitsverhaeltnis.leistungsnehmer.name)
         this.kommentar.set(arbeitsverhaeltnis.kommentar)
+        this.kosten.set(arbeitsverhaeltnis.calculateKostenForArbeitsverhaeltnis())
     }
 
 

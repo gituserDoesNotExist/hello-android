@@ -21,6 +21,6 @@
     <color name="colorOnSurface">#000000</color>
     <color name="colorOnSurfaceSixtyPercentOpacity">#99000000</color>
     <color name="colorOnError">#FFFFFF</color>
-    <color name="textColorBackgroundDisabled">#919191</color>
+    <color name="colorOnBackgroundDisabled">#919191</color>
 
 </resources>
