@@ -18,6 +18,9 @@ class StundensaetzeRecyclerViewAdapter(config: CalendarConfiguration) :
         bezeichnungenUndStundensaetze.addAll(config.anbaugeraete.map { Pair(it.bezeichnung, it.stundensatz) })
         bezeichnungenUndStundensaetze.addAll(config.fahrzeuge.map { Pair(it.bezeichnung, it.stundensatz) })
         bezeichnungenUndStundensaetze.addAll(config.teilnehmer.map { Pair(it.name, it.stundensatz) })
+        bezeichnungenUndStundensaetze.sortBy {
+            it.first
+        }
     }
 
 

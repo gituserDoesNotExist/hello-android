@@ -54,15 +54,24 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@id/metadaten">
 
-            <include
-                    layout="@layout/hello_text_input"
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Theme.HelloAndroid.TextInputLayout.OutlinedBox"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dip"
                     android:layout_weight="0.5"
-                    bind:hintText="@{@string/title}"
-                    bind:inputText="@={viewModel.arbeitsverhaeltnisForAnzeige.title}"
-                    bind:isEnabled="@{viewModel.editable}" />
+                    app:layout_constraintEnd_toEndOf="@id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@id/guideline_left"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <AutoCompleteTextView
+                        android:id="@+id/autocomplete_title"
+                        style="@style/Theme.HelloAndroid.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{viewModel.editable}"
+                        android:hint="@string/title"
+                        android:text="@{viewModel.arbeitsverhaeltnisForAnzeige.title}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                     android:layout_width="0dip"

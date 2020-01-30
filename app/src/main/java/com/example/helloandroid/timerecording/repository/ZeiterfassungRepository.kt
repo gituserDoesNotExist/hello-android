@@ -22,7 +22,16 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
                 arbeitsverhaeltnisRepository.fetchArbeitsverhaeltnisseFromRemote(suchkriterien, it)
             }.map {
                 Arbeitseinsaetze(it)
+            }.doOnSuccess {
+                saveTitles(it)
             }
+    }
+
+    private fun saveTitles(arbeitseinsaetze: Arbeitseinsaetze) {
+        appConfigurationRepository.deleteAllTitles()
+        arbeitseinsaetze.einsaetze.forEach {
+            appConfigurationRepository.saveTitle(it.arbeitsverhaeltnis.title)
+        }
     }
 
     fun addZeitArbeitsverhaeltnisToRemoteCalendar(arbeitsverhaeltnis: ZeitArbeitsverhaeltnis): Single<Long> {
@@ -38,11 +47,11 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
     }
 
     fun updateZeitArbeitsverhaeltnis(verhaeltnis: ZeitArbeitsverhaeltnis, info: EventInfo): Single<String> {
-        return arbeitsverhaeltnisRepository.updateZeitArbeitsverhaeltnis(verhaeltnis,info)
+        return arbeitsverhaeltnisRepository.updateZeitArbeitsverhaeltnis(verhaeltnis, info)
     }
 
     fun updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis: StueckArbeitsverhaeltnis, info: EventInfo): Single<String> {
-        return arbeitsverhaeltnisRepository.updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis,info)
+        return arbeitsverhaeltnisRepository.updateStueckArbeitsverhaeltnis(arbeitsverhaeltnis, info)
     }
 
 
@@ -64,6 +73,10 @@ class ZeiterfassungRepository(private val appConfigurationRepository: AppConfigu
 
     fun saveAppUser(appUser: Person) {
         appConfigurationRepository.saveAppUser(appUser)
+    }
+
+    fun getTitles(): Single<List<String>> {
+        return appConfigurationRepository.getTitles()
     }
 
 

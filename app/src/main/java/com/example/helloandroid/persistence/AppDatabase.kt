@@ -8,10 +8,13 @@ import androidx.room.TypeConverters
 import com.example.helloandroid.finances.persistence.*
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
+import com.example.helloandroid.timerecording.persistence.TitleDao
+import com.example.helloandroid.timerecording.persistence.TitleEntity
 import com.example.helloandroid.verzicht.persistence.Verzicht
 import com.example.helloandroid.verzicht.persistence.VerzichtDao
 
-@Database(entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class, CalendarConfigurationEntity::class],
+@Database(
+    entities = [Verzicht::class, PostenEntity::class, AusgabeEntity::class, CalendarConfigurationEntity::class, TitleEntity::class],
     version = 1)
 @TypeConverters(OptionalLocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -25,6 +28,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun postenWithAusgabeDao(): PostenWithAusgabenDao
 
     abstract fun calendarConfigurationDao(): CalendarConfigurationDao
+
+    abstract fun titleDao(): TitleDao
 
     companion object {
         private const val DATABASE_NAME = "APP_DATABASE"

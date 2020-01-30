@@ -14,19 +14,6 @@ class ZeitArbeitsverhaeltnis(var fahrzeug: Maschine? = null, var anbaugeraet: Ma
                              var arbeitszeit: Arbeitszeit = Arbeitszeit(BigDecimal.ZERO)) : Arbeitsverhaeltnis() {
 
 
-    override fun createDescription(resources: Resources): String {
-        val fahrzeugBezeichnung = fahrzeug?.bezeichnung ?: ""
-        val anbaugeraetBezeichnung = anbaugeraet?.bezeichnung ?: ""
-        return when {
-            (StringUtils.isBlank(fahrzeugBezeichnung) && StringUtils.isBlank(anbaugeraetBezeichnung)) -> ""
-            StringUtils.isBlank(anbaugeraetBezeichnung) -> fahrzeugBezeichnung
-            else -> {
-                resources.getString(//
-                    R.string.description_zeit_arbeitsverhaeltnis, fahrzeugBezeichnung, anbaugeraetBezeichnung)
-
-            }
-        }
-    }
 
 
     override fun calculateEndDatum(): LocalDateTime {

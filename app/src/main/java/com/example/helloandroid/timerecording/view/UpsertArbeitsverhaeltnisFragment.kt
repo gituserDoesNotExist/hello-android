@@ -31,6 +31,7 @@ abstract class UpsertArbeitsverhaeltnisFragment : Fragment() {
         (activity as? BaseActivity)?.let { activity ->
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             initializeViewModel(activity)
+            appConfigurationViewModel.loadTitles()
             initializeArbeitsverhaeltnis()
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
                 leistungserbringerListPopupWindow = createListPopupWindowLeistungserbringer(activity, it.teilnehmer)

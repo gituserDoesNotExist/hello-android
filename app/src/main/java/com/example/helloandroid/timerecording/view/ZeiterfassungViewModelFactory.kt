@@ -14,8 +14,9 @@ class ZeiterfassungViewModelFactory(private val context: Context) : ViewModelPro
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val calendarConfigurationDao = AppDatabase.getDb(context).calendarConfigurationDao()
+        val titleDao = AppDatabase.getDb(context).titleDao()
         val teamUpApi = TeamupServiceGenerator.getTeamUpApi(context)
-        val configRepository = AppConfigurationRepository(calendarConfigurationDao, teamUpApi)
+        val configRepository = AppConfigurationRepository(calendarConfigurationDao, titleDao, teamUpApi)
         val zeiterfassungRepository = ZeiterfassungRepository(configRepository, ArbeitsverhaeltnisRepository(teamUpApi))
 
         return modelClass.getConstructor(ZeiterfassungRepository::class.java).newInstance(zeiterfassungRepository)

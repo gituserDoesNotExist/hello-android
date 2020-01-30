@@ -14,14 +14,6 @@
             android:weightSum="1">
 
 
-        <TextView
-                android:id="@+id/title_arbeitsverhaeltnis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:text="Some title" />
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,74 +23,98 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-
             <TextView
                     android:id="@+id/item_arbeitsverhaeltnis_date"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:textStyle="bold"
                     tools:text="20 Nov 2019" />
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/kosten" />
+                    android:text="@string/colon" />
 
             <TextView
-                    android:id="@+id/item_arbeitsverhaeltnis_kosten"
+                    android:id="@+id/title_arbeitsverhaeltnis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dip"
-                    tools:text="500 €" />
+                    android:paddingStart="5dip"
+                    android:paddingEnd="5dip"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Some title which is " />
 
 
         </LinearLayout>
 
 
-        <TableLayout
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:stretchColumns="1">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <TableRow android:id="@+id/table_row_leistungserbringer">
+            <TableLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:stretchColumns="1">
+
+                <TableRow android:id="@+id/table_row_leistungserbringer">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dip"
+                            android:text="@string/leistungserbringer" />
+
+                    <TextView
+                            android:id="@+id/item_arbeitsverhaeltnis_leistungserbringer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Beutel" />
+
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dip"
+                            android:text="@string/leistungsnehmer" />
+
+                    <TextView
+                            android:id="@+id/item_arbeitsverhaeltnis_leistungsnehmer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Rapp" />
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center_vertical|end">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="3dip"
-                        android:text="@string/leistungserbringer" />
+                        android:text="@string/kosten" />
 
                 <TextView
-                        android:id="@+id/item_arbeitsverhaeltnis_leistungserbringer"
+                        android:id="@+id/item_arbeitsverhaeltnis_kosten"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Beutel" />
+                        android:paddingStart="5dip"
+                        android:paddingEnd="5dip"
+                        tools:text="500 €" />
+            </LinearLayout>
 
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dip"
-                        android:text="@string/leistungsnehmer" />
-
-                <TextView
-                        android:id="@+id/item_arbeitsverhaeltnis_leistungsnehmer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="Rapp" />
-            </TableRow>
-        </TableLayout>
-
-
-        <TextView
-                android:id="@+id/item_arbeitsverhaeltnis_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="5720 mit Ladewagen der eine sehr lange Bezeichnung hat die nicht auf eine Seite passtsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf" />
+        </LinearLayout>
 
 
     </LinearLayout>

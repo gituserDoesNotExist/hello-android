@@ -44,6 +44,14 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
         binding.viewModel = upsertZeitArbeitsverhaeltnisViewModel
         binding.upsertArbeitsverhaeltnisDetailsFragment = this
 
+        (activity as? BaseActivity)?.let {
+            val adapter = TitlesArrayAdapter(it.applicationContext, appConfigurationViewModel.titles)
+            binding.autocompleteTitle.apply {
+                setAdapter(adapter)
+                threshold = 1
+            }
+        }
+
         return binding.root
     }
 

@@ -1,6 +1,5 @@
 package com.example.helloandroid.timerecording
 
-import android.content.res.Resources
 import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.view.Suchkriterien
 import org.threeten.bp.LocalDate
@@ -15,7 +14,6 @@ abstract class Arbeitsverhaeltnis {
     var leistungsnehmer: Person = Person()
     var kommentar: String = ""
 
-    abstract fun createDescription(resources: Resources): String
 
     open fun calculateEndDatum(): LocalDateTime {
         return datum.atStartOfDay()

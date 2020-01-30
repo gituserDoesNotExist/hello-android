@@ -7,6 +7,8 @@ import com.example.helloandroid.timerecording.config.Person
 import com.example.helloandroid.timerecording.config.RemoteCalendarMetadata
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationDao
 import com.example.helloandroid.timerecording.persistence.CalendarConfigurationEntity
+import com.example.helloandroid.timerecording.persistence.TitleDao
+import com.example.helloandroid.timerecording.persistence.TitleEntity
 import com.example.helloandroid.timerecording.view.CalendarConfiguration
 import com.example.helloandroid.timerecording.web.TeamUpApi
 import com.example.helloandroid.timerecording.web.remotemodel.ConfigurationWrapper
@@ -15,7 +17,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 class AppConfigurationRepository(private val calendarConfigurationDao: CalendarConfigurationDao,
-                                 private val teamUpApi: TeamUpApi) {
+                                 private val titleDao: TitleDao, private val teamUpApi: TeamUpApi) {
 
     private val calendarConfigMapper = CalendarConfigurationMapper()
 
@@ -71,7 +73,21 @@ class AppConfigurationRepository(private val calendarConfigurationDao: CalendarC
             throw DatabaseOperationException("$appUser konnte in der bestehenden Konfiguration nicht gefunden werden")
         }
         calendarConfigurationDao.updateConfiguration(config.apply { this.appUser = appUser })
+    }
 
+    fun saveTitle(title: String): Long {
+        return titleDao.insertTitle(TitleEntity(title))
+    }
+
+    fun deleteAllTitles() {
+        titleDao.deleteAll()
+    }
+
+    fun getTitles(): Single<List<String>> {
+        return titleDao.getTitles().observeOn(Schedulers.io())//
+            .map { titles ->
+                titles.map { it.title }
+            }
     }
 
 
