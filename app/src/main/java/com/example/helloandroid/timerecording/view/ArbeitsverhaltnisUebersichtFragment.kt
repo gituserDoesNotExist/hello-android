@@ -6,7 +6,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +23,8 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
 
 
     private lateinit var arbeitsverhaeltnisViewModel: ArbeitsverhaeltnisUebersichtViewModel
-    private lateinit var sharedZeitArbeitsverhaeltnisViewModel: SharedZeitArbeitsverhaeltnisViewModel
-    private lateinit var sharedStueckArbeitsverhaeltnisViewModel: SharedStueckArbeitsverhaeltnisViewModel
+    private lateinit var sharedZeitArbeitsverhaeltnisVM: SharedZeitArbeitsverhaeltnisViewModel
+    private lateinit var sharedStueckVerhaeltnisVM: SharedStueckArbeitsverhaeltnisViewModel
     private lateinit var filtersViewModel: FiltersViewModel
 
 
@@ -59,16 +58,11 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
         }
     }
 
-    private fun initializeViewModel(activity: AppCompatActivity) {
-        filtersViewModel = ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-            .get(FiltersViewModel::class.java)
-        arbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(ArbeitsverhaeltnisUebersichtViewModel::class.java)
-        sharedZeitArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
-        sharedStueckArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity).get(SharedStueckArbeitsverhaeltnisViewModel::class.java)
+    private fun initializeViewModel(activity: BaseActivity) {
+        filtersViewModel = activity.provideViewModel(FiltersViewModel::class.java)
+        arbeitsverhaeltnisViewModel = activity.provideViewModel(ArbeitsverhaeltnisUebersichtViewModel::class.java)
+        sharedZeitArbeitsverhaeltnisVM = activity.provideViewModel(SharedZeitArbeitsverhaeltnisViewModel::class.java)
+        sharedStueckVerhaeltnisVM = activity.provideViewModel(SharedStueckArbeitsverhaeltnisViewModel::class.java)
     }
 
     private fun loadArbeitsverhaeltnisse() {
@@ -93,12 +87,12 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
             val verhaeltnis = it.arbeitsverhaeltnis
             val navController = findNavController()
             if (verhaeltnis is ZeitArbeitsverhaeltnis) {
-                sharedZeitArbeitsverhaeltnisViewModel.eventInfo = it.eventInfo
-                sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis = verhaeltnis
+                sharedZeitArbeitsverhaeltnisVM.eventInfo = it.eventInfo
+                sharedZeitArbeitsverhaeltnisVM.currentArbeitsverhaeltnis = verhaeltnis
                 ZeiterfassungNavigation.getNavigation(navController).fromUebersichtToEditZeitArbeitsverhaeltnis()
             } else if (verhaeltnis is StueckArbeitsverhaeltnis) {
-                sharedStueckArbeitsverhaeltnisViewModel.eventInfo = it.eventInfo
-                sharedStueckArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis = verhaeltnis
+                sharedStueckVerhaeltnisVM.eventInfo = it.eventInfo
+                sharedStueckVerhaeltnisVM.currentArbeitsverhaeltnis = verhaeltnis
                 ZeiterfassungNavigation.getNavigation(navController).fromUebersichtToEditStueckArbeitsverhaeltnis()
             }
         }
@@ -134,7 +128,6 @@ class ArbeitsverhaltnisUebersichtFragment : Fragment() {
     fun openAddArbeitsverhaeltnisFragment() {
         ZeiterfassungNavigation.getNavigation(findNavController()).fromUebersichtToAddArbeitsverhaeltnis()
     }
-
 
 
 }

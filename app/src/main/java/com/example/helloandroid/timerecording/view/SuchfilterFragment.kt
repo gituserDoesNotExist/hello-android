@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.DialogOpener
@@ -24,7 +23,7 @@ class SuchfilterFragment : Fragment() {
         (activity as? AppCompatActivity)?.let {
             it.supportActionBar?.title = resources.getString(R.string.title_fragment_suchfilter)
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            initializeViewModel(it)
+            filtersViewModel = ViewModelProviders.of(it).get(FiltersViewModel::class.java)
         }
         val binding = FragmentSuchfilterBinding.inflate(inflater, container, false)
 
@@ -33,10 +32,6 @@ class SuchfilterFragment : Fragment() {
         binding.viewModel = filtersViewModel
 
         return binding.root
-    }
-
-    private fun initializeViewModel(it: FragmentActivity) {
-        filtersViewModel = ViewModelProviders.of(it).get(FiltersViewModel::class.java)
     }
 
 
@@ -75,7 +70,6 @@ class SuchfilterFragment : Fragment() {
     fun applyFilters() {
         ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
     }
-
 
 
 }

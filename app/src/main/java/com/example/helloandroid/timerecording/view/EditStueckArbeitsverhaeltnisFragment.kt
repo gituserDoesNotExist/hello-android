@@ -1,9 +1,10 @@
 package com.example.helloandroid.timerecording.view
 
 
-import android.os.Bundle
-import android.view.*
-import androidx.lifecycle.ViewModelProviders
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
@@ -18,25 +19,24 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
 
 
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
-    private lateinit var sharedStueckArbeitsverhaeltnisViewModel: SharedStueckArbeitsverhaeltnisViewModel
+    private lateinit var sharedVerhaeltnisViewModel: SharedStueckArbeitsverhaeltnisViewModel
     private var deleteArbeitsverhaeltnisDisposable: Disposable? = null
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-        val rootView = super.onCreateView(inflater, container, savedInstanceState)
-        upsertStueckArbeitsverhaeltnisViewModel.isUpdateMode.set(true)
-        upsertStueckArbeitsverhaeltnisViewModel.editable.set(false)
-
-        (activity as? BaseActivity)?.let {
-            it.supportActionBar?.title = resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
-        }
-        return rootView
+    override fun fragmentTitle(): String {
+        return resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
     }
 
-    private fun initSharedArbeitsverhaeltnisViewModel(it: BaseActivity) {
-        sharedStueckArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(it).get(SharedStueckArbeitsverhaeltnisViewModel::class.java)
+    override fun initArbeitsverhaeltnis(activity: BaseActivity) {
+        sharedVerhaeltnisViewModel = activity.provideViewModel(SharedStueckArbeitsverhaeltnisViewModel::class.java)
+        val eventInfo = sharedVerhaeltnisViewModel.eventInfo
+        val arbeitsverhaeltnis = sharedVerhaeltnisViewModel.currentArbeitsverhaeltnis
+        viewModel.initEventInfoAndArbeitsverhaeltnis(eventInfo, arbeitsverhaeltnis)
+    }
+
+    override fun prepareView(rootView: View, config: CalendarConfiguration) {
+        setHasOptionsMenu(true)
+        viewModel.isUpdateMode.set(true)
+        viewModel.editable.set(false)
     }
 
 
@@ -51,14 +51,14 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
                 ConfirmDeleteDialog(this.context) { confirmDeleteListener(findNavController()) }.show()
             }
             R.id.action_edit_arbeitsverhaeltnis -> {
-                upsertStueckArbeitsverhaeltnisViewModel.editable.set(true)
+                viewModel.editable.set(true)
             }
         }
         return false
     }
 
     private fun confirmDeleteListener(navController: NavController) {
-        deleteArbeitsverhaeltnisDisposable = upsertStueckArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
+        deleteArbeitsverhaeltnisDisposable = viewModel.deleteArbeitsverhaeltnis()//
             .subscribe(Consumer<String> {
                 ZeiterfassungNavigation.getNavigation(navController).toUebersicht()
             })
@@ -66,23 +66,12 @@ class EditStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragm
 
 
     override fun upsert() {
-        updateArbeitsverhaeltnisDisposable = upsertStueckArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
+        updateArbeitsverhaeltnisDisposable = viewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {
                 ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
-
-    override fun initializeArbeitsverhaeltnis() {
-        (activity as? BaseActivity)?.let {
-            initSharedArbeitsverhaeltnisViewModel(it)
-            upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
-                sharedStueckArbeitsverhaeltnisViewModel.eventInfo,
-                sharedStueckArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
-
-        }
-    }
-
 
     override fun onStop() {
         super.onStop()

@@ -21,36 +21,30 @@ class AddStueckArbeitsverhaeltnisFragment : UpsertStueckArbeitsverhaeltnisFragme
 
     private var addArbeitseinsatzDisposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = super.onCreateView(inflater, container, savedInstanceState)
 
-        upsertStueckArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
-        upsertStueckArbeitsverhaeltnisViewModel.editable.set(true)
+    override fun fragmentTitle(): String {
+        return resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
+    }
 
-        appConfigurationViewModel.calendarConfig.observe(this, Observer {
-            upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
-        })
+    override fun initArbeitsverhaeltnis(activity: BaseActivity) {
+        viewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(), StueckArbeitsverhaeltnis())
+    }
 
-        (activity as? BaseActivity)?.let {
-            it.supportActionBar?.title = resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
-        }
-
-
-        return rootView
+    override fun prepareView(rootView: View, config: CalendarConfiguration) {
+        viewModel.isUpdateMode.set(false)
+        viewModel.editable.set(true)
+            viewModel.setLeistungserbringer(config.appUser)
     }
 
 
+
+
     override fun upsert() {
-        addArbeitseinsatzDisposable = upsertStueckArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
+        addArbeitseinsatzDisposable = viewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer {
                 ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
-    }
-
-    override fun initializeArbeitsverhaeltnis() {
-        upsertStueckArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(),
-            StueckArbeitsverhaeltnis())
     }
 
     override fun onStop() {

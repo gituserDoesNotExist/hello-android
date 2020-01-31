@@ -1,9 +1,10 @@
 package com.example.helloandroid.timerecording.view
 
 
-import android.os.Bundle
-import android.view.*
-import androidx.lifecycle.ViewModelProviders
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
@@ -18,21 +19,26 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
 
 
     private var updateArbeitsverhaeltnisDisposable: Disposable? = null
-    private lateinit var sharedZeitArbeitsverhaeltnisViewModel: SharedZeitArbeitsverhaeltnisViewModel
+    private lateinit var sharedArbeitsverhaeltnisViewModel: SharedZeitArbeitsverhaeltnisViewModel
     private var deleteArbeitsverhaeltnisDisposable: Disposable? = null
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = super.onCreateView(inflater, container, savedInstanceState)
-        setHasOptionsMenu(true)
-        upsertZeitArbeitsverhaeltnisViewModel.isUpdateMode.set(true)
-        upsertZeitArbeitsverhaeltnisViewModel.editable.set(false)
-
-        (activity as? BaseActivity)?.let {
-            it.supportActionBar?.title = resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
-        }
-        return rootView
+    override fun fragmentTitle(): String {
+        return resources.getString(R.string.title_edit_arbeitsverhaeltnis_fragment)
     }
+
+    override fun initArbeitsverhaeltnis(activity: BaseActivity) {
+        sharedArbeitsverhaeltnisViewModel = activity.provideViewModel(SharedZeitArbeitsverhaeltnisViewModel::class.java)
+        val eventInfo = sharedArbeitsverhaeltnisViewModel.eventInfo
+        val arbeitsverhaeltnis = sharedArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis
+        upsertViewModel.initEventInfoAndArbeitsverhaeltnis(eventInfo, arbeitsverhaeltnis)
+    }
+
+    override fun prepareView(rootView: View, config: CalendarConfiguration) {
+        setHasOptionsMenu(true)
+        upsertViewModel.isUpdateMode.set(true)
+        upsertViewModel.editable.set(false)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_arbeitsverhaeltnis_details, menu)
@@ -45,14 +51,14 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
                 ConfirmDeleteDialog(this.context) { confirmDeleteListener(findNavController()) }.show()
             }
             R.id.action_edit_arbeitsverhaeltnis -> {
-                upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
+                upsertViewModel.editable.set(true)
             }
         }
         return false
     }
 
     private fun confirmDeleteListener(navController: NavController) {
-        deleteArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.deleteArbeitsverhaeltnis()//
+        deleteArbeitsverhaeltnisDisposable = upsertViewModel.deleteArbeitsverhaeltnis()//
             .subscribe(Consumer<String> {
                 ZeiterfassungNavigation.getNavigation(navController).toUebersicht()
             })
@@ -60,25 +66,11 @@ class EditZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment(
 
 
     override fun upsert() {
-        updateArbeitsverhaeltnisDisposable = upsertZeitArbeitsverhaeltnisViewModel.updateArbeitsverhaeltnis()//
+        updateArbeitsverhaeltnisDisposable = upsertViewModel.updateArbeitsverhaeltnis()//
             .observeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer<String> {
                 ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
-    }
-
-    override fun initializeArbeitsverhaeltnis() {
-        (activity as? BaseActivity)?.let {
-            initSharedArbeitsverhaeltnisViewModel(it)
-            upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(
-                sharedZeitArbeitsverhaeltnisViewModel.eventInfo,
-                sharedZeitArbeitsverhaeltnisViewModel.currentArbeitsverhaeltnis)
-        }
-    }
-
-    private fun initSharedArbeitsverhaeltnisViewModel(activity: BaseActivity) {
-        sharedZeitArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity).get(SharedZeitArbeitsverhaeltnisViewModel::class.java)
     }
 
 

@@ -1,14 +1,11 @@
 package com.example.helloandroid.timerecording.view
 
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.HelloDatePickerDialog
 import com.example.helloandroid.databinding.FragmentUpsertStueckArbeitsverhaeltnisBinding
@@ -21,68 +18,57 @@ import org.threeten.bp.LocalDate
 abstract class UpsertStueckArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFragment() {
 
 
-    protected lateinit var upsertStueckArbeitsverhaeltnisViewModel: UpsertStueckArbeitsverhaeltnisViewModel
+    protected lateinit var viewModel: UpsertStueckArbeitsverhaeltnisViewModel
 
     private lateinit var produktListPopupWindow: ListPopupWindow
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as? BaseActivity)?.let { activity ->
-            initializeArbeitsverhaeltnis()
-            appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                produktListPopupWindow = createListPopupWindowProdukt(activity, it.produkte)
-            })
-        }
+    override fun createRequiredListPopupWindows(activity: BaseActivity, calendarConfig: CalendarConfiguration) {
+        produktListPopupWindow = createListPopupWindowProdukt(activity, calendarConfig.produkte)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun initArbeitsverhaeltnisViewModel(activity: BaseActivity) {
+        viewModel = activity.provideViewModel(UpsertStueckArbeitsverhaeltnisViewModel::class.java)
+    }
+
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, titlesAdapter: TitlesArrayAdapter?): View {
         val binding = FragmentUpsertStueckArbeitsverhaeltnisBinding.inflate(inflater, container, false)
-        binding.viewModel = upsertStueckArbeitsverhaeltnisViewModel
+        binding.viewModel = viewModel
         binding.upsertArbeitsverhaeltnisDetailsFragment = this
 
-        (activity as? BaseActivity)?.let {
-            val adapter = TitlesArrayAdapter(it.applicationContext, appConfigurationViewModel.titles)
-            binding.autocompleteTitle.apply {
-                setAdapter(adapter)
-                threshold = 1
-            }
+        binding.autocompleteTitle.apply {
+            setAdapter(titlesAdapter)
+            threshold = 1
         }
-
         return binding.root
     }
 
-    override fun initArbeitsverhaeltnisViewModel(activity: AppCompatActivity) {
-        upsertStueckArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(UpsertStueckArbeitsverhaeltnisViewModel::class.java)
-    }
 
     override fun updateLeistungserbringerListener(entries: List<Person>): (Int) -> Unit {
         return {
-            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(Person())
-            else upsertStueckArbeitsverhaeltnisViewModel.setLeistungserbringer(entries[it - 1])
+            if (it == 0) viewModel.setLeistungserbringer(Person())
+            else viewModel.setLeistungserbringer(entries[it - 1])
             leistungserbringerListPopupWindow.dismiss()
         }
     }
 
     override fun updateLeistungsnehmerListener(entries: List<Person>): (Int) -> Unit {
         return {
-            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setLeistungsnehmer(Person())
-            else upsertStueckArbeitsverhaeltnisViewModel.setLeistungsnehmer(entries[it - 1])
+            if (it == 0) viewModel.setLeistungsnehmer(Person())
+            else viewModel.setLeistungsnehmer(entries[it - 1])
             leistungsnehmerListPopupWindow.dismiss()
         }
     }
 
     override fun validate(): Boolean {
-        return upsertStueckArbeitsverhaeltnisViewModel.validate()
+        return viewModel.validate()
     }
 
 
     private fun createListPopupWindowProdukt(it: AppCompatActivity, entries: List<Produkt>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            if (it == 0) upsertStueckArbeitsverhaeltnisViewModel.setProdukt(Produkt())
-            else upsertStueckArbeitsverhaeltnisViewModel.setProdukt(entries[it - 1])
+            if (it == 0) viewModel.setProdukt(Produkt())
+            else viewModel.setProdukt(entries[it - 1])
             produktListPopupWindow.dismiss()
         }
         val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.name }) }
@@ -91,9 +77,9 @@ abstract class UpsertStueckArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnis
 
 
     fun openDatePickerDialog() {
-        val crrntDate = upsertStueckArbeitsverhaeltnisViewModel.stueckArbeitsverhaeltnis.datum
+        val crrntDate = viewModel.stueckArbeitsverhaeltnis.datum
         val dateSetListener: (LocalDate) -> Unit = {
-            upsertStueckArbeitsverhaeltnisViewModel.setDatum(it)
+            viewModel.setDatum(it)
         }
         activity?.let {
             HelloDatePickerDialog(it, dateSetListener, crrntDate).show()

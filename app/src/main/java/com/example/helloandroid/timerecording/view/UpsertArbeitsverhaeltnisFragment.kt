@@ -2,6 +2,7 @@ package com.example.helloandroid.timerecording.view
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -11,7 +12,6 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
 import com.example.helloandroid.timerecording.KeineAuswahl
@@ -26,27 +26,60 @@ abstract class UpsertArbeitsverhaeltnisFragment : Fragment() {
     protected lateinit var leistungserbringerListPopupWindow: ListPopupWindow
     protected lateinit var leistungsnehmerListPopupWindow: ListPopupWindow
 
+    abstract fun fragmentTitle(): String
+
+    abstract fun createRequiredListPopupWindows(activity: BaseActivity, calendarConfig: CalendarConfiguration)
+
+    protected abstract fun initArbeitsverhaeltnisViewModel(activity: BaseActivity)
+
+    protected abstract fun initArbeitsverhaeltnis(activity: BaseActivity)
+
+    protected abstract fun createView(inflater: LayoutInflater, container: ViewGroup?,
+                                      titlesAdapter: TitlesArrayAdapter?): View
+
+    protected abstract fun prepareView(rootView: View, config: CalendarConfiguration)
+
+    abstract fun validate(): Boolean
+
+    abstract fun upsert()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity as? BaseActivity)?.let { activity ->
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            initializeViewModel(activity)
-            appConfigurationViewModel.loadTitles()
-            initializeArbeitsverhaeltnis()
+            activity.supportActionBar?.title = fragmentTitle()
+
+            appConfigurationViewModel = activity.provideViewModel(AppConfigurationViewModel::class.java).apply {
+                loadTitles()
+            }
+            setupArbeitsverhaeltnis(activity)
+
             appConfigurationViewModel.calendarConfig.observe(this, Observer {
                 leistungserbringerListPopupWindow = createListPopupWindowLeistungserbringer(activity, it.teilnehmer)
                 leistungsnehmerListPopupWindow = createListPopupWindowLeistungsnehmer(activity, it.teilnehmer)
+                createRequiredListPopupWindows(activity, it)
             })
         }
     }
 
-    private fun initializeViewModel(activity: AppCompatActivity) {
-        appConfigurationViewModel = ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-            .get(AppConfigurationViewModel::class.java)
-        initArbeitsverhaeltnisViewModel(activity)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        var titlesAdapter : TitlesArrayAdapter? = null
+        (activity as? BaseActivity)?.let {
+            titlesAdapter = TitlesArrayAdapter(it.applicationContext, appConfigurationViewModel.titles)
+        }
+        val rootView = createView(inflater, container, titlesAdapter)
+        appConfigurationViewModel.calendarConfig.observe(this, Observer {
+            prepareView(rootView,it)
+        })
+        return rootView
     }
 
-    protected abstract fun initArbeitsverhaeltnisViewModel(activity: AppCompatActivity)
+    private fun setupArbeitsverhaeltnis(activity: BaseActivity) {
+        initArbeitsverhaeltnisViewModel(activity)
+        initArbeitsverhaeltnis(activity)
+    }
 
     private fun createListPopupWindowLeistungserbringer(it: AppCompatActivity, entries: List<Person>): ListPopupWindow {
         val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.name }) }
@@ -96,10 +129,5 @@ abstract class UpsertArbeitsverhaeltnisFragment : Fragment() {
         }
     }
 
-    abstract fun validate(): Boolean
-
-    abstract fun upsert()
-
-    abstract fun initializeArbeitsverhaeltnis()
 
 }

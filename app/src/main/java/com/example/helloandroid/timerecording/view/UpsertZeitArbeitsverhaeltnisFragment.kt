@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.HelloDatePickerDialog
 import com.example.helloandroid.databinding.FragmentUpsertZeitArbeitsverhaeltnisBinding
@@ -20,27 +18,39 @@ import org.threeten.bp.LocalDate
 abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFragment() {
 
 
-    protected lateinit var upsertZeitArbeitsverhaeltnisViewModel: UpsertZeitArbeitsverhaeltnisViewModel
+    protected lateinit var upsertViewModel: UpsertZeitArbeitsverhaeltnisViewModel
 
     private lateinit var fahrzeugListPopupWindow: ListPopupWindow
     private lateinit var anbaugeraetListPopupWindow: ListPopupWindow
     private lateinit var taetigkeitListPopupWindow: ListPopupWindow
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as? BaseActivity)?.let { activity ->
-            appConfigurationViewModel.calendarConfig.observe(this, Observer {
-                fahrzeugListPopupWindow = createListPopupWindowFahrzeug(activity, it.fahrzeuge)
-                anbaugeraetListPopupWindow = createListPopupWindowAnaugeraet(activity, it.anbaugeraete)
-                taetigkeitListPopupWindow = createListPopupWindowTaetigkeit(activity, it.teatigkeiten)
-            })
+    override fun createRequiredListPopupWindows(activity: BaseActivity, calendarConfig: CalendarConfiguration) {
+        fahrzeugListPopupWindow = createListPopupWindowFahrzeug(activity, calendarConfig.fahrzeuge)
+        anbaugeraetListPopupWindow = createListPopupWindowAnaugeraet(activity, calendarConfig.anbaugeraete)
+        taetigkeitListPopupWindow = createListPopupWindowTaetigkeit(activity, calendarConfig.teatigkeiten)
+    }
+
+    override fun initArbeitsverhaeltnisViewModel(activity: BaseActivity) {
+        upsertViewModel = activity.provideViewModel(UpsertZeitArbeitsverhaeltnisViewModel::class.java)
+    }
+
+
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, titlesAdapter: TitlesArrayAdapter?): View {
+        val binding = FragmentUpsertZeitArbeitsverhaeltnisBinding.inflate(inflater, container, false)
+        binding.viewModel = upsertViewModel
+        binding.upsertArbeitsverhaeltnisDetailsFragment = this
+
+        binding.autocompleteTitle.apply {
+            setAdapter(titlesAdapter)
+            threshold = 1
         }
+        return binding.root
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentUpsertZeitArbeitsverhaeltnisBinding.inflate(inflater, container, false)
-        binding.viewModel = upsertZeitArbeitsverhaeltnisViewModel
+        binding.viewModel = upsertViewModel
         binding.upsertArbeitsverhaeltnisDetailsFragment = this
 
         (activity as? BaseActivity)?.let {
@@ -54,37 +64,32 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
         return binding.root
     }
 
-    override fun initArbeitsverhaeltnisViewModel(activity: AppCompatActivity) {
-        upsertZeitArbeitsverhaeltnisViewModel =
-            ViewModelProviders.of(activity, ZeiterfassungViewModelFactory(activity.application))
-                .get(UpsertZeitArbeitsverhaeltnisViewModel::class.java)
-    }
 
     override fun updateLeistungserbringerListener(entries: List<Person>): (Int) -> Unit {
         return {
-            if (it == 0) upsertZeitArbeitsverhaeltnisViewModel.setLeistungserbringer(Person())
-            else upsertZeitArbeitsverhaeltnisViewModel.setLeistungserbringer(entries[it - 1])
+            if (it == 0) upsertViewModel.setLeistungserbringer(Person())
+            else upsertViewModel.setLeistungserbringer(entries[it - 1])
             leistungserbringerListPopupWindow.dismiss()
         }
     }
 
     override fun updateLeistungsnehmerListener(entries: List<Person>): (Int) -> Unit {
         return {
-            if (it == 0) upsertZeitArbeitsverhaeltnisViewModel.setLeistungsnehmer(Person())
-            else upsertZeitArbeitsverhaeltnisViewModel.setLeistungsnehmer(entries[it - 1])
+            if (it == 0) upsertViewModel.setLeistungsnehmer(Person())
+            else upsertViewModel.setLeistungsnehmer(entries[it - 1])
             leistungsnehmerListPopupWindow.dismiss()
         }
     }
 
     override fun validate(): Boolean {
-        return upsertZeitArbeitsverhaeltnisViewModel.validate()
+        return upsertViewModel.validate()
     }
 
 
     private fun createListPopupWindowFahrzeug(it: AppCompatActivity, entries: List<Maschine>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            if (it == 0) upsertZeitArbeitsverhaeltnisViewModel.setFahrzeug(Fahrzeug())
-            else upsertZeitArbeitsverhaeltnisViewModel.setFahrzeug(entries[it - 1])
+            if (it == 0) upsertViewModel.setFahrzeug(Fahrzeug())
+            else upsertViewModel.setFahrzeug(entries[it - 1])
             fahrzeugListPopupWindow.dismiss()
         }
         val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.bezeichnung }) }
@@ -94,8 +99,8 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
 
     private fun createListPopupWindowAnaugeraet(it: AppCompatActivity, entries: List<Maschine>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            if (it == 0) upsertZeitArbeitsverhaeltnisViewModel.setAnbaugaeraet(Anbaugeraet())
-            else upsertZeitArbeitsverhaeltnisViewModel.setAnbaugaeraet(entries[it - 1])
+            if (it == 0) upsertViewModel.setAnbaugaeraet(Anbaugeraet())
+            else upsertViewModel.setAnbaugaeraet(entries[it - 1])
             anbaugeraetListPopupWindow.dismiss()
         }
         val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.bezeichnung }) }
@@ -105,8 +110,8 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
 
     private fun createListPopupWindowTaetigkeit(it: AppCompatActivity, entries: List<Taetigkeit>): ListPopupWindow {
         val updateModelListener: (Int) -> Unit = {
-            if (it == 0) upsertZeitArbeitsverhaeltnisViewModel.setTaetigkeit(Taetigkeit())
-            else upsertZeitArbeitsverhaeltnisViewModel.setTaetigkeit(entries[it - 1])
+            if (it == 0) upsertViewModel.setTaetigkeit(Taetigkeit())
+            else upsertViewModel.setTaetigkeit(entries[it - 1])
             taetigkeitListPopupWindow.dismiss()
         }
         val dropdownEntries = mutableListOf(KeineAuswahl.value).apply { addAll(entries.map { it.bezeichnung }) }
@@ -115,9 +120,9 @@ abstract class UpsertZeitArbeitsverhaeltnisFragment : UpsertArbeitsverhaeltnisFr
 
 
     fun openDatePickerDialog() {
-        val crrntDate = upsertZeitArbeitsverhaeltnisViewModel.zeitArbeitsverhaeltnis.datum
+        val crrntDate = upsertViewModel.zeitArbeitsverhaeltnis.datum
         val dateSetListener: (LocalDate) -> Unit = {
-            upsertZeitArbeitsverhaeltnisViewModel.setDatum(it)
+            upsertViewModel.setDatum(it)
         }
         activity?.let {
             HelloDatePickerDialog(it, dateSetListener, crrntDate).show()

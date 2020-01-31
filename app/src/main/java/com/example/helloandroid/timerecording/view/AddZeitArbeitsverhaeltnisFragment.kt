@@ -1,11 +1,7 @@
 package com.example.helloandroid.timerecording.view
 
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.helloandroid.BaseActivity
 import com.example.helloandroid.R
@@ -21,37 +17,29 @@ class AddZeitArbeitsverhaeltnisFragment : UpsertZeitArbeitsverhaeltnisFragment()
 
     private var addArbeitseinsatzDisposable: Disposable? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = super.onCreateView(inflater, container, savedInstanceState)
+    override fun fragmentTitle(): String {
+        return resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
+    }
 
-        upsertZeitArbeitsverhaeltnisViewModel.isUpdateMode.set(false)
-        upsertZeitArbeitsverhaeltnisViewModel.editable.set(true)
+    override fun initArbeitsverhaeltnis(activity: BaseActivity) {
+        upsertViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(), ZeitArbeitsverhaeltnis())
+    }
 
-        appConfigurationViewModel.calendarConfig.observe(this, Observer {
-            upsertZeitArbeitsverhaeltnisViewModel.setLeistungserbringer(it.appUser)
-        })
-
-
-        (activity as? BaseActivity)?.let {
-            it.supportActionBar?.title = resources.getString(R.string.title_add_arbeitsverhaeltnis_fragment)
-        }
-
-
-        return rootView
+    override fun prepareView(rootView: View, config: CalendarConfiguration) {
+        upsertViewModel.isUpdateMode.set(false)
+        upsertViewModel.editable.set(true)
+        upsertViewModel.setLeistungserbringer(config.appUser)
     }
 
 
     override fun upsert() {
-        addArbeitseinsatzDisposable = upsertZeitArbeitsverhaeltnisViewModel.addArbeitsverhaeltnis()//
+        addArbeitseinsatzDisposable = upsertViewModel.addArbeitsverhaeltnis()//
             .subscribeOn(AndroidSchedulers.mainThread())//
             .subscribe(Consumer {
                 ZeiterfassungNavigation.getNavigation(findNavController()).toUebersicht()
             })
     }
 
-    override fun initializeArbeitsverhaeltnis() {
-        upsertZeitArbeitsverhaeltnisViewModel.initEventInfoAndArbeitsverhaeltnis(EventInfo(), ZeitArbeitsverhaeltnis())
-    }
 
     override fun onStop() {
         super.onStop()

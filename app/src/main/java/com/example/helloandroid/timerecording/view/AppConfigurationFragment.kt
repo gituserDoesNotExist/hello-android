@@ -11,7 +11,6 @@ import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,10 +32,10 @@ class AppConfigurationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentAppConfigurationBinding.inflate(inflater, container, false)
-        initializeViewModel()
 
         val rootView = binding.root
         (activity as? BaseActivity)?.let { activity ->
+            appConfigurationViewModel = activity.provideViewModel(AppConfigurationViewModel::class.java)
             configureNetworkErrorHandling(activity, rootView)
             activity.supportActionBar?.title = resources.getString(R.string.title_fragment_configuration)
             downloadRemoteConfig(activity, rootView)
@@ -72,13 +71,6 @@ class AppConfigurationFragment : Fragment() {
             }
     }
 
-
-    private fun initializeViewModel() {
-        activity?.let {
-            appConfigurationViewModel = ViewModelProviders.of(it, ZeiterfassungViewModelFactory(it.application))
-                .get(AppConfigurationViewModel::class.java)
-        }
-    }
 
     private fun createParticipantsListPopUpWindow(it: FragmentActivity, entries: List<Person>): ListPopupWindow {
         val names = entries.map { it.name }
